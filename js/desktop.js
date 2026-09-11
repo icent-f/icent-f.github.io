@@ -7,6 +7,16 @@
   const Blog = window.Blog;
   const WM = window.WindowManager;
 
+  /* ---------- 触摸设备提示上的「仍要继续」 ---------- */
+  const mtContinue = document.getElementById("mt-continue");
+  if (mtContinue) {
+    mtContinue.addEventListener("click", () => {
+      document.documentElement.classList.add("force-desktop");
+      try { localStorage.setItem("pay3cents-force-desktop", "1"); } catch (e) {}
+      toast("已强制进入，部分功能可能不可用");
+    });
+  }
+
   /* ---------- 右半边：桌面图标网格（分类由文章清单动态生成） ---------- */
   const iconRoot = document.getElementById("desktop-icons");
   function buildDesktopIcons() {

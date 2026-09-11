@@ -6,16 +6,36 @@
   <title>Pay3Cents 的博客</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/style.css" />
-  <!-- 尽早套用已保存的主题，避免刷新时闪一下 -->
+  <!-- 尽早套用已保存的设置，避免刷新时闪一下 -->
   <script>
     try {
       if (localStorage.getItem("pay3cents-theme") === "dark") {
         document.documentElement.classList.add("dark");
       }
+      // 触摸设备上点过「仍要继续」，就放行桌面
+      if (localStorage.getItem("pay3cents-force-desktop") === "1") {
+        document.documentElement.classList.add("force-desktop");
+      }
     } catch (e) {}
   </script>
 </head>
 <body>
+  <!-- 触摸设备提示（软拦截）：只在「以触摸为主」的设备上显示，可用下面的按钮强制进入 -->
+  <div class="mobile-tip" id="mobile-tip">
+    <div class="mt-card">
+      <div class="mt-ic">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2.5" y="4.5" width="19" height="13" rx="2.5"/>
+          <path d="M8.5 20.5h7M12 17.5v3"/>
+        </svg>
+      </div>
+      <h1>请在电脑上访问</h1>
+      <p>这个博客是一个「电脑桌面」，需要鼠标才能正常操作。<br />手机上很多功能用不了。</p>
+      <div class="mt-url">https://icent-f.github.io/</div>
+      <button class="mt-continue" id="mt-continue" type="button">仍要继续（体验可能不佳）</button>
+    </div>
+  </div>
+
   <!-- 锁屏：页面打开时出现一次，点 Login 进入桌面 -->
   <div class="lockscreen" id="lockscreen">
     <div class="lock-inner">
