@@ -7,15 +7,9 @@
   const Blog = window.Blog;
   const WM = window.WindowManager;
 
-  /* ---------- 触摸设备提示上的「仍要继续」 ---------- */
+  /* ---------- 触摸设备提示：进入极简移动版 ---------- */
   const mtContinue = document.getElementById("mt-continue");
-  if (mtContinue) {
-    mtContinue.addEventListener("click", () => {
-      document.documentElement.classList.add("force-desktop");
-      try { localStorage.setItem("pay3cents-force-desktop", "1"); } catch (e) {}
-      toast("已强制进入，部分功能可能不可用");
-    });
-  }
+  if (mtContinue) mtContinue.addEventListener("click", () => Blog.mobileEnter());
 
   /* ---------- 右半边：桌面图标网格（分类由文章清单动态生成） ---------- */
   const iconRoot = document.getElementById("desktop-icons");
@@ -303,5 +297,6 @@
     await Promise.all([Blog.loadPosts(), Blog.loadTree()]);
     buildDesktopIcons();
     Blog.openFromHash();   // 支持 #post-<id> 直达某篇文章
+    Blog.initMobile();     // 极简移动版：绑定返回键 + 必要时渲染列表
   }
 })();

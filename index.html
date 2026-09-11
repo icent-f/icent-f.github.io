@@ -12,15 +12,15 @@
       if (localStorage.getItem("pay3cents-theme") === "dark") {
         document.documentElement.classList.add("dark");
       }
-      // 触摸设备上点过「仍要继续」，就放行桌面
-      if (localStorage.getItem("pay3cents-force-desktop") === "1") {
-        document.documentElement.classList.add("force-desktop");
+      // 触摸设备上选过「看文章（极简版）」，就直接进极简版
+      if (localStorage.getItem("pay3cents-mobile") === "1") {
+        document.documentElement.classList.add("mobile-mode");
       }
     } catch (e) {}
   </script>
 </head>
 <body>
-  <!-- 触摸设备提示（软拦截）：只在「以触摸为主」的设备上显示，可用下面的按钮强制进入 -->
+  <!-- 触摸设备提示（软拦截）：只在「以触摸为主」的设备上显示 -->
   <div class="mobile-tip" id="mobile-tip">
     <div class="mt-card">
       <div class="mt-ic">
@@ -30,10 +30,20 @@
         </svg>
       </div>
       <h1>请在电脑上访问</h1>
-      <p>这个博客是一个「电脑桌面」，需要鼠标才能正常操作。<br />手机上很多功能用不了。</p>
+      <p>这个博客是一个「电脑桌面」，完整效果需要鼠标操作。</p>
+      <button class="mt-primary" id="mt-continue" type="button">看文章（极简版）</button>
+      <div class="mt-hint">想在电脑上体验完整版？</div>
       <div class="mt-url">https://icent-f.github.io/</div>
-      <button class="mt-continue" id="mt-continue" type="button">仍要继续（体验可能不佳）</button>
     </div>
+  </div>
+
+  <!-- 极简移动版：纯列表 + 正文 -->
+  <div class="m-view" id="m-view">
+    <header class="m-head">
+      <button class="m-back" id="m-back" type="button" hidden aria-label="返回">‹</button>
+      <div class="m-title" id="m-title">Pay3Cents 的博客</div>
+    </header>
+    <div class="m-body" id="m-body"></div>
   </div>
 
   <!-- 锁屏：页面打开时出现一次，点 Login 进入桌面 -->

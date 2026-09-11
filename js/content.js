@@ -538,9 +538,122 @@
     return win;
   }
 
+  /* ============================================================
+     极简移动版：纯列表 + 正文（触摸设备点「看文章（极简版）」后进入）
+     ============================================================ */
+  const MOBILE_KEY = "pay3cents-mobile";
+
+  function mBody() { return document.getElementById("m-body"); }
+
+  /* 列表页 */
+  function mobileList() {
+    const body = mBody();
+    if (!body) return;
+    const back = document.getElementById("m-back");
+    const title = document.getElementById("m-title");
+    if (back) back.hidden = true;
+    if (title) title.textContent = META.name || "博客";
+
+    const cats = [];
+    POSTS.forEach((p) => { if (p.category && cats.indexOf(p.category) === -1) cats.push(p.category); });
+
+    let cur = "";
+    let html = '<div class="m-chips">';
+    html += '<button class="m-chip active" data-cat="">全部</button>';
+    cats.forEach((c) => {
+      html += '<button class="m-chip" data-cat="' + esc(c) + '">' + esc(c) + "</button>";
+    });
+    html += '</div><div class="m-list"></div>';
+    body.innerHTML = html;
+
+    const listEl = body.querySelector(".m-list");
+
+    function paint() {
+      const list = cur ? POSTS.filter((p) => p.category === cur) : POSTS;
+      listEl.innerHTML = list.length
+        ? list.map((p) =>
+            '<a class="m-item" data-file="' + esc(p.file) + '">' +
+              '<div class="m-item-t">' + esc(p.title) + "</div>" +
+              '<div class="m-item-m">' +
+                '<span class="m-cat" style="color:' + catColor(p.category) + '">' + esc(p.category) + "</span>" +
+                "<span>" + esc(p.date) + "</span>" +
+              "</div>" +
+            "</a>").join("")
+        : '<div class="empty-state">暂无文章</div>';
+      listEl.querySelectorAll(".m-item").forEach((a) => {
+        a.addEventListener("click", () => {
+          const p = POSTS.find((x) => x.file === a.dataset.file);
+          if (p) mobileArticle(p);
+        });
+      });
+    }
+
+    body.querySelectorAll(".m-chip").forEach((b) => {
+      b.addEventListener("click", () => {
+        cur = b.dataset.cat || "";
+        body.querySelectorAll(".m-chip").forEach((x) => x.classList.toggle("active", x === b));
+        paint();
+      });
+    });
+
+    paint();
+    body.scrollTop = 0;
+  }
+
+  /* 正文页 */
+  function mobileArticle(p) {
+    const body = mBody();
+    if (!body) return;
+    const back = document.getElementById("m-back");
+    const title = document.getElementById("m-title");
+    if (back) back.hidden = false;
+    if (title) title.textContent = p.title;
+
+    const show = (inner) => {
+      body.innerHTML = '<div class="post-article m-article">' + inner + "</div>";
+      body.scrollTop = 0;
+    };
+    const fromMd = () => fetch(p.file)
+      .then((r) => { if (!r.ok) throw new Error(); return r.text(); })
+      .then((t) => show(
+        "<h1>" + esc(p.title) + "</h1>" +
+        '<div class="post-meta"><span class="chip">' + esc(p.category) + "</span>" +
+        "<span>" + esc(p.date) + "</span></div>" +
+        renderMarkdown(t, p.file.replace(/[^/]*$/, ""))
+      ))
+      .catch(() => show("<h1>加载失败</h1><p>无法读取：" + esc(p.file) + "</p>"));
+
+    body.innerHTML = '<div class="empty-state"><span class="spinner"></span>加载中…</div>';
+    body.scrollTop = 0;
+
+    if (p.html) {
+      fetch(p.html)
+        .then((r) => { if (!r.ok) throw new Error(); return r.text(); })
+        .then(show)
+        .catch(fromMd);
+    } else {
+      fromMd();
+    }
+  }
+
+  /* 进入极简版 */
+  function mobileEnter() {
+    document.documentElement.classList.add("mobile-mode");
+    try { localStorage.setItem(MOBILE_KEY, "1"); } catch (e) {}
+    mobileList();
+  }
+
+  /* 初始化：绑定返回按钮；若是从 localStorage 恢复的，就直接渲染列表 */
+  function initMobile() {
+    const back = document.getElementById("m-back");
+    if (back) back.addEventListener("click", mobileList);
+    if (document.documentElement.classList.contains("mobile-mode")) mobileList();
+  }
+
   /* 暴露 */
   global.Blog = {
     META, RAIL_ITEMS, RAIL_SOCIALS, open, openPost, openFromHash,
     loadPosts, loadTree, desktopIcons, topFolders, postsIn, childFolders, catColor, catIcon,
+    mobileEnter, initMobile,
   };
 })(window);

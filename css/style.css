@@ -1074,27 +1074,182 @@ html.theme-anim *::after {
   user-select: all;
   -webkit-user-select: all;
 }
-.mt-continue {
-  padding: 6px;
-  border: none;
-  background: transparent;
-  color: var(--ink-faint);
+.mt-primary {
+  display: block;
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 13px 20px;
+  border: 1px solid rgba(255, 255, 255, .5);
+  border-radius: 13px;
+  background: var(--accent);
+  color: #fff;
   font-family: var(--font);
+  font-size: 15.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: background-color .15s ease, transform .12s ease;
+}
+.mt-primary:hover { background: var(--accent-2); }
+.mt-primary:active { transform: scale(.98); }
+.mt-hint {
+  margin-bottom: 8px;
   font-size: 12.5px;
-  text-decoration: underline;
+  color: var(--ink-faint);
+}
+
+/* ============================================================
+   极简移动版：纯列表 + 正文
+   ============================================================ */
+.m-view {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: none;
+  flex-direction: column;
+  background: var(--bg);
+}
+.m-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  background: linear-gradient(180deg, var(--accent-2), var(--accent));
+  color: #fff;
+  box-shadow: 0 3px 14px rgba(30, 60, 52, .25);
+}
+.m-back {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, .2);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
   cursor: pointer;
 }
-.mt-continue:hover { color: var(--accent); }
+.m-back:active { background: rgba(255, 255, 255, .36); }
+.m-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 15.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.m-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background-image: url("../assets/wallpaper.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.dark .m-body { background-image: url("../assets/wallpaper-dark.jpg"); }
+
+/* 分类筛选 */
+.m-chips {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: rgba(213, 240, 231, .82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, .5);
+}
+.dark .m-chips { background: rgba(20, 28, 28, .84); }
+.m-chips::-webkit-scrollbar { display: none; }
+.m-chip {
+  flex: 0 0 auto;
+  padding: 7px 15px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .55);
+  color: var(--ink-soft);
+  font-family: var(--font);
+  font-size: 13.5px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.dark .m-chip { background: rgba(255, 255, 255, .1); }
+.m-chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* 文章列表 */
+.m-list { padding: 12px 14px 28px; }
+.m-item {
+  display: block;
+  padding: 15px 16px;
+  margin-bottom: 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .68);
+  border: 1px solid rgba(255, 255, 255, .6);
+  box-shadow: 0 3px 12px rgba(30, 60, 52, .12);
+  text-decoration: none;
+  color: var(--ink);
+}
+.dark .m-item {
+  background: rgba(28, 38, 38, .74);
+  border-color: rgba(255, 255, 255, .12);
+}
+.m-item:active { background: rgba(255, 255, 255, .9); }
+.m-item .m-item-t {
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 1.45;
+  margin-bottom: 7px;
+}
+.m-item .m-item-m {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+}
+.m-item .m-cat { font-weight: 600; }
+
+/* 正文 */
+.m-article {
+  margin: 12px 14px 28px;
+  padding: 20px 18px 24px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .78);
+  border: 1px solid rgba(255, 255, 255, .6);
+  box-shadow: 0 4px 18px rgba(30, 60, 52, .14);
+  color: var(--ink);
+  font-size: 15.5px;
+  line-height: 1.85;
+}
+.dark .m-article {
+  background: rgba(26, 36, 36, .8);
+  border-color: rgba(255, 255, 255, .12);
+}
+.m-article h1 { font-size: 21px; line-height: 1.4; margin-bottom: 10px; color: var(--accent); }
+.m-article img { max-width: 100%; border-radius: 8px; }
+.m-article pre { font-size: 12.5px; }
 
 /* 以触摸为主的设备（手机 / 平板）：藏起桌面，显示提示 */
 @media (hover: none) and (pointer: coarse) {
   .mobile-tip { display: grid; }
-  .desktop, .lockscreen { display: none; }
+  .desktop, .lockscreen, .m-view { display: none; }
 
-  /* 点过「仍要继续」就放行（html 上有 force-desktop 类） */
-  html.force-desktop .mobile-tip { display: none; }
-  html.force-desktop .desktop { display: block; }
-  html.force-desktop .lockscreen { display: grid; }
+  /* 选了「看文章（极简版）」就切到极简版 */
+  html.mobile-mode .mobile-tip { display: none; }
+  html.mobile-mode .m-view { display: flex; }
 }
 
 /* 移动端兜底（仅「强制进入」时生效：触摸设备点了仍要继续，或窄窗口的桌面浏览器） */
