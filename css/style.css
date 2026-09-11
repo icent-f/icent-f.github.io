@@ -1141,6 +1141,25 @@ html.theme-anim *::after {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* 极简版顶栏的深色 / 浅色切换 */
+.m-theme {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, .2);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color .12s ease;
+}
+.m-theme:active { background: rgba(255, 255, 255, .36); }
+.m-theme svg { width: 19px; height: 19px; display: none; }
+.m-theme .i-moon { display: block; }          /* 浅色模式：显示月亮（点了变深色） */
+.dark .m-theme .i-moon { display: none; }
+.dark .m-theme .i-sun { display: block; }     /* 深色模式：显示太阳 */
 .m-body {
   flex: 1 1 auto;
   overflow-y: auto;

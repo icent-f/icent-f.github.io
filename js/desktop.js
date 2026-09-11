@@ -138,6 +138,16 @@
     });
   }
 
+  /* 极简移动版顶栏的同一个开关（图标由 CSS 按 .dark 自动切换） */
+  const mobileThemeBtn = document.getElementById("m-theme");
+  if (mobileThemeBtn) {
+    mobileThemeBtn.addEventListener("click", () => {
+      const dark = !document.documentElement.classList.contains("dark");
+      applyMode(dark, true);
+      try { localStorage.setItem(MODE_KEY, dark ? "dark" : "light"); } catch (e) {}
+    });
+  }
+
   /* ---------- 开始菜单 ---------- */
   const startBtn = document.getElementById("start-btn");
   let startMenu = null;

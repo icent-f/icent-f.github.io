@@ -14,7 +14,7 @@
     handle: "@一只学网安的魂淡",
     avatar: "assets/avatar.png",
     illustration: "assets/about-illustration.jpg",
-    desc: "这里是 Pay3Cents 的电脑桌面。用来记录一些「未确定事件」的观察、随笔与生活碎碎念。欢迎随便逛逛。",
+    desc: "这里是 Pay3Cents 的电脑桌面。用来记录一些知识、随笔与生活碎碎念。欢迎随便逛逛。",
     tags: ["MISC手", "CTF", "半个画师", "勉强算个人类", "蓝色大肥鱼"],
     socials: [
       { icon: "assets/icons/twitter.svg", label: "Twitter / X", href: "#" },
