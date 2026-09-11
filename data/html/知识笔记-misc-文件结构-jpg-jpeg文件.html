@@ -1,0 +1,33 @@
+<h1>JPG/JPEG</h1>
+<div class="post-meta"><span class="chip">知识笔记 · Misc / 文件结构</span><span>2026-09-11</span></div>
+<p><a href="https://lubicanony.github.io/2025/09/27/my-first-blog/index.html">文章参考</a></p>
+<p>首先 JPG就是JPEG 这俩是一个东西</p>
+<p>JPG是有损压缩图片 像素数据用JPG保存会有少许变化 且JPG没有透明度信息  <br>JPG的压缩方式有以下几种</p>
+<ul><li><strong>标准JPEG</strong>  </li></ul>
+<p>  以24位颜色存储单个光栅图像 是与平台无关的格式 支持最高级别的压缩 不过在网页下载时只能由上而下依序显示图片 直到全部下载完毕 才能看到全貌</p>
+<ul><li><strong>渐进式JPEG</strong>  </li></ul>
+<p>  为标准JPG的改良格式 支持交错 可以在网页下载时先呈现出图片的粗略外观 再慢慢地呈现出完整的内容 渐进式JPG的文件比标准JPG的文件要小</p>
+<ul><li><strong>JPEG2000</strong>  </li></ul>
+<p>  有自己的文件头 <code>00 00 00 0C 6A 50 20 20 0D 0A 87 0A</code> 后缀名 <code>.jp2</code>/<code>.j2k</code>  <br>  新一代的影像压缩法 压缩品质更好 压缩率比标准JPEG高30％左右 同时支持无损压缩 能实现渐进传输 即先传输图像的轮廓 然后逐步传输数据 让图像由朦胧到清晰</p>
+<p>以一幅24位彩色图像为例，JPEG的压缩分为四个步骤：</p>
+<ul><li><strong>颜色转换和采样</strong>  </li></ul>
+<p>  压缩前 对颜色模式进行数据转换 然后进行数据采样</p>
+<ul><li><strong>DCT变换</strong>  </li></ul>
+<p>  即 将图像信号在频率域上进行变换 分离出高频和低频信息 然后对高频部分(图像细节)进行压缩  <br>  首先把图片的像素划分为多个8×8的矩阵 然后对每个矩阵DCT变换  <br>  此时矩阵都变成了频率系数矩阵（频率即颜色改变的速度 且频率系数都是浮点数）</p>
+<ul><li><strong>量化</strong>  </li></ul>
+<p>  编码使用的码本是整数 所以频率系数需要量化为整数  <br>  量化后 矩阵中的数据都是近似值 所以图像压缩后会失真  <br>  这个过程的参数叫质量因子 与压缩比成正相关 与图像质量成负相关</p>
+<ul><li><strong>编码</strong></li></ul>
+<p>压缩完成的JPG文件 基本数据结构为两大类型 <strong>段</strong>、<strong>经过压缩编码的图像数据</strong></p>
+<p>先讲段 段的基本结构如下</p>
+<table><thead><tr><th>名称</th><th>字节数</th><th>说明</th></tr></thead><tbody><tr><td>段标识</td><td>1(FF)</td><td>段的开始标识</td></tr><tr><td>段类型</td><td>1</td><td>类型编码（称作标记码）</td></tr><tr><td>段长度</td><td>2</td><td>包括段内容和段长度本身, 不包括段标识和段类型</td></tr><tr><td>段内容</td><td>≤65533字节</td><td></td></tr></tbody></table>
+<blockquote>
+<p>JPG文件采用Motorola格式 即高位在前 低位在后  <br>有些段只有段标识和段类型 比如文件头和文件尾  <br>段与段之间的 <code>FF</code> 都是合法的 叫“填充字节” 会被忽略</p>
+</blockquote>
+<p>段类型有30种 但只有10种必须被所有程序识别的 所以只列这10种</p>
+<table><thead><tr><th>类型</th><th>标记码</th><th>说明</th></tr></thead><tbody><tr><td>SOI</td><td>D8</td><td>文件头</td></tr><tr><td>EOI</td><td>D9</td><td>文件尾</td></tr><tr><td>SOF0</td><td>C0</td><td>帧开始（标准 JPEG）</td></tr><tr><td>SOF1</td><td>C1</td><td>同上</td></tr><tr><td>DHT</td><td>C4</td><td>定义 哈夫曼表</td></tr><tr><td>SOS</td><td>DA</td><td>扫描行开始</td></tr><tr><td>DQT</td><td>DB</td><td>定义量化表</td></tr><tr><td>DRI</td><td>DD</td><td>定义重新开始间隔</td></tr><tr><td>APP0</td><td>E0</td><td>定义交换格式和图像识别信息</td></tr><tr><td>COM</td><td>FE</td><td>注释</td></tr><tr><td>DNL（有争议）</td><td>DC</td><td>定义扫描行数</td></tr></tbody></table>
+<p>主要看看SOFn(n=0,1,2)<br>SOFn(Start of Frame) 即帧图像开始段</p>
+<blockquote>
+<p>n代表图像所用的编码格式 例如基线DCT格式为SOF0 渐进式DCT格式为SOF2  <br>SOF段必须在任何扫描开始前定义</p>
+</blockquote>
+<p>该段记录了图像的基本信息 如 <strong>长宽、数据精度、颜色分量数</strong> 等  <br>注意JPG是先高再宽 和PNG和BMP不一样</p>
+<table><thead><tr><th>内容</th><th>长度(字节)</th><th>说明</th></tr></thead><tbody><tr><td>段标识+类型SOFn</td><td>2</td><td>0xFFC0+n</td></tr><tr><td>SOF长度</td><td>2</td><td>就是段长度</td></tr><tr><td>图像数据精度</td><td>1</td><td>8/12/16位 大多数软件仅支持8位</td></tr><tr><td>图像高度</td><td>2</td><td>Y向像素数量</td></tr><tr><td>图像宽度</td><td>2</td><td>X向像素数量</td></tr><tr><td>颜色分量数</td><td>1</td><td>1(灰度图)/3(YCrCb)/4(CMYK)</td></tr><tr><td>颜色分量信息</td><td>(颜色分量数)\*3</td><td>颜色ID(1B):从1计数 采样因子(1B):高4位水平采样因子 低4位垂直采样因子 量化表ID:该颜色分量所使用量化表ID</td></tr></tbody></table>

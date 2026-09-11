@@ -1,0 +1,14 @@
+<h1>Corrupted file(文件损坏)</h1>
+<div class="post-meta"><span class="chip">解题记录 · PicoCTF</span><span>2026-09-10</span></div>
+<p><strong>题目描述</strong>：这个文件看起来坏了……或者不是呢？也许几个字节就能改变一切。你能想办法让它恢复生机吗？  <br><strong>工具</strong>：010Editor</p>
+<p>拿到附件 不知道什么文件</p>
+<p><img src="content/所有文章/解题记录/PicoCTF/图片/pico5m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>用 <strong>010Editor</strong> 打开</p>
+<p><img src="content/所有文章/解题记录/PicoCTF/图片/pico5m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现关键词 <strong>JFIF</strong> 可以看出这是一个jpg文件  <br>jpg文件的开头是 <code>FF D8 FF E0</code> 把损坏的文件头改掉就行</p>
+<p><img src="content/所有文章/解题记录/PicoCTF/图片/pico5m3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>保存 并且把后缀改成.jpg</p>
+<p><img src="content/所有文章/解题记录/PicoCTF/图片/pico5m4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>打开</p>
+<p><img src="content/所有文章/解题记录/PicoCTF/图片/pico5m5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为  <br><code>picoCTF{r3st0r1ng_th3_by73s_939a65f5}</code></p>

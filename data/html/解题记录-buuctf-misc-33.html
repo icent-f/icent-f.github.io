@@ -1,0 +1,23 @@
+<h1>snake</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：binwalk foremost Cyberchef</p>
+<p>拿到附件 jpg文件 内容是绿树蟒</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/33d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p><strong>binwalk</strong> 看看 发现藏了压缩包</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/33d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p><strong>foremost</strong> 提取出来</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/33d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>解压 得到密文和key</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/33d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>密文看不出啥 不过key像base64</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/33d5.png" alt="" referrerpolicy="no-referrer"></p>
+<p><strong>Cyberchef</strong> 解密一下</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/33d6.png" alt="" referrerpolicy="no-referrer"></p>
+<pre><code>What is Nicki Minaj&#x27;s favorite song that refers to snakes?
+
+Nicki Minaj 最喜欢哪首提到蛇的歌曲？</code></pre>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/33d7.png" alt="" referrerpolicy="no-referrer"></p>
+<p>得到密钥 anaconda(解密的时候试了 是小写)</p>
+<p>至于密文怎么处理 题目和各种信息都指向了蛇  <br>而蛇的英文有 serpent 这正好是一个加密算法的名字  <br>找个<a href="http://serpent.online-domain-tools.com/">在线网站</a>解密</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/33d8.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 改成<code>flag{}</code> 取得flag flag为  <br><code>flag{who_knew_serpent_cipher_existed}</code></p>

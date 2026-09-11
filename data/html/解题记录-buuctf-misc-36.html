@@ -1,0 +1,21 @@
+<h1>greatescape</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：CTF-NATA Wireshark</p>
+<p>拿到附件 pcap文件</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/36d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p><strong>CTF-NATA</strong> 扫一下先</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/36d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>得到FTP账号和密码 用 <strong>Wireshark</strong> 打开 过滤ftp-data</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/36d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>追踪TCP流</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/36d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>问问ai这是什么东西</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/36d5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>RSA密钥说是 密钥 正好刚刚 <strong>CTF-NATA</strong> 提到设置tls.keylog_file  <br>存下来 保存为 <code>test.key</code></p>
+<p>打开 <strong>Wiresahrk</strong>  <br>编辑 -&gt; 首选项 -&gt; protocols -&gt; TLS -&gt; Edit -&gt; + -&gt; Browser -&gt; test.key</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/36d6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>此时就解密了 过滤 tls 翻一翻  <br>发现 79 80 84 这三个有http</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/36d7.png" alt="" referrerpolicy="no-referrer"></p>
+<p>一个一个追踪一下tls流</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/36d8.png" alt="" referrerpolicy="no-referrer"></p>
+<p>在80里发现flag 复制 取得flag flag为  <br><code>flag{OkThatWasWay2Easy}</code></p>

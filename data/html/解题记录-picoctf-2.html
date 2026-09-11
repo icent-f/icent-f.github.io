@@ -1,0 +1,14 @@
+<h1>Riddle Registry(谜语注册表)</h1>
+<div class="post-meta"><span class="chip">解题记录 · PicoCTF</span><span>2026-09-10</span></div>
+<p><strong>题目描述</strong>：嗨，勇敢的调查者！📄🔍 你偶然发现了一个奇怪的 PDF，里面看似只是一些杂乱的乱码。但要小心！并非一切都如表面所见。在这混乱之中隐藏着一份宝藏——一个难以捉摸的旗帜，等待你去发现。  <br><strong>工具</strong>：exiftool Cyberchef</p>
+<p>拿到附件 pdf文件</p>
+<p><img src="content/所有文章/解题记录/PicoCTF/图片/pico2m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>打开</p>
+<p><img src="content/所有文章/解题记录/PicoCTF/图片/pico2m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现有黑色乱码 <code>Ctrl+a</code> 全选 写到记事本里</p>
+<p><img src="content/所有文章/解题记录/PicoCTF/图片/pico2m3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>没什么可用的内容 只有hint说 答案藏在这些内容之后  <br>结合题目“注册表” 猜测要看元数据 试试 <strong>exiftool</strong></p>
+<p><img src="content/所有文章/解题记录/PicoCTF/图片/pico2m4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现 <code>Author</code> 有段base64 <strong>Cyberchef</strong> 解密</p>
+<p><img src="content/所有文章/解题记录/PicoCTF/图片/pico2m5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为  <br><code>picoCTF{puzzl3d_m3tadata_f0und!_c8f91d68}</code></p>

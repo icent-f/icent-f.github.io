@@ -1,0 +1,15 @@
+<h1>LSB</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：Stegsolve Firefox QR_Research</p>
+<p>拿到附件 解压 发现里面是一张png图片</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/13d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>由于是png文件 且题目基本明示是 <strong>LSB加密</strong> 所以用 <strong>Stegsolve</strong> 打开</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/13d2.png" alt="" referrerpolicy="no-referrer"><br>检查一下所有轨道 看起来没什么问题 那就点 <code>Analyse</code> <code>Data Extract</code>  <br>勾选 <code>LSB first</code> 将 <code>RED</code> <code>GREEN</code> <code>BULE</code> 都勾选成 0 点 <code>Preview</code></p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/13d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>Row 和 Column 都试试 没发现什么  <br>不过发现了PNG文件的结束符 <code>IEND</code> 后还有一大串内容 可能藏了个文件？试着保存一下  <br>按 <code>Save bin</code> 保存成二进制文件</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/13d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>没有后缀名 试着找个能解析二进制文件的软件打开 这里用的 <strong>Firefox</strong> 浏览器</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/13d5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现是个二维码png文件 把文件后缀改成png 用 <strong>QR_Research</strong> 扫一下</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/13d6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>扫出来就是flag 复制 将 <code>cumtctf</code> 改为 <code>flag</code> 取得flag flag为  <br><code>flag{1sb_i4_s0_Ea4y}</code></p>

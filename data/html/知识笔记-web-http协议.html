@@ -1,0 +1,196 @@
+<h1>HTTP协议</h1>
+<div class="post-meta"><span class="chip">知识笔记 · Web</span><span>2026-06-02</span></div>
+<h2><strong>PART 1 简介</strong></h2>
+<p>HTTP( <em>HyperText Transfer Protocol</em> ) 超文本传输协议  <br>顾名思义 HTTP 就是个 <strong>用来传输超文本资源的协议</strong>  <br>而超文本 就是包含超链接的文本，可以使用户从当前内容跳转到下一个内容  <br>这个协议作用于两个对象 <strong>客户端 服务端</strong></p>
+<p>我们访问互联网 就是为了获取网上的资源  <br>而获取资源就需要 客户端 与 服务端 进行网络通信：  <br>客户端 发出 <strong>请求报文</strong> 的时候 服务端才会回送 <strong>响应报文</strong></p>
+<p>而 HTTP 规定了请求报文和响应报文的格式</p>
+<h2><strong>PART 2 URL</strong></h2>
+<p>在正式开始请求和响应的结构和过程前 我们先来简单地认识一下 <strong>URL</strong></p>
+<p>URL( <em>Uniform Resource Locator</em> ) 统一资源定位符  <br>顾名思义 就是用于定位资源的字符 用户可以通过访问URL来获取自己想要的资源</p>
+<p>一个完整的 URL 结构由六个按顺序排列的部分构成:  <br>&lt;协议&gt;&lt;域名&gt;&lt;端口&gt;&lt;路径&gt;&lt;查询参数&gt;&lt;锚点&gt;  <br>比如 <em><code>https://www.example.com:8080/path?query=123#fragment</code></em></p>
+<p>我们把这条URL拆开分析一下</p>
+<h3><strong>PART 2.1 协议</strong></h3>
+<p>比如 http协议 https协议 等</p>
+<p>https相比起http更加安全 因为http为明文 而https则进行了加密</p>
+<p>http的默认端口为 80  <br>https是的默认端口为 443</p>
+<p>http为 <strong>非持久连接</strong> 即每次完成请求响应 都立刻断开客户端与服务端的连接  <br>这样做的好处在于 服务器可以逐个处理多个请求 节省资源</p>
+<blockquote>
+<p>http 1.1 中为 <strong>持久连接</strong> 客户端可连续发送多个请求  <br>用 <code>Connection:close</code> 这一请求头进行断开连接</p>
+</blockquote>
+<p>http协议中 服务器不会记录历史请求数据(无状态)</p>
+<blockquote>
+<p>对于用户来说 其实是有些麻烦的 比如每次进入网页都要重新登陆账号  <br>不过 <code>Cookie</code> 这一请求头可以实现状态管理 减少繁琐的流程</p>
+</blockquote>
+<h3><strong>PART 2.2 域名</strong></h3>
+<p>域名 顾名思义就是 <strong>区域的名称</strong></p>
+<p>浏览器通过DNS（域名系统）将域名（如 <code>www.bilibili.com</code>）解析为对应的IP地址（如 <code>120.92.168.51</code>），以便知道服务器在网络中的具体位置</p>
+<p>域名其实是为了方便人去阅读而设立的 每个域名背后都对应着一个 <strong>IP地址</strong>  <br>就比如访问b站 比起在浏览器输入 <code>120.92.168.51</code>  <br><code>www.bilibili.com</code> 明显更容易记忆</p>
+<h4><strong>PART 2.2.1 ip地址</strong></h4>
+<p><strong>IP地址</strong>( <em>Internet Protocol Address</em> ) 即 <strong>互联网协议地址</strong>  <br>每一台设备(包括服务器)在出厂时都会配备唯一的IP地址</p>
+<p>IP地址的作用就是 唯一标识互联网中的一个网络及该网络内的一台主机</p>
+<p>目前我们最常用的IP地址版本为 <strong>IPV4</strong>(互联网协议第四版)  <br>它的标准型态为32位二进制数(即32个0/1)</p>
+<blockquote>
+<p>由于IPV4提供的地址不够使用 所以后来推出了IPV6(128位二进制)  <br>号称能让地球上的每一粒沙子都有一个专属的IP地址</p>
+</blockquote>
+<p>由于32位对于人类来说实在太长 为了更容易识别记忆IP地址  <br>将其拆分为等长的四段(4\*8)  <br>段与段间用 <code>.</code> 分隔 再把每段二进制数转化为十进制数  <br>就得到了我们的常见的IP地址格式(点分十进制)</p>
+<p>例如 <code>11000000</code> <code>10101000</code> <code>00000001</code> <code>00000001</code>  <br>化为点分十进制就是 <code>192.168.1.1</code></p>
+<p>这样一个IP地址又可以分割为 <strong>网络位</strong> 和 <strong>主机位</strong>  <br>网络位 可以类比为我们生活的 <strong>小区地址</strong> 同一网络内所有设备的网络位完全相同  <br>主机位 可以类比为小区内的 <strong>门牌号</strong> 用来确认网络内的具体设备 且必须唯一</p>
+<p>我们可以通过 <strong>子网掩码</strong> 来判断 网络位 和 主机位  <br>子网掩码的格式和IP地址是一一对应的 比如：  <br>IP地址：<code>192.168.1.10</code>  <br>子网掩码：<code>255.255.255.0</code></p>
+<p>数字为<code>255</code>的部分为网络位 数字为<code>0</code>的部位为主机位</p>
+<p>子网掩码本质上也是二进制分段后转化的十进制 所以 <code>255.255.255.0</code> 其实是指  <br><code>11111111</code> <code>11111111</code> <code>11111111</code> <code>00000000</code>  <br>由于它有24位<code>1</code> 且代表了网络位 我们可以用它在表示IP地址的同时 顺带展示网络位：  <br><code>192.168.1.10/24</code> 这种方法被称为 <strong>CIDR表示法</strong></p>
+<p>IP地址中有几个特殊地址</p>
+<ul><li><strong><code>0.0.0.0</code></strong>: 通常代表任意地址或本机所有IP 若为服务器配置这个IP 可接收来自任意网卡的外部连接请求</li></ul>
+<ul><li><strong><code>127.0.0.1</code></strong>: 本地回环地址 代表设备自身 无论是否接入网络 这个地址都能联通 常用于测试本地网络的运行状态</li></ul>
+<ul><li><strong><code>255.255.255.255</code></strong>: 受限广播地址 若在该地址传输数据 同一局域网的所有设备都能接收到</li></ul>
+<h4><strong>PART 2.2.2 域名的结构</strong></h4>
+<p>我们拿 <code>www.bilibili.com</code> 举例  <br>我们发现这个域名被 <code>.</code> 分成了三个部分 <code>www</code> <code>bilibili</code> <code>com</code></p>
+<ul><li><code>com</code>：好比省级</li><li><code>bilibili</code>：好比市级</li><li><code>www</code>：好比县级</li></ul>
+<ul><li><code>com</code>：顶级域名</li><li><code>bilibili.com</code>：一级域名</li><li><code>www.bilibili.com</code>：二级域名</li></ul>
+<p><strong>顶级域名</strong></p>
+<p>域名管理机构为了管理方便 将虚拟的网络空间划分为多个顶级区域 且都规定了名字 这些就是顶级域名  <br>顶级域名可以划分为三类：</p>
+<ul><li>国家和地区顶级域名 ccTLDs(Country Code Top-level Domains)</li></ul>
+<p>  例如 中国是 <code>.cn</code> 日本是 <code>.jp</code></p>
+<ul><li>通用顶级域名 gTLDs(Generic Top-level Domains)  </li></ul>
+<p>  例如 工商企业 <code>com</code> 网络服务商 <code>net</code> 非营利组织 <code>org</code></p>
+<ul><li>新通用顶级域名 New gTLD(New Generic Top-level Domains)  </li></ul>
+<p>  例如 通用 <code>xyz</code> 高端 <code>top</code> 红色 <code>red</code> 人 <code>man</code></p>
+<p>在每个顶级域名中 又可以分为很多子区域 这些子区域就是 <strong>一级域名</strong>  <br>我们在域名注册商那里购买的域名就是 一级域名  <br>从一级域名开始 就能被用来指向IP地址了</p>
+<blockquote>
+<p>域名虽然有等级的划分 但它指向的IP的服务器是没有等级划分的</p>
+</blockquote>
+<p>而在一级域名中再划分的子区域就称为 <strong>二级域名</strong></p>
+<p>之所以很多网站前都用 <code>www.</code> 指向与一级域名相同的IP地址  <br>是因为 www 是万维网(World Wide Web)的简写 早期域名都是这样处理的 用户也就习惯了</p>
+<p>二级域名还可以再往下分 从二级域名开始的取名和指向  <br>都是域名所有者通过域名管理系统中的DNS解析设置来自行设定的</p>
+<h3><strong>PART 2.3 端口</strong></h3>
+<p>与 USB HDMI 等物理端口不同 这里的端口是基于软件/网站的  <br>端口用于实现不同软件应用程序或服务之间的顺畅通信</p>
+<blockquote>
+<p>远程计算机一般使用固定的端口 而本地计算机则会让操作系统动态分配端口</p>
+</blockquote>
+<p>端口号的范围为0~65535  <br>用于表示网络中计算机或设备上的进程或服务 一般来说：</p>
+<ul><li>0~1023 用于特定服务或协议 比如 HTTP FTP SSH</li><li>1024~49151 由IANA分配 任何应用程序注册后都可以使用</li><li>49152~65535 动态或私有端口</li></ul>
+<p>当数据通过IP地址到达对应的计算机 端口号则会将它们定向到正确的服务</p>
+<p>列举一些常见的服务及其对应的端口号</p>
+<ul><li>HTTP -&gt; 80</li><li>HTTPS -&gt; 443</li><li>FTP -&gt; 21</li><li>SSH -&gt; 22</li><li>TELNET -&gt; 23</li><li>SMTP -&gt; 25</li><li>DNS -&gt; 53</li><li>POP3 -&gt; 110</li><li>IMAP -&gt; 143</li><li>SNMP -&gt; 161</li></ul>
+<h3><strong>PART 2.4 路径</strong></h3>
+<p>路径 用于指定服务器上资源的具体位置 以 <code>/</code> 开头 也以 <code>/</code> 分割</p>
+<p>比如 <code>/products/electronics/smartphones</code>  <br>表示访问网页中 "产品→电子产品→智能手机"的页面</p>
+<blockquote>
+<p><code>/</code> 为根路径 可以访问网站的首页或默认页面<br>还有某些路径(隐藏路径)可能不直接对应文件系统 而是由Web服务器重写规则或应用程序路由处理</p>
+</blockquote>
+<h3><strong>PART 2.5 查询参数</strong></h3>
+<p>查询参数 用于向服务器传递额外数据  <br>比如：</p>
+<p><code>?key1=value1&amp;key2=value2&amp;key3=value3</code><br>我们可以看到 查询参数以 <code>?</code> 开头 参数间用 <code>&amp;</code> 连接  <br>参数的形式都为用 <code>=</code> 连接的 <strong>键值对</strong></p>
+<p>通过查询参数 我们可以做到：</p>
+<ul><li>传递搜索关键词</li><li>指定分页信息</li><li>过滤或排序数据</li><li>传递会话标识或跟踪信息</li><li>向服务器传递配置选项</li></ul>
+<p>查询参数的特性：</p>
+<ul><li>无序性：参数的顺序通常不影响结果（除非服务器端特别处理）</li><li>可省略值：有些参数可能只有键没有值，如?print或?flag</li><li>URL编码：当值中包含特殊字符（空格、中文、=、&amp;等）时，需要进行URL编码</li><li>空格编码为 <code>%20</code> 或 <code>+</code></li><li><code>=</code> 编码为 <code>%3d</code></li><li><code>&amp;</code> 编码为 <code>%26</code></li><li><a href="https://www.toolhelper.cn/EncodeDecode/Url">列举一个编码解码网站</a></li><li>长度限制：不同浏览器对URL长度有限制（通常2048-8192字符），查询参数不宜过长</li><li>请求方式限制：查询参数通常用于GET请求，POST请求的数据通常在请求体中</li></ul>
+<h3><strong>PART 2.6 锚点</strong></h3>
+<p>锚点 也称为 <strong>哈希</strong> 或 <strong>片段标识符</strong>  <br>形如：<code>#xxx</code>  <br>比如：<code>#installation</code></p>
+<p>锚点的特点:</p>
+<ul><li>在浏览器(前端)处理 不会发送给服务器</li><li>改变锚点不会导致页面重新加载</li><li>不同锚点会被记录在浏览器历史中，可以使用前进/后退按钮导航</li><li>锚点中如果有特殊字符，也需要进行URL编码</li></ul>
+<blockquote>
+<p>传统锚点内容对搜索引擎不可见，但现代搜索引擎已能处理部分情况</p>
+</blockquote>
+<p>通过锚点 我们可以做到：</p>
+<ul><li>配合前端语言设定的 <strong>id属性</strong> 实现同一页面不同位置的跳转</li><li>保存应用状态</li><li>实现前端路由</li><li>比如 <code>https://example.com/app#/users/passwd</code></li></ul>
+<h3><strong>PART 2.7 URL分析</strong></h3>
+<p>来看看一个完整的URL 我们以刚刚的示例URL为例</p>
+<p><em><code>https://www.example.com:8080/path?query=123#fragment</code></em></p>
+<ul><li>协议:https</li><li>域名:www.example.com</li><li>端口：8080</li><li>路径：/path</li><li>查询参数：?query=123</li><li>锚点：#fragment</li></ul>
+<p>事实上 我们只要满足 协议 域名(二级即可) 端口 这三个点就已经可以访问到一个网页了</p>
+<blockquote>
+<p>在浏览器中只输入域名也可 协议与端口会由浏览器自动补全</p>
+</blockquote>
+<h2><strong>PART 3 请求和响应</strong></h2>
+<p>了解了URL 来看一看 HTTP 规定的 <strong>请求</strong> 和 <strong>响应</strong></p>
+<h3><strong>PART 3.1 请求</strong></h3>
+<p>请求的方向为 客户端-&gt;服务端</p>
+<p>我们来看看请求报文的格式</p>
+<p>随便挑一个用BP抓包的请求报文</p>
+<pre><code>GET /favicon.ico HTTP/1.1
+Host: node1.anna.nssctf.cn:28999
+Accept-Language: zh-CN,zh;q=0.9
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Referer: http://node1.anna.nssctf.cn:28999/?check=1
+Accept-Encoding: gzip, deflate, br
+Cookie: PHPSESSID=c26a83fa77cf39867938fcb6f0b7892b
+Connection: keep-alive
+
+</code></pre>
+<p>我们来做个注释</p>
+<pre><code>&lt;请求行&gt;[请求方法]GET [请求路径]/favicon.ico [HTTP版本]HTTP/1.1
+&lt;请求头&gt;Host: node1.anna.nssctf.cn:28999
+       Accept-Language: zh-CN,zh;q=0.9
+       User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+       Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+       Referer: http://node1.anna.nssctf.cn:28999/?check=1
+       Accept-Encoding: gzip, deflate, br
+       Cookie: PHPSESSID=c26a83fa77cf39867938fcb6f0b7892b
+       Connection: keep-alive
+       (空行 用于表示请求头的结束)
+&lt;请求体&gt;(这条请求报文的请求体为空)</code></pre>
+<p>可以看出 请求报文由 <strong>请求行 请求头 请求体</strong> 这三大部分组成  <br><strong>请求行</strong> 又由 <strong>请求方法 请求头 请求体</strong> 这三部分组成  <br><strong>请求头</strong> 则有多个形如 <code>XXX: xxxxxxx</code>的 像列举属性一样的键值对组成</p>
+<p>补充一下 <strong>请求体</strong> 中的内容是向服务端传输的数据 为空就是不需要传输额外数据</p>
+<h4><strong>PART 3.1.1 请求行</strong></h4>
+<p>由 <strong>请求方法 请求路径 HTTP版本</strong> 三个部分组成</p>
+<blockquote>
+<p>请求路径的知识在前面 URL 的“路径”中</p>
+</blockquote>
+<p>在 HTTP1.0 中 有 <strong>GET POST HEAD</strong> 三种请求方法  <br>在 HTTP1.1 中 新增了 <strong>OPTIONS PUT PATCH DELETE TRACE CONNECT</strong> 这六种新方法</p>
+<table><thead><tr><th>请求方法</th><th>描述</th></tr></thead><tbody><tr><td><strong>GET</strong></td><td>请求指定的页面信息 并返回实体主体</td></tr><tr><td>HEAD</td><td>类似于 GET 但返回的响应中没有具体的内容 用于获取报头</td></tr><tr><td><strong>POST</strong></td><td>向指定资源提交数据进行处理请求（例如提交表单或者上传文件） 数据被包含在请求体中 POST 可能会导致新的资源的建立和/或已有资源的修改</td></tr><tr><td>PUT</td><td>请求传送的数据取代指定的文档的内容</td></tr><tr><td>DELETE</td><td>请求服务器删除指定页面</td></tr><tr><td>CONNECT</td><td>预留给能够将连接改为管道方式的代理服务器</td></tr><tr><td>OPTIONS</td><td>允许客户端查看服务器的性能</td></tr><tr><td>TRACE</td><td>回显服务器收到的请求 用于测试或诊断</td></tr><tr><td>PATCH</td><td>对 PUT 方法的补充 用来对已知资源进行局部更新</td></tr></tbody></table>
+<p>其中 最重要的就是 <strong>GET</strong> 和 <strong>POST</strong></p>
+<p>一般认为 GET 就是从服务端“拿”数据  <br>而 POST 则是向服务端“传”数据</p>
+<p>我们可以通过以下几种方式发送 GET 请求</p>
+<ul><li>通过浏览器直接访问一个URL</li><li>浏览器运行网页时 HTML中标签的属性中访问URL</li><li>使用 Javascript 中的 ajax</li><li>各种编程语言编写的脚本(只要联网)</li></ul>
+<p>GET的请求体一般是空的</p>
+<p>我们可以通过以下几种方式发送 POST 请求</p>
+<ul><li>利用表单(比如HTML的form)</li><li>使用 Javascript 中的 ajax</li></ul>
+<p>POST的请求体一般不为空(需要在请求体上传数据)</p>
+<h4><strong>PART 3.1.2 请求头</strong></h4>
+<p>请求头中有许多的键值对 可以理解为是在表示 <strong>属性：设定属性的内容</strong>  <br>首部种类相当的多 所以我们只简单列举一些 不死记 真正要用到时直接查阅即可</p>
+<table><thead><tr><th>首部</th><th>内容</th></tr></thead><tbody><tr><td>Host</td><td>表示服务器主机的地址和端口(地址为域名或IP 端口可以省略)</td></tr><tr><td>Content-Length</td><td>表示请求体的数据长度 计量单位为字节</td></tr><tr><td>Content-Type</td><td>表示请求体的数据格式</td></tr><tr><td>User-Agent</td><td>表示 浏览器/操作系统 的属性</td></tr><tr><td>Referer</td><td>表示当前页面是从哪个页面跳转过来的</td></tr><tr><td>Cookie</td><td>提供浏览器在本地存储数据的能力(HTTP协议中的服务端不会记录状态)</td></tr></tbody></table>
+<h3><strong>PART 3.2 响应</strong></h3>
+<p>响应的方向为 服务端-&gt;客户端  <br>只有在客户端发出请求后 服务端才会发出响应</p>
+<p>还是来看BP随便抓的一个响应报文</p>
+<pre><code>HTTP/1.1 200 OK
+Server: nginx/1.20.2
+Date: Sun, 25 Jan 2026 08:32:22 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+X-Powered-By: PHP/7.3.33
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Content-Length: 12856
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;zh-CN&quot;&gt;
+(返回的页面内容 因为过多 这里就不全写了)</code></pre>
+<p>我们做一点注释</p>
+<pre><code>&lt;响应行&gt;[HTTP版本]HTTP/1.1 [状态码]200 [原因短语]OK
+&lt;响应头&gt;Server: nginx/1.20.2
+       Date: Sun, 25 Jan 2026 08:32:22 GMT
+       Content-Type: text/html; charset=UTF-8
+       Connection: keep-alive
+       X-Powered-By: PHP/7.3.33
+       Expires: Thu, 19 Nov 1981 08:52:00 GMT
+       Cache-Control: no-store, no-cache, must-revalidate
+       Pragma: no-cache
+       Content-Length: 12856
+       (空一行表示响应头结束)
+&lt;响应体&gt;&lt;!DOCTYPE html&gt;
+       &lt;html lang=&quot;zh-CN&quot;&gt;
+       (返回的页面内容 因为过多 这里就不全写了)</code></pre>
+<p>可以看出 响应报文也是由三部分组成的 分别是 <strong>响应行 响应头 响应体</strong>  <br>响应行由 <strong>HTTP版本 状态码 原因短语</strong> 组成  <br>响应头与请求头类似 响应体则是服务端向客户端传输的数据</p>
+<h4><strong>PART 3.2.1 响应行</strong></h4>
+<p>状态码 顾名思义就是表示状态的数据 而原因短语则是表述产生这种状态的原因</p>
+<blockquote>
+<p>注意 由于状态码已经可以表示足够的信息 所以在HTTP2中 原因短语已经被省略了</p>
+</blockquote>
+<p>我们列举一些常见的状态码</p>
+<table><thead><tr><th>状态码</th><th>原因短语</th><th>含义</th></tr></thead><tbody><tr><td>200</td><td>OK</td><td>表示访问成功</td></tr><tr><td>301</td><td>Moved Permanently</td><td>表示永久重定向 当浏览器收到时 后续请求都会被改为新地址</td></tr><tr><td>302</td><td>Move temporarily</td><td>表示临时重定向 当浏览器收到时 当前请求会被改为新地址</td></tr><tr><td>403</td><td>Forbidden</td><td>表示访问被拒绝</td></tr><tr><td>404</td><td>Not Found</td><td>表示没有找到资源</td></tr><tr><td>405</td><td>Method Not Allowed</td><td>表示访问的服务器 不支持/不能使用 该请求中的方法</td></tr><tr><td>500</td><td>Internal Server Error</td><td>表示服务器故障</td></tr><tr><td>504</td><td>Gateway Timeout</td><td>表示当前服务器负载大 处理请求不及时 出现超时</td></tr></tbody></table>
+<p>由于状态码的种类相当的多 所以我们可以先记忆一个简单的规律</p>
+<ul><li>1xx 表示请求已接收</li><li>2xx 表示被正常处理</li><li>3xx 表示重定向</li><li>4xx 表示客户端错误</li><li>5xx 表示服务端错误</li></ul>
+<h4><strong>PART 3.2.2 响应头</strong></h4>
+<p>与请求头基本雷同(首部种类是有不同的) 这里不多赘述</p>

@@ -1,0 +1,24 @@
+<h1>爱因斯坦</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：010Editor</p>
+<p>拿到附件 发现是个jpg图片</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/17d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>没啥提示 看看属性先</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/17d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>备注说 <code>this_is_not_password</code></p>
+<p>那用 <strong>010Editor</strong> 看一看 没啥信息的话就考虑jpg文件的隐写</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/17d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现 jpg文件的结束标志 <code>ÿÙ</code> 后还有内容  <br>且是 <code>PK</code> 开头 说明这个内容是zip压缩包  <br>把 <code>PK</code> 前面的内容删了 保存 将文件名后缀改成 <code>.zip</code></p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/17d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现里面有个 flag.txt 尝试打开 发现需要密码</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/17d5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>那就检查一下是真加密还是伪加密 用010再看一眼</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/17d6.png" alt="" referrerpolicy="no-referrer"></p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/17d7.png" alt="" referrerpolicy="no-referrer"></p>
+<p><strong>压缩源文件数据区</strong>（红色部分）与 <strong>压缩源文件目录区</strong>（黄色部分）都为 <code>09 00</code>  <br>可以默认是加密的 但是目前也没啥关于密码的线索 不如试试把它先当成伪加密</p>
+<p>把两个 <code>09 00</code> 改成 <code>00 00</code> 保存</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/17d8.png" alt="" referrerpolicy="no-referrer"></p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/17d9.png" alt="" referrerpolicy="no-referrer"></p>
+<p>嗯CRC报错了 证明确实加密了 之前备注获取到个信息 自称"不是密码"  <br>把jpg隐写当成保底 把这个 <code>this_is_not_password</code> 当密码填上去试试</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/17d10.png" alt="" referrerpolicy="no-referrer"></p>
+<p>666真出了 好一个不是密码 真服了......  <br>复制 取得flag flag为  <br><code>flag{dd22a92bf2cceb6c0cd0d6b83ff51606}</code></p>

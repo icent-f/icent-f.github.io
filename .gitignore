@@ -1,0 +1,9 @@
+# Python 构建缓存
+__pycache__/
+*.pyc
+*.pyo
+
+# 系统文件
+Thumbs.db
+desktop.ini
+.DS_Store

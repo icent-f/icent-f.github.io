@@ -1,0 +1,17 @@
+<h1>ningen</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：人类的科学日益发展，对自然的研究依然无法满足，传闻日本科学家秋明重组了基因序列，造出了名为ningen的超自然生物。某天特工小明偶然截获了日本与俄罗斯的秘密通信，文件就是一张ningen的特写，小明通过社工，知道了秋明特别讨厌中国的六位银行密码，喜欢四位数。你能找出黑暗科学家秋明的秘密么？注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：010Editor ARCHPR</p>
+<p>拿到附件 发现是张jpg图片</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/18d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>先看看属性</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/18d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>没什么信息 根据题目描述 大致可以猜到这里面藏着一个需要4位数字密码解锁的文件  <br>可能藏着压缩包？ 试试 <strong>010Editor</strong> 打开</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/18d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现 jpg文件 的结束标志 <code>ÿÙ</code> 后还有内容 且为 <code>PK</code> 开头  <br>可知这里藏了一个zip压缩包 把 <code>PK</code> 前的内容删除 保存 将文件后缀改为 <code>.zip</code></p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/18d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现压缩包里有个 <code>ningen.txt</code> 试着打开 发现需要密码  <br>根据题目描述 可以确定是四位数字密码 直接用 <strong>ARCHPR</strong> 爆破</p>
+<p>设置参数为 所有数字 0000~9999 开始爆破</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/18d5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>密码为8368 解锁压缩包 打开 <code>ningen.txt</code></p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/18d6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 取得flag flag为  <br><code>flag{b025fc9ca797a67d2103bfbc407a6d5f}</code></p>

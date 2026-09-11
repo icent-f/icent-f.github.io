@@ -1,0 +1,16 @@
+<h1>后门查杀</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：小白的网站被小黑攻击了，并且上传了Webshell，你能帮小白找到这个后门么？(Webshell中的密码(md5)即为答案)。注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：</p>
+<p>拿到附件 东西不少</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/27d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>根据题目描述 被传马了 文件上传 可以看看upload</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/27d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>有个压缩包 解压</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/27d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>得到一个word文件 打开 试试 <code>Ctrl+a</code> 全选 看看有没有隐藏文本  <br>好的并没有</p>
+<p>这里对word找了好一会 没什么东西 可能得换个思路  <br>传马本质会上传一个文件 一般是php 我们直接搜php</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/27d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>include 是一个危险函数 这个名字有点可疑 可以看看</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/27d6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>有了 取得flag flag为  <br><code>flag{6ac45fb83b3bc355c024f5034b947dd3}</code></p>
+<p>二编：做完看别人wp 发现都是D盾扫的 我是原始人</p>

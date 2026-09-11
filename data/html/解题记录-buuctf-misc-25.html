@@ -1,0 +1,18 @@
+<h1>FLAG</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：感谢 牌森 同学提供题目~  <br>注意：请将 hctf 替换为 flag 提交，格式 flag{}  <br><strong>工具</strong>：zsteg IDA</p>
+<p>拿到附件 png图片</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/25d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>属性找到东西 010没找到东西 试试LSB</p>
+<p><strong>zsteg</strong> 发现隐写了zip</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/25d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>提取出来</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/25d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/25d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>解压</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/25d5.png" alt="" referrerpolicy="no-referrer"></p>
+<p><code>file</code> 查看文件类型</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/25d6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>ELF文件 <strong>IDA</strong> 打开</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/25d7.png" alt="" referrerpolicy="no-referrer"></p>
+<p>汇编代码里写了flag 根据题目描述 改成<code>flag{}</code>  <br>复制 取得flag flag为  <br><code>flag{dd0gf4c3tok3yb0ard4g41n~~~}</code></p>

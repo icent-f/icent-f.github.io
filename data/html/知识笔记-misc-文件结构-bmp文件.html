@@ -1,0 +1,14 @@
+<h1>BMP</h1>
+<div class="post-meta"><span class="chip">知识笔记 · Misc / 文件结构</span><span>2026-09-11</span></div>
+<p><a href="https://www.cnblogs.com/wanghao-boke/p/11635179.html">文章参考</a></p>
+<p>BMP(Bitmap) 位图 又叫DIB(Device-Independent Device) 设备无关图  <br>是windows系统中广泛使用的图片文件格式 可以不作任何变换地址保存图像像素域的数据</p>
+<p>BMP分为五部分：<br>文件头 -&gt; 标识这是个BMP文件<br>文件信息 -&gt; 提供文件的大小和偏移量等信息<br>位图信息头 -&gt; 提供图像数据的尺寸、位平面数、压缩方式、颜色索引等信息<br>调色板 -&gt; 可选 使用索引表示图像<br>位图数据 -&gt; 图像数据</p>
+<p>主要写 <strong>文件信息</strong> 和 <strong>位图信息头</strong></p>
+<p><strong>文件信息</strong></p>
+<table><thead><tr><th>内容</th><th>字节数</th><th>描述</th></tr></thead><tbody><tr><td>文件大小</td><td>4</td><td>文件的大小</td></tr><tr><td>保留字1</td><td>2</td><td>大多数情况会被忽略 一般都是'00'</td></tr><tr><td>保留字2</td><td>2</td><td>同上</td></tr><tr><td>起始偏移量</td><td>4</td><td>位图数据部分相对于文件的起始偏移量</td></tr></tbody></table>
+<p>通过偏移量 图像数据可以不紧随图像参数或调色板之后  <br>只要正确地设置偏移量 可以在调色板和数据部分之间填充任何内容</p>
+<p><strong>位图信息头</strong></p>
+<table><thead><tr><th>内容</th><th>字节数</th><th>描述</th></tr></thead><tbody><tr><td>位图信息头的大小</td><td>4</td><td>通常是40或56</td></tr><tr><td>图像宽度</td><td>4</td><td>图像宽度（像素）</td></tr><tr><td>图像高度</td><td>4</td><td>图像高度（像素）</td></tr><tr><td>无含义</td><td>2</td><td>现代bmp中恒为1</td></tr><tr><td>bpp</td><td>2</td><td>每个像素占用的位数</td></tr><tr><td>压缩方式</td><td>4</td><td>可取 0、1、2、3 取3时大小为56 其余都为40</td></tr><tr><td>图像尺寸</td><td>4</td><td>图像的尺寸</td></tr><tr><td>水平分辨率</td><td>4</td><td>水平分辨率</td></tr><tr><td>垂直分辨率</td><td>4</td><td>垂直分辨率</td></tr><tr><td>引用色彩数</td><td>4</td><td>引用色彩数</td></tr><tr><td>关键色彩数</td><td>4</td><td>关键色彩数</td></tr></tbody></table>
+<blockquote>
+<p>压缩方式<br>0 - RGB方式<br>1 - 8bpp的run-length-encoding方式<br>2 - 4bpp的run-length-encoding方式<br>3 - bit-fields方式</p>
+</blockquote>

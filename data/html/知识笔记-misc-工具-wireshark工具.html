@@ -1,0 +1,20 @@
+<h1>Wireshark(简)</h1>
+<div class="post-meta"><span class="chip">知识笔记 · Misc / 工具</span><span>2026-09-11</span></div>
+<p>这个东西有点多 感觉不太容易写体系（主要我也没学完） 所以写的可能会有点乱</p>
+<p>Wireshark 是 CTF 取证、流量分析的核心工具 用于分析数据包、提取文件和发现攻击痕迹</p>
+<p>先看显示过滤器吧 可以拿来过滤流量包</p>
+<table><thead><tr><th>过滤器</th><th>作用</th><th>示例</th></tr></thead><tbody><tr><td><code>http</code></td><td>只显示 HTTP 协议</td><td></td></tr><tr><td><code>tcp</code></td><td>只显示 TCP 协议</td><td></td></tr><tr><td><code>udp</code></td><td>只显示 UDP 协议</td><td></td></tr><tr><td><code>dns</code></td><td>只显示 DNS 流量</td><td></td></tr><tr><td><code>icmp</code></td><td>只显示 ICMP（ping等）</td><td></td></tr><tr><td><code>dns.qry.name</code></td><td>查看所有查询域名 适合检测 DNS 隧道或隐藏信息</td><td></td></tr><tr><td><code>tcp.port ==</code></td><td>源或目的端口为80</td><td><code>tcp.port == 80</code></td></tr><tr><td><code>udp.port ==</code></td><td>DNS 常用</td><td><code>udp.port == 53</code></td></tr><tr><td><code>ip.addr ==</code></td><td>源或目的 IP 等于指定值</td><td><code>ip.addr == 192.168.1.1</code></td></tr><tr><td><code>ip.src ==</code></td><td>源 IP</td><td><code>ip.src == 10.0.0.1</code></td></tr><tr><td><code>ip.dst ==</code></td><td>目的 IP</td><td><code>ip.dst == 10.0.0.2</code></td></tr><tr><td><code>http.request.method == ""</code></td><td>通过请求方式筛选 HTTP 请求</td><td><code>http.request.method == "POST"</code></td></tr><tr><td><code>tcp.flags.syn == and tcp.flags.ack ==</code></td><td>仅 SYN 包（连接发起）</td><td><code>tcp.flags.syn == 1 and tcp.flags.ack == 0</code></td></tr><tr><td><code>http contains ""</code></td><td>搜索 HTTP 内容包含某字符串</td><td>同样可用 <code>http contains "password"</code></td></tr><tr><td><code>frame contains ""</code></td><td>在数据包字节中搜索字符串</td><td><code>frame contains "PNG"</code></td></tr><tr><td><code>tcp.payload[] ==</code></td><td>匹配 TCP 负载开头 4 字节（如 PNG 头）</td><td><code>tcp.payload[0:4] == 89:50:4e:47</code></td></tr></tbody></table>
+<p>这些词条还可以通过以下方式联合过滤</p>
+<p><code>&amp;&amp;</code> -&gt; 与<br><code>||</code> -&gt; 或<br><code>!</code> -&gt; 非<br><code>()</code> -&gt; 分组</p>
+<p>例：<code>http &amp;&amp; ip.src == 10.0.0.5</code>  <br>例：<code>tcp.port == 80 || tcp.port == 443</code></p>
+<p>还有一些常用的操作</p>
+<ul><li><strong>追踪流</strong>  </li></ul>
+<p>   右键任意包 -&gt; <code>Follow</code> -&gt; <code>TCP/UDP/HTTP Stream</code>  <br>   可完整查看请求内容与响应内容</p>
+<ul><li><strong>导出传输文件</strong>  </li></ul>
+<p>   <code>File</code> -&gt; <code>Export Objects</code> -&gt; <code>HTTP/IMF/FTP</code>  <br>   一键列出并保存所有通过 HTTP 等协议传输的文件</p>
+<ul><li><strong>搜索字符串</strong>  </li></ul>
+<p>   <code>Ctrl+F</code><br>  选择“String”，在包字节中搜索</p>
+<ul><li><strong>统计信息</strong></li><li><code>Statistics -&gt; Protocol Hierarchy</code>：查看流量协议分布</li><li><code>Statistics -&gt; Conversations</code>：查看 IP/端口间的会话</li><li><code>Statistics -&gt; HTTP → Requests</code>：统计所有 HTTP 请求</li></ul>
+<ul><li><strong>解密 TLS/SSL</strong>  </li></ul>
+<p>   <code>Edit → Preferences</code> → <code>Protocols</code> → <code>TLS/RSA Keys</code>  <br>   导入 Key File 或设置 <code>SSLKEYLOGFILE</code></p>
+<p>Wireshark 还有个命令行工具叫 tshark</p>

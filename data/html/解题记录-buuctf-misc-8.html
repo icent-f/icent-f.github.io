@@ -1,0 +1,16 @@
+<h1>N种方法解决</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：注意：得到的 flag 请包上 flag{} 提交<br><strong>工具</strong>：010Editor QR_Research</p>
+<p>拿到附件 解压 发现里面是一个exe文件</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/8d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>尝试运行 发现运行不了</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/8d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>用 <strong>010Editor</strong> 打开试试</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/8d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现它实际上是个jpg文件 后面的数据进行了 <strong>base64编码</strong>  <br>试着直接改文件后缀 没用</p>
+<p>那找一个base64转图片的<a href="https://www.toolhelper.cn/Image/Base64?tab=base64">网站</a></p>
+<p>复制文件内容 粘贴 转图片</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/8d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现是个二维码 用 <strong>QR_Research</strong> 扫一下</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/8d5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现flag 复制 将 <code>KEY</code> 改为 <code>flag</code> 取得flag flag为<br><code>flag{dca57f966e4e4e31fd5b15417da63269}</code></p>

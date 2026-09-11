@@ -1,0 +1,42 @@
+<h1>凯撒密码</h1>
+<div class="post-meta"><span class="chip">知识笔记 · Misc / 古典密码</span><span>2026-09-11</span></div>
+<p>凯撒密码（<em>Caesar cipher</em>）是一种替换加密技术  <br>明文中的所有<strong>字母</strong>都在字母表上 向后/向前 按照一个固定数目（Shift）进行偏移后被替换成密文</p>
+<p><img src="content/所有文章/知识笔记/Misc/古典密码/图片/kaisa.png" alt="" referrerpolicy="no-referrer"></p>
+<p>比如 <code>ICENT</code> 可以加密成 <code>KEGPV</code> Shift 为 2  <br>原理简单 可以写个脚本</p>
+<pre><code># 凯撒密码爆破
+
+def caesar_break(ciphertext):
+    &quot;&quot;&quot;
+    对密文进行凯撒密码爆破（仅对字母移位，数字和符号不变）。
+    输出所有偏移量对应的明文。
+    &quot;&quot;&quot;
+    # 循环爆破26次（26个字母）
+    for shift in range(26):
+        # 设立一个 c_str 存储此次循环爆破结果
+        c_str = []
+        # 逐个字符转换
+        for ch in ciphertext:
+            # 大写字母
+            if ch.isupper():
+                shifted = chr((ord(ch) - ord(&#x27;A&#x27;) + shift) % 26 + ord(&#x27;A&#x27;))
+                c_str.append(shifted)
+            # 小写字母
+            elif ch.islower():
+                shifted = chr((ord(ch) - ord(&#x27;a&#x27;) + shift) % 26 + ord(&#x27;a&#x27;))
+                c_str.append(shifted)
+            # 非字母字符
+            else:
+                c_str.append(ch)
+        # 输出此次循环的结果
+        print(f&quot;Shift {shift:2d}: {&#x27;&#x27;.join(c_str)}&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    cipher = &quot;要加密/解密的密文&quot;
+    caesar_break(cipher)</code></pre>
+<p>凯撒密码通常被作为其他更复杂的加密方法中的一个步骤，例如维吉尼亚密码。凯撒密码还在现代的ROT13系统中被应用</p>
+<p>根据偏移量的不同，还存在若干特定的凯撒密码名称：</p>
+<blockquote>
+<p>偏移量为10：Avocat(A→K)  <br>偏移量为13：ROT13  <br>偏移量为-5：Cassis (K 6)  <br>偏移量为-6：Cassette (K 7)</p>
+</blockquote>
+<h2>来一串神秘字符</h2>
+<p>xdsy{F0o_q0m_Cf0o_U4354j!}</p>

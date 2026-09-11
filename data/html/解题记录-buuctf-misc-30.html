@@ -1,0 +1,32 @@
+<h1>面具下的flag</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：010Editor foremost WinRAR 7zip wsl</p>
+<p>拿到附件 jpg文件</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/30d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>目前没啥信息 <strong>010Editor</strong> 打开看看</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/30d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>藏了个zip压缩包 <strong>foremost</strong> 提取一下</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/30d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/30d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>解压</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/30d5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>要密码 猜测伪加密 用 <strong>WinRAR</strong> 打开 工具-&gt;修复  <br>解压修复后的文件</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/30d6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>虚拟磁盘 可以用 <strong>7zip</strong> 解压</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/30d7.png" alt="" referrerpolicy="no-referrer"></p>
+<p>得到两个部分 先看 part one</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/30d8.png" alt="" referrerpolicy="no-referrer"></p>
+<p>文件叫 <code>_NUL</code> 打开是brainfuck  <br>找个<a href="https://www.w3cschool.cn/tryrun/runcode?lang=brainfuck">在线网站</a>运行一下</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/30d9.png" alt="" referrerpolicy="no-referrer"></p>
+<p>得到 <code>flag{N7F5_AD5</code></p>
+<p>再看 part two</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/30d10.png" alt="" referrerpolicy="no-referrer"></p>
+<p>没东西 查阅了一下  <br>在Windows下解压 文件名带冒号的文件会被视为NTFS流的非主文件流  <br>会导致windows下看不见这些文件</p>
+<p>所以要用linux解压 这里用的wsl</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/30d11.png" alt="" referrerpolicy="no-referrer"></p>
+<p>此时 part two 的文件就出现了</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/30d13.png" alt="" referrerpolicy="no-referrer"></p>
+<p>ook编码 找个<a href="https://wnkit.com/tool/brainfuck-ook-encrypt-decrypt">在线网站</a></p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/30d14.png" alt="" referrerpolicy="no-referrer"></p>
+<p>得到 <code>_i5_funny!}</code></p>
+<p>取得flag flag为  <br><code>flag{N7F5_AD5_i5_funny!}</code></p>

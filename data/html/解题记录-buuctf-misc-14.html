@@ -1,0 +1,10 @@
+<h1>rar</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：这个是一个rar文件，里面好像隐藏着什么秘密，但是压缩包被加密了，毫无保留的告诉你，rar的密码是4位纯数字。注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：ARCHPR</p>
+<p>拿到附件 解压 发现里面是一个rar文件</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/14d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>试着打开 发现要密码  <br>根据题目描述 我们知道密码是四位纯数字 这里用 <strong>ARCHPR</strong> 爆破  <br>设置为 勾选 <strong>所有数字(0-9)</strong> 从0000到9999</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/14d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>密码是 8795 打开压缩包 里面有 flag.txt 打开</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/14d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 取得flag flag为  <br><code>flag{1773c5da790bd3caff38e3decd180eb7}</code></p>

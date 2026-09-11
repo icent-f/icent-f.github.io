@@ -1,0 +1,235 @@
+<h1>流量！鲨鱼！</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：就决定是你了！WireShark！  <br><strong>工具</strong>：Wireshark kali</p>
+<p>拿到附件 pcap文件</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/46d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>题目指名用 <strong>Wireshark</strong> 那就用</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/46d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现主要是TCP和HTTP 看看有没有传过什么文件</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/46d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>多如牛毛。。。 而且有些文件直接看看不到 得用 <code>ls -a</code></p>
+<pre><code>┌──(icent㉿LAPTOP-3MMI5U5G)-[/mnt/d/网络安全/MISC安全/题目附件/BUUCTF/41-48/流量！鲨鱼！]
+└─$ cd output;ls -a
+ .                         &#x27;database(1)&#x27;                             &#x27;mysql(1).sql&#x27;
+ ..                        &#x27;database(1).php&#x27;                         &#x27;mysql(2).bak&#x27;
+&#x27;1(1).txt&#x27;                 &#x27;database(1).propertie&#x27;                   &#x27;mysql(2).sql&#x27;
+&#x27;1(2).txt&#x27;                 &#x27;database(2)&#x27;                              mysql.bak
+&#x27;(1).bash_history&#x27;         &#x27;database(2).php&#x27;                          mysql.sql
+&#x27;(1).bzr&#x27;                  &#x27;database(2).propertie&#x27;                    OABglgZRdf9p
+&#x27;(1).DS_store&#x27;             &#x27;database(3).php&#x27;                          Ou33g9prP3ZF.php
+&#x27;(1).git&#x27;                  &#x27;database(4).php&#x27;                         &#x27;phpinfo(1).php&#x27;
+&#x27;(1).gitignore&#x27;            &#x27;database(5).php&#x27;                         &#x27;phpinfo(2).php&#x27;
+&#x27;(1).hg&#x27;                    database.php                              phpinfo.php
+&#x27;(1).htaccess&#x27;              database.propertie                        phpmyadmin
+ 1.php                     &#x27;dataSources(1).xml&#x27;                      &#x27;phpMyAdmin(1)&#x27;
+&#x27;1.php%3fcmd=env&#x27;          &#x27;dataSources(2).xml&#x27;                      &#x27;phpmyadmin(2)&#x27;
+&#x27;1.php%3fcmd=ls&#x27;           &#x27;dataSources.local(1).xml&#x27;                &#x27;phpMyAdmin(3)&#x27;
+&#x27;1.php%3fcmd=ls%20-al&#x27;     &#x27;dataSources.local(2).xml&#x27;                &#x27;phpMyAdmin(4)&#x27;
+&#x27;1.php%3fcmd=ls%20-al%20&#x27;   dataSources.local.xml                    &#x27;phpmyadmin(5)&#x27;
+&#x27;1.php%3fcmd=whoami&#x27;        dataSources.xml                           pkXo3q7iVtQL.js
+&#x27;(1).svn&#x27;                   data.sql                                  plus
+ 1.txt                     &#x27;db(1).sql&#x27;                               &#x27;plus(1)&#x27;
+&#x27;(1).viminfo&#x27;              &#x27;db(2).sql&#x27;                               &#x27;plus(2)&#x27;
+ 29OLlgz5lkqo               db.sql                                   &#x27;qq(1).txt&#x27;
+&#x27;(2).bash_history&#x27;         &#x27;ddb(1).sql&#x27;                              &#x27;qq(2).txt&#x27;
+&#x27;(2).bzr&#x27;                  &#x27;ddb(2).sql&#x27;                               qq.txt
+&#x27;(2).ds_store&#x27;              ddb.sql                                   README
+&#x27;(2).git&#x27;                   debug                                    &#x27;README(1)&#x27;
+&#x27;(2).gitignore&#x27;            &#x27;debug(1)&#x27;                                &#x27;README(1).MD&#x27;
+&#x27;(2).hg&#x27;                   &#x27;debug(2)&#x27;                                &#x27;README(2)&#x27;
+&#x27;(2).htaccess&#x27;              dede                                     &#x27;README(2).MD&#x27;
+&#x27;(2).svn&#x27;                  &#x27;dede(1)&#x27;                                 &#x27;README(3).md&#x27;
+&#x27;(2).viminfo&#x27;              &#x27;dede(2)&#x27;                                 &#x27;README(4).MD&#x27;
+&#x27;(3).DS_store&#x27;             &#x27;default(1).php&#x27;                          &#x27;README(5).md&#x27;
+ %3F                       &#x27;default(2).php&#x27;                           README.md
+ %3F~                       default.php                               register
+&#x27;%3F(1)&#x27;                    description                              &#x27;register(1)&#x27;
+&#x27;%3F~(1)&#x27;                  &#x27;description(1)&#x27;                          &#x27;register(1).php&#x27;
+ %3F~1~                    &#x27;description(2)&#x27;                          &#x27;register(2)&#x27;
+&#x27;%3F~1~(1)&#x27;                 download                                 &#x27;register(2).php&#x27;
+&#x27;%3F~1~(2)&#x27;                &#x27;download(1)&#x27;                              register.php
+&#x27;%3F(1).back&#x27;              &#x27;download(2)&#x27;                             &#x27;robots(1).php&#x27;
+&#x27;%3F(1).bak&#x27;                downloads                                &#x27;robots(1).txt&#x27;
+&#x27;%3F(1).bak_Edietplus&#x27;     &#x27;downloads(1)&#x27;                            &#x27;robots(2).php&#x27;
+&#x27;%3F(1).save&#x27;              &#x27;downloads(2)&#x27;                            &#x27;robots(2).txt&#x27;
+&#x27;%3F(1).save1&#x27;              .ds_store                                 robots.php
+&#x27;%3F(1).save2&#x27;             &#x27;dump(1).sql&#x27;                              robots.txt
+&#x27;%3F(1).save3&#x27;             &#x27;dump(2).sql&#x27;                              Root
+&#x27;.%3F(1).swl&#x27;               dump.sql                                 &#x27;Root(1)&#x27;
+&#x27;.%3F(1).swm&#x27;               .DZ4Un60efkDY                            &#x27;root(1).rar&#x27;
+&#x27;.%3F(1).swn&#x27;               edit                                     &#x27;root(1).zip&#x27;
+&#x27;.%3F(1).swo&#x27;              &#x27;edit(1)&#x27;                                 &#x27;Root(2)&#x27;
+&#x27;.%3F(1).swp&#x27;              &#x27;edit(2)&#x27;                                 &#x27;root(2).rar&#x27;
+&#x27;%3F(2)&#x27;                   &#x27;edit(3)&#x27;                                 &#x27;root(2).zip&#x27;
+&#x27;%3F~(2)&#x27;                  &#x27;edit(4)&#x27;                                  root.rar
+ %3F~2~                    &#x27;edit(5)&#x27;                                  root.zip
+&#x27;%3F~2~(1)&#x27;                 Editor                                   &#x27;rss(1).xml&#x27;
+&#x27;%3F~2~(2)&#x27;                &#x27;editor(1)&#x27;                               &#x27;rss(2).xml&#x27;
+&#x27;%3F(2).back&#x27;              &#x27;Editor(2)&#x27;                                rss.xml
+&#x27;%3F(2).bak&#x27;               &#x27;editor(3)&#x27;                                RxplcFDngjBB.php
+&#x27;%3F(2).bak_Edietplus&#x27;     &#x27;Editor(4)&#x27;                                RYKINq3LQCvT.js
+&#x27;%3F(2).save&#x27;              &#x27;editor(5)&#x27;                               &#x27;secret(1).txt&#x27;
+&#x27;%3F(2).save1&#x27;              entries                                  &#x27;secret(2).txt&#x27;
+&#x27;%3F(2).save2&#x27;             &#x27;Entries(1)&#x27;                               secret.txt
+&#x27;%3F(2).save3&#x27;             &#x27;Entries(2)&#x27;                              &#x27;settings(1).php&#x27;
+&#x27;.%3F(2).swl&#x27;              &#x27;entries(3)&#x27;                              &#x27;settings(2).php&#x27;
+&#x27;.%3F(2).swm&#x27;              &#x27;Entries(4)&#x27;                               settings.php
+&#x27;.%3F(2).swn&#x27;              &#x27;entries(5)&#x27;                               shopadmin
+&#x27;.%3F(2).swo&#x27;               ewebeditor                               &#x27;shopadmin(1)&#x27;
+&#x27;.%3F(2).swp&#x27;              &#x27;ewebeditor(1)&#x27;                           &#x27;shopadmin(2)&#x27;
+ %3F~3~                    &#x27;ewebeditor(2)&#x27;                           &#x27;shopadmin(3)&#x27;
+&#x27;%3F~3~(1)&#x27;                &#x27;example(1).php&#x27;                          &#x27;shopadmin(4)&#x27;
+&#x27;%3F~3~(2)&#x27;                &#x27;example(2).php&#x27;                          &#x27;shopadmin(5)&#x27;
+ %3F.back                   example.php                              &#x27;site(1).php&#x27;
+ %3F.bak                   &#x27;f14g(1).php&#x27;                             &#x27;site(2).php&#x27;
+ %3F.bak_Edietplus         &#x27;f14g(2).php&#x27;                              site.php
+ %3F.save                   f14g.php                                  source
+ %3F.save1                 &#x27;f1ag(1).php&#x27;                             &#x27;source(1)&#x27;
+ %3F.save2                 &#x27;f1ag(2).php&#x27;                             &#x27;source(1).php&#x27;
+ %3F.save3                  f1ag.php                                 &#x27;source(2)&#x27;
+ .%3F.swl                   Fckeditor                                &#x27;source(2).php&#x27;
+ .%3F.swm                  &#x27;Fckeditor(1)&#x27;                             source.php
+ .%3F.swn                  &#x27;Fckeditor(2)&#x27;                            &#x27;.source.php(1).bak&#x27;
+ .%3F.swo                   .ffffllllllll11111144444GGGGGG%7cbase64  &#x27;source.php(1).bak&#x27;
+ .%3F.swp                  &#x27;fl4g(1).php&#x27;                             &#x27;source.php(1).swp&#x27;
+&#x27;(3).git&#x27;                  &#x27;fl4g(2).php&#x27;                             &#x27;.source.php(2).bak&#x27;
+&#x27;(3).svn&#x27;                   fl4g.php                                 &#x27;source.php(2).bak&#x27;
+&#x27;404(1).php&#x27;                flag                                     &#x27;source.php(2).swp&#x27;
+&#x27;404(2).php&#x27;               &#x27;flag(1)&#x27;                                  .source.php.bak
+ 404.php                   &#x27;flag(1).php&#x27;                              source.php.bak
+&#x27;4dm1n(1).php&#x27;             &#x27;flag(1).txt&#x27;                              source.php.swp
+&#x27;4dm1n(2).php&#x27;             &#x27;flag(2)&#x27;                                  src
+ 4dm1n.php                 &#x27;flag(2).php&#x27;                             &#x27;src(1)&#x27;
+&#x27;4dmin(1).php&#x27;             &#x27;flag(2).txt&#x27;                             &#x27;src(2)&#x27;
+&#x27;4dmin(2).php&#x27;             &#x27;flag(3)&#x27;                                  .svn
+ 4dmin.php                 &#x27;flag(4)&#x27;                                 &#x27;system(1).php&#x27;
+&#x27;(4).ds_store&#x27;             &#x27;flag(5)&#x27;                                 &#x27;system(2).php&#x27;
+&#x27;(4).git&#x27;                   flag.php                                 &#x27;system(3).php&#x27;
+&#x27;(4).svn&#x27;                   flag.txt                                 &#x27;system(4).php&#x27;
+ 5bipEgusgYoH.jsp          &#x27;fm(1).php&#x27;                               &#x27;system(5).php&#x27;
+ %5c                       &#x27;fm(2).php&#x27;                                system.php
+&#x27;%5c(1)&#x27;                    fm.php                                   &#x27;t(1).php&#x27;
+&#x27;%5c(2)&#x27;                    .git                                     &#x27;t(2).php&#x27;
+&#x27;(5).DS_store&#x27;              .gitignore                                test
+&#x27;(5).git&#x27;                   GjVnhe2lACQw.html                        &#x27;test(1)&#x27;
+&#x27;(5).svn&#x27;                   gxwBsIIKFv9A.js                          &#x27;test(1).php&#x27;
+&#x27;a(1).sql&#x27;                  H65VNKwSrier.aspx                        &#x27;test(2)&#x27;
+&#x27;a(2).sql&#x27;                  HEAD                                     &#x27;test(2).php&#x27;
+&#x27;adm1n(1).php&#x27;             &#x27;HEAD(1)&#x27;                                  test.php
+&#x27;adm1n(2).php&#x27;             &#x27;HEAD(2)&#x27;                                  tmp
+ adm1n.php                  .hg                                      &#x27;tmp(1)&#x27;
+ admin                     &#x27;hint(1).php&#x27;                             &#x27;tmp(2)&#x27;
+&#x27;admin(1)&#x27;                 &#x27;hint(1).txt&#x27;                              t.php
+&#x27;admin1(1).php&#x27;            &#x27;hint(2).php&#x27;                              .TT5SD3pil6oh
+&#x27;admin1(2).php&#x27;            &#x27;hint(2).txt&#x27;                              upload
+ admin1.php                 hint.php                                 &#x27;upload(1)&#x27;
+&#x27;admin(1).php&#x27;              hint.txt                                 &#x27;upload(1).php&#x27;
+&#x27;admin(2)&#x27;                  home                                     &#x27;upload(2)&#x27;
+&#x27;admin2(1).php&#x27;            &#x27;home(1)&#x27;                                 &#x27;upload(2).php&#x27;
+&#x27;admin2(2).php&#x27;            &#x27;home(1).php&#x27;                              upload.php
+ admin2.php                &#x27;home(2)&#x27;                                  uploads
+&#x27;admin(2).php&#x27;             &#x27;home(2).php&#x27;                             &#x27;uploads(1)&#x27;
+&#x27;admin(3)&#x27;                  home.php                                 &#x27;uploads(2)&#x27;
+&#x27;admin(4)&#x27;                  houtai                                    user
+&#x27;admin(5)&#x27;                 &#x27;houtai(1)&#x27;                               &#x27;user(1)&#x27;
+ administrator             &#x27;houtai(2)&#x27;                               &#x27;user(1).php&#x27;
+&#x27;administrator(1)&#x27;          .htaccess                                &#x27;user(2)&#x27;
+&#x27;administrator(1).php&#x27;      IFOw49oAd8qN.html                        &#x27;user(2).php&#x27;
+&#x27;administrator(2)&#x27;          index                                     user.php
+&#x27;administrator(2).php&#x27;     &#x27;index(1)&#x27;                                &#x27;user.php(1).bak&#x27;
+ administrator.php         &#x27;index(1).html&#x27;                           &#x27;user.php(2).bak&#x27;
+&#x27;adminlogin(1).php&#x27;        &#x27;.index(1).php~&#x27;                           user.php.bak
+&#x27;adminlogin(2).php&#x27;        &#x27;index(1).php&#x27;                             users
+ adminlogin.php            &#x27;index(1).php~&#x27;                           &#x27;users(1)&#x27;
+ admin.php                 &#x27;index(2)&#x27;                                &#x27;users(1).php&#x27;
+ AFqme1NQRROG              &#x27;index(2).html&#x27;                           &#x27;users(1).sql&#x27;
+ a.sql                     &#x27;.index(2).php~&#x27;                          &#x27;users(2)&#x27;
+&#x27;b(1).sql&#x27;                 &#x27;index(2).php&#x27;                            &#x27;users(2).php&#x27;
+&#x27;b(2).sql&#x27;                 &#x27;index(2).php~&#x27;                           &#x27;users(2).sql&#x27;
+ backdoor                   index.html                                users.php
+&#x27;backdoor(1)&#x27;               .index.php~                               users.sql
+&#x27;backdoor(1).php&#x27;           index.php                                 .viminfo
+&#x27;backdoor(2)&#x27;               index.php.~                               _viminfo
+&#x27;backdoor(2).php&#x27;           index.php~                               &#x27;_viminfo(1)&#x27;
+ backdoor.php              &#x27;index.php(1).~&#x27;                          &#x27;_viminfo(2)&#x27;
+&#x27;backup(1).rar&#x27;             index.php.~1~                             vNtA9qzJeJdc
+&#x27;backup(1).sql&#x27;            &#x27;index.php(1).~1~&#x27;                         vs0YOC3YosWX.aspx
+&#x27;backup(1).zip&#x27;            &#x27;index.php(1).7z&#x27;                         &#x27;wc(1).db&#x27;
+&#x27;backup(2).rar&#x27;            &#x27;index.php(1).bak&#x27;                        &#x27;wc(2).db&#x27;
+&#x27;backup(2).sql&#x27;            &#x27;index.php(1).bak_Edietplus&#x27;               wc.db
+&#x27;backup(2).zip&#x27;            &#x27;index.php(1).rar&#x27;                         web
+ backup.rar                &#x27;.index.php(1).swp&#x27;                       &#x27;web(1)&#x27;
+ backup.sql                &#x27;index.php(1).swp&#x27;                        &#x27;web(1).7z&#x27;
+&#x27;backup.sql(1).bz2&#x27;        &#x27;index.php(1).txt&#x27;                        &#x27;web(1).rar&#x27;
+&#x27;backup.sql(1).gz&#x27;         &#x27;index.php(1).zip&#x27;                        &#x27;web(1).tar&#x27;
+&#x27;backup.sql(2).bz2&#x27;        &#x27;index.php(2).~&#x27;                          &#x27;web(1).xml&#x27;
+&#x27;backup.sql(2).gz&#x27;         &#x27;index.php(2).~1~&#x27;                        &#x27;web(1).zip&#x27;
+ backup.sql.bz2            &#x27;index.php(2).7z&#x27;                         &#x27;web(2)&#x27;
+ backup.sql.gz             &#x27;index.php(2).bak&#x27;                        &#x27;web(2).7z&#x27;
+ backup.zip                &#x27;index.php(2).bak_Edietplus&#x27;              &#x27;web(2).rar&#x27;
+ .bash_history             &#x27;index.php(2).rar&#x27;                        &#x27;web(2).tar&#x27;
+&#x27;_basic_config(1).php&#x27;     &#x27;.index.php(2).swp&#x27;                       &#x27;web(2).xml&#x27;
+&#x27;_basic_config(2).php&#x27;     &#x27;index.php(2).swp&#x27;                        &#x27;web(2).zip&#x27;
+ _basic_config.php         &#x27;index.php(2).txt&#x27;                         web.7z
+ bbs                       &#x27;index.php(2).zip&#x27;                         webadmin
+&#x27;bbs(1)&#x27;                    index.php.7z                             &#x27;webadmin(1)&#x27;
+&#x27;bbs(2)&#x27;                    index.php.bak                            &#x27;webadmin(2)&#x27;
+&#x27;bdb(1).sql&#x27;                index.php.bak_Edietplus                   webedit
+&#x27;bdb(2).sql&#x27;                index.php.rar                            &#x27;webedit(1)&#x27;
+ bdb.sql                    .index.php.swp                           &#x27;webedit(2)&#x27;
+ b.sql                      index.php.swp                             WebEditor
+ .bzr                      &#x27;index.php.tar(1).gz&#x27;                     &#x27;WebEditor(1)&#x27;
+ classes                   &#x27;index.php.tar(2).gz&#x27;                     &#x27;WebEditor(2)&#x27;
+&#x27;classes(1)&#x27;                index.php.tar.gz                          web_Fckeditor
+&#x27;classes(2)&#x27;                index.php.txt                            &#x27;web_Fckeditor(1)&#x27;
+&#x27;common.inc(1).php&#x27;         index.php.zip                            &#x27;web_Fckeditor(2)&#x27;
+&#x27;common.inc(2).php&#x27;        &#x27;info(1).php&#x27;                              web.rar
+ common.inc.php            &#x27;info(2).php&#x27;                              web.tar
+ config                     info.php                                 &#x27;web.tar(1).gz&#x27;
+&#x27;config(1)&#x27;                 JmmozLTH589H                             &#x27;web.tar(2).gz&#x27;
+&#x27;config(10).php&#x27;            lib                                       web.tar.gz
+&#x27;config(11).php&#x27;           &#x27;lib(1)&#x27;                                   web.xml
+&#x27;_config(1).php&#x27;           &#x27;lib(2)&#x27;                                   web.zip
+&#x27;config(1).php&#x27;            &#x27;lib(3)&#x27;                                  &#x27;workspace(1).xml&#x27;
+&#x27;config(2)&#x27;                &#x27;lib(4)&#x27;                                  &#x27;workspace(2).xml&#x27;
+&#x27;_config(2).php&#x27;           &#x27;lib(5)&#x27;                                   workspace.xml
+&#x27;config(2).php&#x27;            &#x27;localconf(1).php&#x27;                        &#x27;wp-config(1).php&#x27;
+&#x27;config(3).php&#x27;            &#x27;localconf(2).php&#x27;                        &#x27;wp-config(2).php&#x27;
+&#x27;config(4).php&#x27;             localconf.php                             wp-config.php
+&#x27;config(5).php&#x27;            &#x27;log(1).php&#x27;                               wp-includes
+&#x27;config(6).php&#x27;            &#x27;log(1).txt&#x27;                              &#x27;wp-includes(1)&#x27;
+&#x27;config(7).php&#x27;            &#x27;log(2).php&#x27;                              &#x27;wp-includes(2)&#x27;
+&#x27;config(8).php&#x27;            &#x27;log(2).txt&#x27;                               WqbQpOAsi5BN.php
+&#x27;config(9).php&#x27;             login                                    &#x27;www(1).7z&#x27;
+&#x27;config_global(1).php&#x27;     &#x27;login(1)&#x27;                                &#x27;www(1).rar&#x27;
+&#x27;config_global(2).php&#x27;     &#x27;login(1).php&#x27;                            &#x27;www(1).tar&#x27;
+ config_global.php         &#x27;login(2)&#x27;                                &#x27;www(1).zip&#x27;
+&#x27;config.inc(1).php&#x27;        &#x27;login(2).php&#x27;                            &#x27;www(2).7z&#x27;
+&#x27;config.inc(2).php&#x27;        &#x27;login(3)&#x27;                                &#x27;www(2).rar&#x27;
+&#x27;config.inc(3).php&#x27;        &#x27;login(4)&#x27;                                &#x27;www(2).tar&#x27;
+&#x27;config.inc(4).php&#x27;        &#x27;login(5)&#x27;                                &#x27;www(2).zip&#x27;
+&#x27;config.inc(5).php&#x27;         login.php                                 www.7z
+&#x27;config.inc(6).php&#x27;         log.php                                   www.rar
+&#x27;config.inc(7).php&#x27;        &#x27;logs(1).php&#x27;                             &#x27;wwwroot(1).rar&#x27;
+&#x27;config.inc(8).php&#x27;        &#x27;logs(2).php&#x27;                             &#x27;wwwroot(1).zip&#x27;
+ config.inc.php             logs.php                                 &#x27;wwwroot(2).rar&#x27;
+ _config.php                log.txt                                  &#x27;wwwroot(2).zip&#x27;
+ config.php                 manage                                    wwwroot.rar
+&#x27;config_ucenter(1).php&#x27;    &#x27;manage(1)&#x27;                                wwwroot.zip
+&#x27;config_ucenter(2).php&#x27;    &#x27;manage(2)&#x27;                                www.tar
+ config_ucenter.php        &#x27;manage(3)&#x27;                               &#x27;www.tar(1).gz&#x27;
+&#x27;configuration(1).php&#x27;     &#x27;manage(4)&#x27;                               &#x27;www.tar(2).gz&#x27;
+&#x27;configuration(2).php&#x27;     &#x27;manage(5)&#x27;                                www.tar.gz
+ configuration.php          manager                                   www.zip
+&#x27;crossdomain(1).xml&#x27;       &#x27;manager(1)&#x27;                               XHWgGSvTgY6j.html
+&#x27;crossdomain(2).xml&#x27;       &#x27;manager(2)&#x27;                               Y9WAtjtqUE75.jsp
+ crossdomain.xml           &#x27;member(1).php&#x27;                            YHx4ZSVfYFXG.jsp
+&#x27;data(1).sql&#x27;              &#x27;member(2).php&#x27;                            yPBHFrnOZxoD
+&#x27;data(2).sql&#x27;               member.php                                ZBiBj8QTTH8S.aspx
+ database                  &#x27;mysql(1).bak&#x27;                             .ZdCcP6daWvH4</code></pre>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/46d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>这几个hint文件都是404 写着flag的文件也是</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/46d5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>这个文件也写着flag 而且出奇的名字长 看看</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/46d6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现base64 解码两遍 取得flag flag为  <br><code>flag{Wri35h4rk_1s_u53ful_b72a609537e6}</code></p>

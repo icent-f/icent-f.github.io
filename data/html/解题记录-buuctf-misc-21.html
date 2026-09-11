@@ -1,0 +1,14 @@
+<h1>隐藏的钥匙</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：路飞一行人千辛万苦来到了伟大航道的终点，找到了传说中的One piece，但是需要钥匙才能打开One Piece大门，钥匙就隐藏在下面的图片中，聪明的你能帮路飞拿到钥匙，打开One Piece的大门吗？注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：010Editor Cyberchef</p>
+<p>拿到附件 解压 发现是一张jpg图片</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/21d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>看看属性</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/21d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>好 啥也没有 那就用 <strong>010Editor</strong> 看看文件结构</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/21d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现 jpg文件 的结束标志 <code>ÿÙ</code> 后还有内容 看起来和flag有关 还是 base64编码 的  <br><code>flag:base64:(Mzc3Y2JhZGRhMWVjYTJmMmY3M2QzNjI3Nzc4MWYwMGE=)</code></p>
+<p>用 <strong>Cyberchef</strong> 解码看看 拖入 <code>From base64</code> 在 Input框 中输入  <br><code>Mzc3Y2JhZGRhMWVjYTJmMmY3M2QzNjI3Nzc4MWYwMGE=</code></p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/21d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 Output框 中的内容 试试是不是flag 套上 <code>flag{}</code> 提交看看</p>
+<p>正确 取得flag flag为  <br><code>flag{377cbadda1eca2f2f73d36277781f00a}</code></p>

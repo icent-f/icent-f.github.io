@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>Pay3Cents 的博客</title>
+  <link>https://icent-f.github.io/</link>
+  <description>记录未确定事件的观察、CTF 解题与生活碎碎念。</description>
+  <language>zh-cn</language>
+  <item>
+    <title>明文攻击</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-压缩包相关-明文攻击</link>
+    <guid isPermaLink="false">知识笔记-misc-压缩包相关-明文攻击</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+    <description>其实一般都会用 bkcrack 这个工具  <br>如果有完整的文件 ARCHPR 也可以做</description>
+  </item>
+  <item>
+    <title>摩斯电码</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-隐写术-音频隐写-摩斯电码</link>
+    <guid isPermaLink="false">知识笔记-misc-隐写术-音频隐写-摩斯电码</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+    <description>由  与 . 编码 字符与字符间由空格隔开  <br>长音为 短音为. 空格在音频上体现为一段较长的空白  <br>映射表如下</description>
+  </item>
+  <item>
+    <title>培根密码</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-古典密码-培根密码</link>
+    <guid isPermaLink="false">知识笔记-misc-古典密码-培根密码</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+    <description>培根密码，又名倍康尼密码（Bacon's cipher）  <br>加密时，明文中的每个字母都会转换成一组五个英文字母。其转换依靠下表：</description>
+  </item>
+  <item>
+    <title>凯撒密码</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-古典密码-凯撒密码</link>
+    <guid isPermaLink="false">知识笔记-misc-古典密码-凯撒密码</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+    <description>凯撒密码（Caesar cipher）是一种替换加密技术  <br>明文中的所有字母都在字母表上 向后/向前 按照一个固定数目（Shift）进行偏移后被替换成密文</description>
+  </item>
+  <item>
+    <title>pngcheck的使用方法</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-工具-pngcheck工具</link>
+    <guid isPermaLink="false">知识笔记-misc-工具-pngcheck工具</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+    <description></description>
+  </item>
+  <item>
+    <title>foremost</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-工具-foremost工具</link>
+    <guid isPermaLink="false">知识笔记-misc-工具-foremost工具</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+    <description>foremost 是一个基于文件头和文件尾特征的数据雕复（data carving）工具  <br>常用于从磁盘镜像、内存 dump、网络流量抓包 甚至单个文件中快速…</description>
+  </item>
+  <item>
+    <title>binwalk</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-工具-binwalk工具</link>
+    <guid isPermaLink="false">知识笔记-misc-工具-binwalk工具</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+    <description>一款用于分析、识别和提取嵌入在其他文件中的隐藏文件或数据的固件分析工具</description>
+  </item>
+  <item>
+    <title>ZIP</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-文件结构-zip文件</link>
+    <guid isPermaLink="false">知识笔记-misc-文件结构-zip文件</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+    <description>zip压缩包主要由三大部分组成：文件数据区 中央目录记录区/核心目录记录 中央目录记录尾部区  <br>注意zip压缩包是小端序存储的 关于端序在week1写png的…</description>
+  </item>
+  <item>
+    <title>Wireshark(简)</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-工具-wireshark工具</link>
+    <guid isPermaLink="false">知识笔记-misc-工具-wireshark工具</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+    <description>这个东西有点多 感觉不太容易写体系（主要我也没学完） 所以写的可能会有点乱</description>
+  </item>
+  <item>
+    <title>PNG</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-文件结构-png文件</link>
+    <guid isPermaLink="false">知识笔记-misc-文件结构-png文件</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+    <description>PNG 文件格式设计时就统一采用大端序（网络字节序）  <br>因为它的设计目标是跨平台一致 而TCP/IP 网络协议栈也采用大端序  <br>这样任何机器读取 PNG 文…</description>
+  </item>
+  <item>
+    <title>MD5</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-编码and现代密码-md5</link>
+    <guid isPermaLink="false">知识笔记-misc-编码and现代密码-md5</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+    <description>MD5（MessageDigest Algorithm 5）是一种密码学哈希函数  <br>用于将任意长度的数据计算成一个固定的128bit即32位十六进制的数</description>
+  </item>
+  <item>
+    <title>JPG/JPEG</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-文件结构-jpg-jpeg文件</link>
+    <guid isPermaLink="false">知识笔记-misc-文件结构-jpg-jpeg文件</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+    <description>文章参考</description>
+  </item>
+  <item>
+    <title>Base家族</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-编码and现代密码-base家族</link>
+    <guid isPermaLink="false">知识笔记-misc-编码and现代密码-base家族</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+    <description>Base编码是一种将二进制数据转换为可打印字符的编码方式  <br>确保数据在只能处理文本的通道（如邮件、URL）中能完好无损地传输</description>
+  </item>
+  <item>
+    <title>BMP</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-文件结构-bmp文件</link>
+    <guid isPermaLink="false">知识笔记-misc-文件结构-bmp文件</guid>
+    <pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
+    <description>文章参考</description>
+  </item>
+  <item>
+    <title>瓜！你怎么真把这tuo石山端上来了！</title>
+    <link>https://icent-f.github.io/#post-随笔-welcome</link>
+    <guid isPermaLink="false">随笔-welcome</guid>
+    <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+    <description>博客设计的一点过程&amp;灵感和碎碎念</description>
+  </item>
+  <item>
+    <title>Verify(验证)</title>
+    <link>https://icent-f.github.io/#post-解题记录-picoctf-9</link>
+    <guid isPermaLink="false">解题记录-picoctf-9</guid>
+    <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：人们总是试图用仿冒的旗子来骗我的玩家。我想确保他们拿到真的！我打算提供 SHA256 哈希和一个解密脚本，帮你确认我的旗子是真的。<br>Checksum(…</description>
+  </item>
+  <item>
+    <title>Scan Surprise(扫描惊喜)</title>
+    <link>https://icent-f.github.io/#post-解题记录-picoctf-10</link>
+    <guid isPermaLink="false">解题记录-picoctf-10</guid>
+    <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：我厌倦了以文字形式发放旗帜。如果它们能变成图片，那岂不是很酷吗？  <br>工具：QRResearch</description>
+  </item>
+  <item>
+    <title>Riddle Registry(谜语注册表)</title>
+    <link>https://icent-f.github.io/#post-解题记录-picoctf-2</link>
+    <guid isPermaLink="false">解题记录-picoctf-2</guid>
+    <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：嗨，勇敢的调查者！📄🔍 你偶然发现了一个奇怪的 PDF，里面看似只是一些杂乱的乱码。但要小心！并非一切都如表面所见。在这混乱之中隐藏着一份宝藏——一个…</description>
+  </item>
+  <item>
+    <title>RED(红色)</title>
+    <link>https://icent-f.github.io/#post-解题记录-picoctf-7</link>
+    <guid isPermaLink="false">解题记录-picoctf-7</guid>
+    <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：红色，红色，红色，红色  <br>工具：zsteg Cyberchef</description>
+  </item>
+  <item>
+    <title>Ph4nt0m 1ntrud3r(幽灵入侵者)</title>
+    <link>https://icent-f.github.io/#post-解题记录-picoctf-8</link>
+    <guid isPermaLink="false">解题记录-picoctf-8</guid>
+    <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：一个数字幽灵突破了我的防御，我的敏感数据被盗了！😱💻 你的任务是找出这个幽灵入侵者是如何渗透我的系统的，并找回隐藏的标志。</description>
+  </item>
+  <item>
+    <title>Hidden in plainsight(隐藏在显眼处)</title>
+    <link>https://icent-f.github.io/#post-解题记录-picoctf-3</link>
+    <guid isPermaLink="false">解题记录-picoctf-3</guid>
+    <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：你得到了一张看似普通的 JPG 图片。文件里藏着一些看不见的东西。你的任务是发现隐藏的内容并提取旗标。  <br>工具：exiftool Cyberchef…</description>
+  </item>
+  <item>
+    <title>Flag in Flame(火焰中的旗帜)</title>
+    <link>https://icent-f.github.io/#post-解题记录-picoctf-4</link>
+    <guid isPermaLink="false">解题记录-picoctf-4</guid>
+    <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：SOC 团队在最近的一次安全漏洞后发现了一个异常大的日志文件。当他们打开它时，发现里面不是普通的日志，而是一大块编码过的文本。里面会隐藏着什么东西吗？…</description>
+  </item>
+  <item>
+    <title>DISKO 1(磁盘1)</title>
+    <link>https://icent-f.github.io/#post-解题记录-picoctf-6</link>
+    <guid isPermaLink="false">解题记录-picoctf-6</guid>
+    <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：你能在这个磁盘镜像里找到旗子吗？  <br>工具：FTKImager</description>
+  </item>
+  <item>
+    <title>Corrupted file(文件损坏)</title>
+    <link>https://icent-f.github.io/#post-解题记录-picoctf-5</link>
+    <guid isPermaLink="false">解题记录-picoctf-5</guid>
+    <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：这个文件看起来坏了……或者不是呢？也许几个字节就能改变一切。你能想办法让它恢复生机吗？  <br>工具：010Editor</description>
+  </item>
+  <item>
+    <title>Binary Digits(二进制数字)</title>
+    <link>https://icent-f.github.io/#post-解题记录-picoctf-1</link>
+    <guid isPermaLink="false">解题记录-picoctf-1</guid>
+    <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：这个文件看起来没什么大不了的......只是一堆1和0。但也许这不仅仅是随机的噪音。你能从中恢复任何有意义的东西吗?  <br>工具：010Editor C…</description>
+  </item>
+  <item>
+    <title>黑客帝国</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-41</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-41</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：Jack很喜欢看黑客帝国电影，一天他正在上网时突然发现屏幕不受控制，出现了很多数据再滚屏，结束后留下了一份神秘的数据文件，难道这是另一个世界给Jack…</description>
+  </item>
+  <item>
+    <title>面具下的flag</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-30</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-30</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：010Editor foremost WinRAR 7zip wsl</description>
+  </item>
+  <item>
+    <title>隐藏的钥匙</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-21</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-21</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：路飞一行人千辛万苦来到了伟大航道的终点，找到了传说中的One piece，但是需要钥匙才能打开One Piece大门，钥匙就隐藏在下面的图片中，聪明的…</description>
+  </item>
+  <item>
+    <title>镜子里面的世界</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-16</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-16</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：Stegsolve</description>
+  </item>
+  <item>
+    <title>金三胖</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-2</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-2</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：Stegsolve</description>
+  </item>
+  <item>
+    <title>谁赢了比赛？</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-43</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-43</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：小光非常喜欢下围棋。一天，他找到了一张棋谱，但是看不出到底是谁赢了。你能帮他看看到底是谁赢了么？注意：得到的 flag 请包上 flag{} 提交  …</description>
+  </item>
+  <item>
+    <title>被嗅探的流量</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-11</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-11</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：某黑客潜入到某公司内网通过嗅探抓取了一段文件传输的数据，该数据也被该公司截获，你能帮该公司分析他抓取的到底是什么文件的数据吗？注意：得到的 flag …</description>
+  </item>
+  <item>
+    <title>被偷走的文件</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-37</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-37</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：一黑客入侵了某公司盗取了重要的机密文件，还好管理员记录了文件被盗走时的流量，请分析该流量，分析出该黑客盗走了什么文件。注意：得到的 flag 请包上 …</description>
+  </item>
+  <item>
+    <title>荷兰宽带数据泄露</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-31</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-31</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：RouterPassView</description>
+  </item>
+  <item>
+    <title>签到</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-1</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-1</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：签到题 flag{buuctf}  <br>工具：无</description>
+  </item>
+  <item>
+    <title>秘密文件</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-38</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-38</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：深夜里，Hack偷偷的潜入了某公司的内网，趁着深夜偷走了公司的秘密文件，公司的网络管理员通过通过监控工具成功的截取Hack入侵时数据流量，但是却无法分…</description>
+  </item>
+  <item>
+    <title>爱因斯坦</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-17</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-17</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：010Editor</description>
+  </item>
+  <item>
+    <title>流量！鲨鱼！</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-46</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-46</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：就决定是你了！WireShark！  <br>工具：Wireshark kali</description>
+  </item>
+  <item>
+    <title>梅花香之苦寒来</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-35</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-35</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：binwalk 010Editor Cyberchef Python QRResearc…</description>
+  </item>
+  <item>
+    <title>来首歌吧</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-28</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-28</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：Audacity</description>
+  </item>
+  <item>
+    <title>数据包中的线索</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-23</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-23</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：公安机关近期截获到某网络犯罪团伙在线交流的数据包，但无法分析出具体的交流内容，聪明的你能帮公安机关找到线索吗？注意：得到的 flag 请包上 flag…</description>
+  </item>
+  <item>
+    <title>数据包中的线索</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-24</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-24</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：神秘龙卷风转转转，科学家用四位数字为它命名，但是发现解密后居然是一串外星人代码！！好可怕！注意：得到的 flag 请包上 flag{} 提交  <br>工具…</description>
+  </item>
+  <item>
+    <title>很好的色彩呃？</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-42</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-42</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：Cyberchef</description>
+  </item>
+  <item>
+    <title>小易的U盘</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-47</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-47</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：小易的U盘中了一个奇怪的病毒，电脑中莫名其妙会多出来东西。小易重装了系统，把U盘送到了攻防实验室，希望借各位的知识分析出里面有啥。请大家加油噢，不过他…</description>
+  </item>
+  <item>
+    <title>小明的保险箱</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-19</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-19</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：小明有一个保险箱，里面珍藏了小明的日记本，他记录了什么秘密呢？。。。告诉你，其实保险箱的密码四位纯数字密码。（答案格式：flag｛答案｝，只需提交答案…</description>
+  </item>
+  <item>
+    <title>大白</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-5</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-5</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：看不到图？ 是不是屏幕太小了 注意：得到的 flag 请包上 flag{} 提交  <br>工具：010Editor</description>
+  </item>
+  <item>
+    <title>基础破解</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-10</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-10</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：小明经常喜欢在文件中藏一些秘密。时间久了便忘记了，你能帮小明找到该文件中的秘密吗？注意：得到的 flag 请包上 flag{} 提交  <br>工具：无</description>
+  </item>
+  <item>
+    <title>基础破解</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-9</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-9</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：给你一个压缩包，你并不能获得什么，因为他是四位数字加密的哈哈哈哈哈哈哈。。。不对= =我说了什么了不得的东西。。注意：得到的 flag 请包上 fla…</description>
+  </item>
+  <item>
+    <title>后门查杀</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-27</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-27</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：小白的网站被小黑攻击了，并且上传了Webshell，你能帮小白找到这个后门么？(Webshell中的密码(md5)即为答案)。注意：得到的 flag …</description>
+  </item>
+  <item>
+    <title>另外一个世界</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-22</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-22</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：010Editor Cyberchef</description>
+  </item>
+  <item>
+    <title>刷新过的图片</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-45</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-45</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：浏览图片的时候刷新键有没有用呢注意：得到的 flag 请包上 flag{} 提交  <br>工具：F5steganography WinRAR</description>
+  </item>
+  <item>
+    <title>假如给我三天光明</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-26</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-26</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：Audacity Cyberchef</description>
+  </item>
+  <item>
+    <title>你竟然赶我走</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-3</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-3</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：010Editor</description>
+  </item>
+  <item>
+    <title>二维码</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-4</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-4</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：QRResearch 010Editor ARCHPR</description>
+  </item>
+  <item>
+    <title>九连环</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-32</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-32</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：010Editor foremost</description>
+  </item>
+  <item>
+    <title>乌镇峰会种图</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-7</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-7</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：乌镇互联网大会召开了，各国巨头汇聚一堂，他们的照片里隐藏着什么信息呢？（答案格式：flag｛答案｝，只需提交答案）注意：得到的 flag 请包上 fl…</description>
+  </item>
+  <item>
+    <title>zip伪加密</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-12</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-12</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：010Editor</description>
+  </item>
+  <item>
+    <title>wireshark</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-6</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-6</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：黑客通过wireshark抓到管理员登陆网站的一段流量包（管理员的密码即是答案） 注意：得到的 flag 请包上 flag{} 提交  <br>工具：Wir…</description>
+  </item>
+  <item>
+    <title>webshell后门</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-29</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-29</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：朋友的网站被黑客上传了webshell后门，他把网站打包备份了，你能帮忙找到黑客的webshell在哪吗？(Webshell中的密码(md5)即为答案…</description>
+  </item>
+  <item>
+    <title>voip</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-34</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-34</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：binwalk foremost Cyberchef</description>
+  </item>
+  <item>
+    <title>snake</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-33</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-33</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：binwalk foremost Cyberchef</description>
+  </item>
+  <item>
+    <title>rar</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-14</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-14</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：这个是一个rar文件，里面好像隐藏着什么秘密，但是压缩包被加密了，毫无保留的告诉你，rar的密码是4位纯数字。注意：得到的 flag 请包上 flag…</description>
+  </item>
+  <item>
+    <title>qr</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-15</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-15</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：这是一个二维码，谁用谁知道！注意：得到的 flag 请包上 flag{} 提交  <br>工具：QRResearch</description>
+  </item>
+  <item>
+    <title>ningen</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-18</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-18</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：人类的科学日益发展，对自然的研究依然无法满足，传闻日本科学家秋明重组了基因序列，造出了名为ningen的超自然生物。某天特工小明偶然截获了日本与俄罗斯…</description>
+  </item>
+  <item>
+    <title>john-in-the-middle</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-39</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-39</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：binwalk Wireshark foremost Stegsolve</description>
+  </item>
+  <item>
+    <title>greatescape</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-36</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-36</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：CTFNATA Wireshark</description>
+  </item>
+  <item>
+    <title>easycap</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-20</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-20</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：Wireshark</description>
+  </item>
+  <item>
+    <title>[BJDCTF2020]认真你就输了</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-44</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-44</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：得到的 flag 请包上 flag{} 提交。来源：https://github.com/BjdsecCA/BJDCTF2020  <br>工具：binwa…</description>
+  </item>
+  <item>
+    <title>[BJDCTF2020]藏藏藏</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-40</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-40</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：得到的 flag 请包上 flag{} 提交。来源：https://github.com/BjdsecCA/BJDCTF2020  <br>工具：binwa…</description>
+  </item>
+  <item>
+    <title>[BJDCTF2020]你猜我是个啥</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-48</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-48</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：得到的 flag 请包上 flag{} 提交。来源：https://github.com/BjdsecCA/BJDCTF2020  <br>工具：bandz…</description>
+  </item>
+  <item>
+    <title>N种方法解决</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-8</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-8</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交<br>工具：010Editor QRResearch</description>
+  </item>
+  <item>
+    <title>LSB</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-13</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-13</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：注意：得到的 flag 请包上 flag{} 提交  <br>工具：Stegsolve Firefox QRResearch</description>
+  </item>
+  <item>
+    <title>Hello World!</title>
+    <link>https://icent-f.github.io/#post-随笔-hello-world</link>
+    <guid isPermaLink="false">随笔-hello-world</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>这是一台「桌面式」的博客。双击图标、拖动窗口、点开侧边栏里的我——就像在操作一台自己的电脑。</description>
+  </item>
+  <item>
+    <title>FLAG</title>
+    <link>https://icent-f.github.io/#post-解题记录-buuctf-misc-25</link>
+    <guid isPermaLink="false">解题记录-buuctf-misc-25</guid>
+    <pubDate>Wed, 09 Sep 2026 00:00:00 +0000</pubDate>
+    <description>题目描述：感谢 牌森 同学提供题目  <br>注意：请将 hctf 替换为 flag 提交，格式 flag{}  <br>工具：zsteg IDA</description>
+  </item>
+  <item>
+    <title>盲水印（两图型）</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-盲水印-两图型-盲水印-两图型</link>
+    <guid isPermaLink="false">知识笔记-misc-盲水印-两图型-盲水印-两图型</guid>
+    <pubDate>Mon, 07 Sep 2026 00:00:00 +0000</pubDate>
+    <description>盲水印是一种肉眼不可见的数字水印技术 本文章主要介绍两图型盲水印及工具</description>
+  </item>
+  <item>
+    <title>USB流量（简）</title>
+    <link>https://icent-f.github.io/#post-知识笔记-misc-usb流量-简-usb流量-简</link>
+    <guid isPermaLink="false">知识笔记-misc-usb流量-简-usb流量-简</guid>
+    <pubDate>Mon, 07 Sep 2026 00:00:00 +0000</pubDate>
+    <description>USB流量可以用来传输多种交互式设备的操作 本文章主要介绍鼠标流量和键盘流量及工具</description>
+  </item>
+  <item>
+    <title>磐石行动</title>
+    <link>https://icent-f.github.io/#post-解题记录-磐石行动-wp</link>
+    <guid isPermaLink="false">解题记录-磐石行动-wp</guid>
+    <pubDate>Sat, 05 Sep 2026 00:00:00 +0000</pubDate>
+    <description>磐石行动2026 misc方向的wp 入队后打的第一场较大的比赛</description>
+  </item>
+  <item>
+    <title>HnuCTF2026暑假招新赛</title>
+    <link>https://icent-f.github.io/#post-解题记录-hnuctf-26shujia</link>
+    <guid isPermaLink="false">解题记录-hnuctf-26shujia</guid>
+    <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>
+    <description>入队打的比赛 记录一下哇哈哈</description>
+  </item>
+  <item>
+    <title>HnuCTF2025寒假招新赛</title>
+    <link>https://icent-f.github.io/#post-解题记录-hnuctf-25hanjia</link>
+    <guid isPermaLink="false">解题记录-hnuctf-25hanjia</guid>
+    <pubDate>Tue, 28 Jul 2026 00:00:00 +0000</pubDate>
+    <description>复现一下寒假misc方向的招新赛</description>
+  </item>
+  <item>
+    <title>HTTP协议</title>
+    <link>https://icent-f.github.io/#post-知识笔记-web-http协议</link>
+    <guid isPermaLink="false">知识笔记-web-http协议</guid>
+    <pubDate>Tue, 02 Jun 2026 00:00:00 +0000</pubDate>
+    <description>HTTP协议即超文本传输协议 本文章介绍了HTTP的知识 并补全了前置知识 对报文结构进行了拆分</description>
+  </item>
+  <item>
+    <title>MoeCTF2025 Misc方向wp</title>
+    <link>https://icent-f.github.io/#post-解题记录-moectf-moectf2025-wp</link>
+    <guid isPermaLink="false">解题记录-moectf-moectf2025-wp</guid>
+    <pubDate>Thu, 12 Feb 2026 00:00:00 +0000</pubDate>
+    <description>本文章记录了MoeCTF的misc方向（包括pyjail）的题解</description>
+  </item>
+  <item>
+    <title>HTML语言</title>
+    <link>https://icent-f.github.io/#post-知识笔记-前端-html语言</link>
+    <guid isPermaLink="false">知识笔记-前端-html语言</guid>
+    <pubDate>Thu, 12 Feb 2026 00:00:00 +0000</pubDate>
+    <description>HTML语言是一种浏览器标记语言 此文章较详细地记录了html的知识</description>
+  </item>
+</channel>
+</rss>

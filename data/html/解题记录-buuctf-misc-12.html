@@ -1,0 +1,13 @@
+<h1>zip伪加密</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：010Editor</p>
+<p>拿到附件 解压 发现要密码  <br>根据题目描述 这个加密是假的 用 <strong>010Editor</strong> 打开</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/12d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>根据zip加密的知识 知道重点应该放在 <strong>压缩源文件数据区</strong>（红色部分）与 <strong>压缩源文件目录区</strong>（黄色部分）的  <br><code>50 4B</code>后的 <code>14 00</code>后的数据 即<code>09 00</code>上  <br>若数据为 <code>09 00</code> 则为加密 <code>00 00</code>则没有加密</p>
+<blockquote>
+<p>ps: 根据查到的资料 应该 <strong>压缩源文件数据区</strong> 为 <code>00 00</code> <strong>压缩源文件目录区</strong> 为 <code>09 00</code> 才是伪加密  <br>按资料上 两个都是 <code>09 00</code> 应该是真加密 但是题目上明确表示是伪加密 所以这里把两个都给改成 <code>00 00</code></p>
+</blockquote>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/12d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>保存 再直接打开</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/12d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p><code>flag.txt</code> 中有flag 取得flag flag为  <br><code>flag{Adm1N-B2G-kU-SZIP}</code></p>

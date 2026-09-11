@@ -1,0 +1,18 @@
+<h1>被偷走的文件</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：一黑客入侵了某公司盗取了重要的机密文件，还好管理员记录了文件被盗走时的流量，请分析该流量，分析出该黑客盗走了什么文件。注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：Wireshark WinRAR ARCHPR</p>
+<p>拿到附件 pacpng文件</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/37d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>根据题目描述 需要从流量包中提取文件 <strong>Wireshark</strong> 打开  <br>导出对象</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/37d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现FTP流有个 flag.rar</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/37d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>尝试解压</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/37d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p><strong>WinRAR</strong> 解压</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/37d5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>要密码 这里找了挺久 没什么线索 直接爆破吧  <br>猜测四位纯数字 <strong>ARCHPR</strong> 爆破</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/37d6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>密码5790 解压</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/37d7.png" alt="" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为  <br><code>flag{6fe99a5d03fb01f833ec3caa80358fa3}</code></p>

@@ -1,0 +1,325 @@
+<h1>HTML语言</h1>
+<div class="post-meta"><span class="chip">知识笔记 · 前端</span><span>2026-02-12</span></div>
+<h2><strong>PART 0 前言</strong></h2>
+<p>该文章算是属于个人学习的笔记 可能在有些地方有误或不全 只是单纯记录学习过程</p>
+<p>文章中有多次直接在当前页运行html代码 有些效果可能显示不成功<br>如果有人有兴趣可以自己复制html代码在浏览器运行看看</p>
+<p>没有写出所有的html标签和属性 只写了常用的</p>
+<h2><strong>PART 1 简述</strong></h2>
+<p>HTML是一种 <strong>标签语言</strong> 负责“绘制”网页  <br>标签的形态大多为 <code>&lt;标签&gt;&lt;/标签&gt;</code> 或 <code>&lt;标签&gt;</code>  <br>比如整个html文件的内容 实际上就是由 <code>&lt;html&gt;&lt;/html&gt;</code> 标签包裹起来的</p>
+<p>标签就如同一本手册 浏览器通过手册中的内容“识别”网页开发者们写下的标签 将具有不同标签的内容渲染为不同的样式/功能  <br>在互联网发展之初 每个浏览器的“手册”都有一本自己的手册 导致了那时的网页编写需要为不同浏览器编写好几套代码 对于开发者与维护者来说非常的不友好  <br>于是后来出现了万维网联盟( <em>W3C</em> )( <em>World Wild Web Consortium</em> )来统一手册 而html与css就是由它们组织管理的</p>
+<p>目前 html的标签种类由近百种 但事实上 平时常用的种类不过 20 多种  <br>html的编写对环境的要求几乎为0 只要有浏览器都可以跑 vscode只是方便编写 实际的运行还是要到浏览器中</p>
+<h2><strong>PART 2 HTML的基本结构</strong></h2>
+<p>一个html文件的后缀名为 <code>.html</code> 一般来说 我们会将html文件命名为 <code>index.html</code>  <br>进入vscode 输入 <code>!</code> 或者 <code>html5</code> 再按下 <code>tab</code> 编译器就会帮助补全一个基本的html结构</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>在这个结构中 我们见到了几个标签 <code>!DOCTYPE</code> <code>html</code> <code>head</code> <code>body</code> <code>meta</code> <code>title</code>  <br>同时我们发现 像 <code>&lt;html lang="en"&gt;&lt;/html&gt;</code> 它的左标签还拥有 <code>lang="en"</code> 这样 像给标签上补丁的一样的内容  <br>我们将标签内的“补丁”内容称为 属性</p>
+<blockquote>
+<p>打个比方 浏览器就是一家 <strong>公司</strong> ,开发者则为 <strong>求职者</strong> ,开发者撰写的html文件为 <strong>简历</strong>  <br>当公司收到简历时 他首先看到的是 <code>&lt;求职者&gt;我是简历&lt;/求职者&gt;</code> 这个标签 就可以知道它是来求职的  <br>但是这个标签只能说明它是来求职的 不能说明它是来求哪个岗位的职的 所以这份简历还打了补丁内容  <br><code>&lt;求职者 岗位=渗透测试工程师&gt;我是简历&lt;/求职者&gt;</code> 标签内的补丁内容补充了求职者要应聘的岗位 使公司可以更好地理解这份简历  <br>也就是说 在标签中添加属性 可以让浏览器更好地理解你的html文件 渲染为开发者更希望的形态</p>
+</blockquote>
+<h3><strong>PART 2.1 简单解释编译器补全的标签</strong></h3>
+<p>接下来我们来简单解释一下编译器补全后的结构代表的内容</p>
+<ul><li><code>&lt;!DOCTYPE html&gt;</code>  </li></ul>
+<p>  这个标签没有成对出现 是一个单标签  <br>  它的作用是告知浏览器 要用 <strong>HTML5</strong> 的标准去解析这个html文件  <br>  DOCTYPE 标签不区分大小写<br>  如果我们不想要用 <strong>HTML5</strong> 这个最新标准来解析 而是像使用以前的版本 我们可以更改这个标签的属性  <br>  简单列举几种html版本：  <br>  HTML 2.0 -1995年发布 是第一个正式的HTML版本  <br>  <code>&lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN"&gt;</code>  <br>  HTML 3.2 -1997年发布 增加了一些新的标签和特性  <br>  <code>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN"&gt;</code>  <br>  HTML 5 -2014年发布 增加了很多新的标签和特性 包括音频、视频、画布、地理位置等  <br>  <code>&lt;!DOCTYPE html&gt;</code></p>
+<ul><li><code>&lt;html lang="en"&gt;&lt;/html&gt;</code>  </li></ul>
+<p>  html标签内的内容会被浏览器解析渲染 我们也是在这个标签内编写网页内容  <br>  我们发现补全的标签拥有一个属性 <code>lang</code> 其实就是 <strong>language</strong> 设置语言  <br>  en就是英语  <br>  zh-CN就是简体中文（大陆）  <br>  zh-TW就是繁体中文（台湾）  <br>  zh-HK就是繁体中文（香港）  <br>  html标签中包含 <code>&lt;head&gt;&lt;/head&gt;</code> <code>&lt;body&gt;&lt;/body&gt;</code>两个标签</p>
+<ul><li><code>&lt;head&gt;&lt;/head&gt;</code>  </li></ul>
+<p>  头标签 引申一下其实就是思维  <br>  既然是思维 那么head中的内容就 <strong>不会被浏览器渲染为可视化内容</strong> 只是为浏览器提供“指导”</p>
+<ul><li><code>&lt;title&gt;&lt;/title&gt;</code>  </li></ul>
+<p>  标题 其实就是 <strong>网页的名称</strong>  <br>  默认的网页名称为 <code>Document</code>  <br>  假如我改写为<code>&lt;title&gt;我是标题&lt;/title&gt;</code> 那么网页的名称就会变为 <code>我是标题</code>  <br>  我们只会设置一个title标签 如果这个网页是要通过(云)服务器上传到公网上的  <br>  那么title标签的内容决定了搜索引擎搜索时 是否推荐你的网页 所以如果是网页开发 title的编写还是需要斟酌一下的</p>
+<ul><li><code>&lt;meta&gt;&lt;/meta&gt;</code>  </li></ul>
+<p>  元数据 其实就是为浏览器提供解析的指导 可以编写多个  <br>  比如 <code>&lt;meta charset="UTF-8"&gt;</code> 的属性 指导浏览器要通过 <strong>UTF-8</strong> 这个字符集(文件编码模式)来解析html文件  <br>  <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code> 就是对视窗的设置(比如显示区域的缩放)  <br>  meta还可以设置网页的 关键字 和 描述信息 也是对于搜索引擎搜索到你的网页是有帮助的<br>  meta标签的内容对于初学者 或者 非网页开发者(只是来简单了解html) 并不需要细究</p>
+<ul><li><code>&lt;body&gt;&lt;/body&gt;</code>  </li></ul>
+<p>  体标签 区别于头标签 body的内容会被渲染为可视化内容  <br>  也就是说 网页呈现的形态结构基本都是在body标签内编写的</p>
+<h3><strong>PART 2.2 补充标签</strong></h3>
+<ul><li><code>&lt;link&gt;</code>  </li></ul>
+<p>  链接 用于引入文件 比如css文件 js文件</p>
+<ul><li><code>&lt;style&gt;&lt;/style&gt;</code>  </li></ul>
+<p>  样式 可以在内部直接编写css代码(内部css) 也可以通过src属性引入(外部css)</p>
+<ul><li><code>&lt;script&gt;&lt;/script&gt;</code>  </li></ul>
+<p>  脚本 可以在内部直接编写JavaScript代码(内部js) 也可以通过src引入(外部js)</p>
+<h2><strong>PART 3 HTML常用标签</strong></h2>
+<h3><strong>PART 3.1 文字类标签</strong></h3>
+<p>简单地将常用的文字类标签分为 <strong>文本结构类 文本修饰类 列表类 通用类 其他类</strong></p>
+<h4><strong>PART 3.1.1 文本结构类</strong></h4>
+<table><thead><tr><th>文本结构类</th><th>作用</th><th>效果(建议还是在html文件里自己去写去试)</th></tr></thead><tbody><tr><td><code>&lt;h1&gt;&lt;/h1&gt;</code></td><td>一级标题(Heading1)</td><td>&lt;h1&gt;Heading1&lt;/h1&gt;</td></tr><tr><td><code>&lt;h2&gt;&lt;/h2&gt;</code></td><td>二级标题(Heading2)</td><td>&lt;h2&gt;Heading2&lt;/h2&gt;</td></tr><tr><td><code>&lt;h3&gt;&lt;/h3&gt;</code></td><td>三级标题(Heading3)</td><td>&lt;h3&gt;Heading3&lt;/h3&gt;</td></tr><tr><td><code>&lt;h4&gt;&lt;/h4&gt;</code></td><td>四级标题(Heading4)</td><td>&lt;h4&gt;Heading4&lt;/h4&gt;</td></tr><tr><td><code>&lt;h5&gt;&lt;/h5&gt;</code></td><td>五级标题(Heading5)</td><td>&lt;h5&gt;Heading5&lt;/h5&gt;</td></tr><tr><td><code>&lt;h6&gt;&lt;/h6&gt;</code></td><td>六级标题(Heading6)</td><td>&lt;h6&gt;Heading6&lt;/h6&gt;</td></tr><tr><td><code>&lt;p&gt;&lt;/p&gt;</code></td><td>段落标题(Paragraph)</td><td>&lt;p&gt;Paragraph&lt;/p&gt;</td></tr></tbody></table>
+<h4><strong>PART 3.1.2 文本修饰类</strong></h4>
+<table><thead><tr><th>文本修饰类</th><th>作用</th><th>效果</th></tr></thead><tbody><tr><td><code>&lt;em&gt;&lt;/em&gt;</code></td><td>强调(Emphasis)</td><td>&lt;em&gt;Emphasis&lt;/em&gt;</td></tr><tr><td><code>&lt;i&gt;&lt;/i&gt;</code></td><td>斜体</td><td>&lt;i&gt;斜体&lt;/i&gt;</td></tr><tr><td><code>&lt;strong&gt;&lt;/strong&gt;</code></td><td>加粗(Strong)</td><td>&lt;strong&gt;Strong&lt;/strong&gt;</td></tr><tr><td><code>&lt;b&gt;&lt;/b&gt;</code></td><td>粗体</td><td>&lt;b&gt;粗体&lt;/b&gt;</td></tr><tr><td><code>&lt;u&gt;&lt;/u&gt;</code></td><td>下划线(Underline)</td><td>&lt;u&gt;Underline&lt;/u&gt;</td></tr><tr><td><code>&lt;ins&gt;&lt;/ins&gt;</code></td><td>插入(Insert)</td><td>&lt;ins&gt;Insert&lt;/ins&gt;</td></tr><tr><td><code>&lt;del&gt;&lt;/del&gt;</code></td><td>删除(Delete)</td><td>&lt;del&gt;Delete&lt;/del&gt;</td></tr><tr><td><code>&lt;s&gt;&lt;/s&gt;</code></td><td>删除线</td><td>&lt;s&gt;删除线&lt;/s&gt;</td></tr><tr><td><code>&lt;sup&gt;&lt;/sup&gt;</code></td><td>上标(Superscript)</td><td>&lt;sup&gt;Superscript&lt;/sup&gt;</td></tr><tr><td><code>&lt;sub&gt;&lt;/sub&gt;</code></td><td>下标(Subscript)</td><td>&lt;sub&gt;Subscript&lt;/sub&gt;</td></tr><tr><td><code>&lt;blockquote&gt;&lt;/blockquote&gt;</code></td><td>长引用(Blockquote)</td><td>&lt;blockquote&gt;Blockquote&lt;/blockquote&gt;</td></tr><tr><td><code>&lt;q&gt;&lt;/q&gt;</code></td><td>短引用(Quote)</td><td>&lt;q&gt;Quote&lt;/q&gt;</td></tr></tbody></table>
+<h4><strong>PART 3.1.3 列表类</strong></h4>
+<p><code>&lt;ul&gt;&lt;li&gt;&lt;/li&gt;&lt;/ul&gt;</code>无序列表</p>
+<pre><code>&lt;ul&gt;
+  &lt;li&gt; Unorder List 1 &lt;/li&gt;
+  &lt;li&gt; Unorder List 2 &lt;/li&gt;
+  &lt;li&gt; Unorder List 3 &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+<p>效果：</p>
+<p>&lt;ul&gt;<br>  &lt;li&gt; Unorder List 1 &lt;/li&gt;<br>  &lt;li&gt; Unorder List 2 &lt;/li&gt;<br>  &lt;li&gt; Unorder List 3 &lt;/li&gt;<br>&lt;/ul&gt;</p>
+<p><code>&lt;ol&gt;&lt;li&gt;&lt;/li&gt;&lt;/ol&gt;</code>有序列表</p>
+<pre><code>&lt;ol&gt;
+  &lt;li&gt; Order List 1 &lt;/li&gt;
+  &lt;li&gt; Order List 2 &lt;/li&gt;
+  &lt;li&gt; Order List 3 &lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+<p>效果：</p>
+<p>&lt;ol&gt;<br>  &lt;li&gt; Order List 1 &lt;/li&gt;<br>  &lt;li&gt; Order List 2 &lt;/li&gt;<br>  &lt;li&gt; Order List 3 &lt;/li&gt;<br>&lt;/ol&gt;</p>
+<h4><strong>PART 3.1.4 通用类</strong></h4>
+<p><code>&lt;span&gt;&lt;/span&gt;</code>  <br>这个标签本身没有特殊的渲染 与直接写文字无异  <br>它更多用来添加属性 类似于“自定义”标签的功能(主要用css)</p>
+<p>事实上 所有的标签都可以用span来表示  <br>之所以设计这么多别的签 主要是为了开发友好 让html文件的可读性更强</p>
+<h4><strong>PART 3.1.5 其他类</strong></h4>
+<p><code>&lt;br&gt;</code> 换行(Line Break)</p>
+<pre><code>我用来展示 Line Break&lt;br&gt;现在我换行了</code></pre>
+<p>效果：</p>
+<p>我用来展示 Line Break&lt;br&gt;现在我换行了</p>
+<p><code>&lt;hr&gt;</code> 横线(Horizontal Rule)</p>
+<pre><code>&lt;hr&gt;</code></pre>
+<p>效果：</p>
+<p>&lt;hr&gt;</p>
+<p><code>&lt;!--  --&gt;</code> 注释  <br>和其他语言一样 注释内的内容不会参与编译 可以使代码更具可读性  <br>html的注释可以通过<code>Ctrl+/</code>来快捷产生</p>
+<h3><strong>PART 3.2 结构化标签</strong></h3>
+<p>首先我们要知道 绝大多数的html文件都是通过 <strong>嵌套标签</strong> 的方式来让网页变得更好管理的  <br>我们当然也可以选择不用任何嵌套 选择“平铺” 但这会大大增加我们的管理与维护成本  <br>所以 大多数的网页开发者都会选择“嵌套”的方式来“多层地打包”一个网页  <br>并且 在学习css时 实现高效的元素布局 结构上必须得是父子级关系<br>在后期学习js后 我们也会发现很多的调整都是通过“组”来调整 而非单一元素逐个调整</p>
+<p>那么为了让嵌套更有体系 我们就离不开结构化标签  <br>结构化标签在没有进行样式的设置前 是没有任何可视的效果的(就是和直接输入文本一样) 它们只是方便可读的语义化的标签  <br>我们简单地将常用的结构化标签分为 <strong>常规标签类 文章结构类 通用类</strong></p>
+<h4><strong>PART 3.2.1 常规标签类</strong></h4>
+<table><thead><tr><th>常规结构类标签</th><th>内容</th><th>作用</th></tr></thead><tbody><tr><td><code>&lt;header&gt;&lt;/header&gt;</code></td><td>页面头部</td><td>表示页面或页面片段的页眉 通常包含网站的标志、导航链接和其他元素</td></tr><tr><td><code>&lt;nav&gt;&lt;nav&gt;</code></td><td>页面导航</td><td>表示导航链接的区域 通常包括主要的文章、产品列表或其他主要内容</td></tr><tr><td><code>&lt;main&gt;&lt;main&gt;</code></td><td>页面主要区域</td><td>表示页面的主要内容区域 通常包含主要的文章、产品列表或其他主要内容</td></tr><tr><td><code>&lt;footer&gt;&lt;/footer&gt;</code></td><td>页脚</td><td>表示页面或页面片段的页脚 通常包含版权信息、联系方式和其他元素</td></tr></tbody></table>
+<h4><strong>PART 3.2.2 文章结构类</strong></h4>
+<table><thead><tr><th>文章结构类标签</th><th>内容</th><th>作用</th></tr></thead><tbody><tr><td><code>&lt;article&gt;&lt;/article&gt;</code></td><td>文章/文字内容</td><td>表示独立的文章、博客帖子、评论或其他类似的内容块</td></tr><tr><td><code>&lt;section&gt;&lt;/section&gt;</code></td><td>文章/文档部分区块</td><td>表示文档中的一个通用区块 通常包含一组相关的内容 如章节、页脚或侧边栏</td></tr><tr><td><code>&lt;aside&gt;&lt;/aside&gt;</code></td><td>文章/文档附加区块</td><td>表述文档中的一个附加区块 通常包含与主要内容相关但不是必须的内容 如侧边栏、广告或引用</td></tr></tbody></table>
+<h4><strong>PART 3.2.3 通用类</strong></h4>
+<p><code>&lt;div&gt;&lt;/div&gt;</code>  <br>Division 类似于文本的span标签  <br>由于结构化标签不加入样式与普通文本没有任何变化  <br>所以一个网页可能顶多有个header main footer 其他都是大片大片的div</p>
+<h3><strong>PART 3.3 媒体资源类标签</strong></h3>
+<p>在网页中 除了文字 还有 视频 图片 音频 等其他的 <strong>媒体资源</strong>  <br>这些媒体资源本质上都是文件 那么我们如果要展现这些文件 首先需要让网页能够访问到它们  <br>一般我们会选择用 <strong>地址</strong> 来访问文件资源</p>
+<h4><strong>PART 3.3.1 文件资源地址 </strong></h4>
+<p>我们访问文件资源的地址 一般是通过 <code>src</code> 这个属性来访问的</p>
+<p>对于网络中的文件(以浏览器为例) 我们可以选择右键复制它的地址</p>
+<p>以图片为例 图片的标签为 <code>img</code> 我们想让一个图片显示 就可以写:  <br><code>&lt;img src="content/所有文章/知识笔记/前端/复制的图片地址" &gt;</code></p>
+<p>然而在真正网页开发中 其实更常见的方法是将图片存储在项目文件夹中  <br>这种用法中 src这个属性写的是 <strong>文件的路径</strong><br>这里可以写绝对路径也可以写相对路径 这里以相对路径为例<br>举个例子 如果项目的文件排布为：</p>
+<ul><li>srctest</li><li>index.html</li><li>photo.png</li></ul>
+<p>我们在index.html里就可以写 <code>&lt;img src="content/所有文章/知识笔记/前端/photo.png" &gt;</code></p>
+<p>如果项目的排布为</p>
+<ul><li>srctest</li><li>index.html</li><li>photo</li><li>photo.png</li></ul>
+<p>我们在index.html里就可以写 <code>&lt;img src="content/所有文章/知识笔记/前端/photo/photo.png" &gt;</code>  <br>或者写 <code>&lt;img src="content/所有文章/知识笔记/前端/./photo/photo.png" &gt;</code></p>
+<blockquote>
+<p>这里的 <code>.</code> 指的是当前文件(即index.html)</p>
+</blockquote>
+<p>如果项目的排布为</p>
+<ul><li>srctest</li><li>HTML</li><li>index.html</li><li>photo</li><li>photo.png</li></ul>
+<p>我们在index.html里就可以写 <code>&lt;img src="content/所有文章/知识笔记/前端/../photo/photo.png" &gt;</code></p>
+<blockquote>
+<p>这里的 <code>..</code>指的是上级目录(即HTML)</p>
+</blockquote>
+<h4><strong>PART 3.3.2 图片</strong></h4>
+<p>我们访问的图片 后缀一般为以下几种:</p>
+<table><thead><tr><th>后缀</th><th>特点</th></tr></thead><tbody><tr><td>.jpg</td><td>文件相对较小 有损压缩 不支持透明度</td></tr><tr><td>.png</td><td>文件相对较大 无损压缩 支持透明度</td></tr><tr><td>.gif</td><td>文件尺寸大 简单动态图形 色彩范围较窄 不适合复杂图像</td></tr><tr><td>.svg</td><td>矢量格式 无损任意缩放 支持动态效果 支持透明度 复杂图像文件尺寸偏大</td></tr><tr><td>.webp</td><td>支持透明度和动画 支持无损压缩和有损压缩 图片质量比jpg好 文件大小比png小(得多)</td></tr></tbody></table>
+<p>访问图片我们一般使用的标签为 <code>img</code>  <br>除了刚刚提到的 <strong>src</strong> 属性外 它还有许多别的常用的属性</p>
+<table><thead><tr><th>属性</th><th>效果</th></tr></thead><tbody><tr><td>alt</td><td>在图片访问失败时显示的文字</td></tr><tr><td>title</td><td>将鼠标移到图片上时显示的文字</td></tr><tr><td>width</td><td>设置图片的宽度</td></tr><tr><td>hight</td><td>设置图片的高度</td></tr><tr><td>srcset</td><td>让高分辨率的屏幕可以显示更高分辨率的图片</td></tr></tbody></table>
+<blockquote>
+<p>一般 width 和 hight 这两个标签写一个即可 可以让图片以原比例增大/缩小  <br>都写的大小是遵从于写的数值的 很可能会让图片比例失调</p>
+</blockquote>
+<h4><strong>PART 3.3.3 视频</strong></h4>
+<p>视频的后缀一般有以下几种：</p>
+<table><thead><tr><th>后缀</th><th>特点</th></tr></thead><tbody><tr><td>.mp4</td><td>支持率高 文件相对较小 视频质量相对较高</td></tr><tr><td>.webm</td><td>支持率高 文件相对较小 视频质量相对较高</td></tr><tr><td>.ogg</td><td>不咋样</td></tr><tr><td>.avi</td><td>不咋样</td></tr><tr><td>.mov</td><td>不咋样</td></tr><tr><td>.fly</td><td>不咋样</td></tr></tbody></table>
+<blockquote>
+<p>视频文件其实是一种“容器” 容纳了两种数据 视觉数据和音频数据 二者其实是分开的</p>
+</blockquote>
+<p>视频的标签为 <code>video</code> 写法为: <code>&lt;video&gt;&lt;/video&gt;</code>  <br>在视频标签中可以写文字 在浏览器不支持解析视频的时候会显示这段文字</p>
+<p>视频也有很多常用的属性</p>
+<table><thead><tr><th>属性</th><th>效果</th></tr></thead><tbody><tr><td>width</td><td>设置视频的宽度</td></tr><tr><td>hight</td><td>设置视频的高度</td></tr><tr><td>volume</td><td>设置视频音量(范围为0~1)</td></tr><tr><td>muted</td><td>视频静音</td></tr><tr><td>autopaly</td><td>自动播放</td></tr><tr><td>loop</td><td>循环播放</td></tr><tr><td>controls</td><td>视频显示控制按钮(暂停全屏 音量调节等)</td></tr><tr><td>poster</td><td>设置视频封面图片(写法和src一样)</td></tr><tr><td>preload</td><td>预加载视频资源</td></tr></tbody></table>
+<h4><strong>PART 3.3.4 音频</strong></h4>
+<p>音频的后缀一般有以下几种：</p>
+<table><thead><tr><th>后缀</th><th>特点</th></tr></thead><tbody><tr><td>.mp3</td><td>有损压缩 文件较小</td></tr><tr><td>.wav</td><td>无损 文件大 高质量音频</td></tr><tr><td>.ogg</td><td>不咋样</td></tr><tr><td>.aac</td><td>不咋样</td></tr></tbody></table>
+<p>音频的标签为 <code>audio</code> 写法为: <code>&lt;audio&gt;&lt;/audio&gt;</code>  <br>和视频标签一样 在标签中可以写文字 在浏览器不支持解析的时候会显示这段文字</p>
+<p>音频一般常用的属性就是 <code>volume</code></p>
+<h4><strong>PART 3.3.5 网页</strong></h4>
+<p>我们可以用 <code>iframe</code> 这个标签在页面中再嵌入网页  <br>写法为: <code>&lt;iframe&gt;&lt;/iframe&gt;</code></p>
+<p>常用的属性有</p>
+<table><thead><tr><th>属性</th><th>效果</th></tr></thead><tbody><tr><td>width</td><td>设置显示出的嵌入网页的宽度</td></tr><tr><td>hight</td><td>设置显示出的嵌入网页的高度</td></tr><tr><td>frameborder</td><td>为嵌入的网页设置边框</td></tr></tbody></table>
+<blockquote>
+<p>嵌入的网页不是拉伸(缩放 放大)的 而是显示部分区域 条件宽高也是调整显示内容的大小</p>
+</blockquote>
+<h4><strong>PART 3.3.6 矢量图片</strong></h4>
+<p>我们在绘图软件中 可能用一些几何图形拼凑出一些图形  <br>某些绘图软件可以将这种图片复制/保存为 SVG  <br>在html中 我们可以用 <code>svg</code> 这个标签来显示这种图片 写法为: <code>&lt;svg&gt;&lt;/svg&gt;</code></p>
+<p>svg标签内写的是各个几何图形的数值 在绘图软件中保存的就是它  <br>它的原理其实是照着参数自己“画”了一个图片  <br>这样的好处是 页面的优化更好 避免的读取图片渲染的过程 而是直接用html“绘画”</p>
+<p>并且 svg可以单独的写成一个文件(.svg) 就用svg标签的形式写 然后在.html文件中用img标签读取 也方便管理</p>
+<p>常用的属性:</p>
+<table><thead><tr><th>属性</th><th>效果</th></tr></thead><tbody><tr><td>width</td><td>设置图片的宽度</td></tr><tr><td>hight</td><td>设置图片的高度</td></tr></tbody></table>
+<h4><strong>PART 3.3.7 画布</strong></h4>
+<p>使用的标签是 <code>canvas</code> 写法为 <code>&lt;canvas&gt;&lt;/canvas&gt;</code></p>
+<p>默认是不可见的一部分区域 在做动画的时候非常好用(玩PPT的会知道)  <br>在学了js后才会经常操作他</p>
+<h3><strong>PART 3.4 页面跳转标签</strong></h3>
+<p>一般使用的是 <code>a</code>标签 写法为: <code>&lt;a&gt;&lt;/a&gt;</code></p>
+<p>几乎必写的属性为 <code>href</code> 值为地址或路径(和src相同)  <br>只要点击a标签中的内容就会跳转到别的页面</p>
+<blockquote>
+<p>之所以建议把html命名为 index.html 是因为如果a标签读取的是文件夹  <br>它会自动访问名称为 index.html 的文件 不用写繁杂的路径 让代码更简洁</p>
+</blockquote>
+<p>a标签常用的属性</p>
+<ul><li>target  </li></ul>
+<p>  有几个参数：  <br>  \_self(默认): 在当前页面打开  <br>  \_blank: 在新标签页打开<br>  \_top: 和iframe一起使用 打开当前页面在iframe框架中最顶层的页面<br>  \_parent: 和iframe一起使用 打开当前页面在iframe框架中上层的页面</p>
+<p>还有一个属性 结合a标签很好用 可以实现页面某个区段的跳转</p>
+<p>这里用到的属性为 id 很多元素都可以设置id这个属性 但id的值必须是唯一的</p>
+<p>假设我的页面由四个使用 <code>&lt;img&gt;</code> 的图片构成  <br>它们的id分别设置为 1 2 3 4</p>
+<p>我们可以通过为a标签的herf属性设置为 #1 #2 #3 #4  <br>来分别将页面跳转到相应的图片的位置</p>
+<blockquote>
+<p>形如<code>#xxx</code>的地址叫做锚地址</p>
+</blockquote>
+<p>这个方法适合去写 位于一个页面的长文章 为他配备目录 等场景</p>
+<h3><strong>PART 3.5 表单相关标签</strong></h3>
+<p>表单(Form)  <br>填写资料 填写数据等页面 都是通过表单及其元素实现的  <br>也就是说表单是用来让用户输入数据并与服务器发生交互的  <br>所以真正要让表单用起来 是需要通过js打交道的</p>
+<p>表单的标签为 <code>form</code> 写法为: <code>&lt;form&gt;&lt;/form&gt;</code></p>
+<p>先来看看form内大概涉及到哪些标签</p>
+<table><thead><tr><th>标签</th><th>用途</th></tr></thead><tbody><tr><td><code>input</code> <code>textarea</code></td><td>输入或者选择</td></tr><tr><td><code>select</code> <code>option</code> <code>optgroup</code></td><td>下拉列表</td></tr><tr><td><code>filedset</code> <code>legend</code></td><td>做结构</td></tr><tr><td><code>button</code></td><td>按钮</td></tr><tr><td><code>label</code></td><td>绑定</td></tr></tbody></table>
+<h4><strong>PART 3.5.1 输入或选择</strong></h4>
+<p><code>input</code> 写法为: <code>&lt;input&gt;</code></p>
+<p>input 的一个相当重要的属性为 <code>type</code>  <br>列举一些 type 的参数</p>
+<table><thead><tr><th>参数</th><th>效果</th></tr></thead><tbody><tr><td>text(默认)</td><td>用于文本输入</td></tr><tr><td>range</td><td>范围</td></tr><tr><td>password</td><td>用于密码输入 输入的字符会被隐藏</td></tr><tr><td>email</td><td>用于电子邮箱地址输入</td></tr><tr><td>number</td><td>用于数字输入</td></tr><tr><td>date</td><td>用于日期选择</td></tr><tr><td>time</td><td>用于时间选择</td></tr><tr><td>checkbox</td><td>用于多选框</td></tr><tr><td>radio</td><td>用于单选框</td></tr><tr><td>file</td><td>用于文件上传</td></tr><tr><td>submit</td><td>用于提交表单数据</td></tr><tr><td>reset</td><td>用于清除表单数据</td></tr><tr><td>button</td><td>用于按钮</td></tr></tbody></table>
+<p>简单列举几例</p>
+<pre><code>&lt;input type=&quot;text&quot;&gt;&lt;br&gt;
+&lt;input type=&quot;password&quot;&gt;&lt;br&gt;
+&lt;input type=&quot;radio&quot;&gt;&lt;br&gt;</code></pre>
+<p>&lt;input type="text"&gt;&lt;br&gt;<br>&lt;input type="password"&gt;&lt;br&gt;<br>&lt;input type="radio"&gt;&lt;br&gt;</p>
+<p>然后是 <code>name</code> 和 <code>value</code> 这两个属性  <br>我们输入框中输入的数据 可以理解为赋值给了以 name 这个属性的内容为名的变量 也就是说 name 相当于数据的名称  <br>而 value 相当于输入后的值为什么</p>
+<blockquote>
+<p>在类似文本这种非选择输入时 value设置是非必须的 设置的 value 为初始值 用户输入可以将其覆盖</p>
+</blockquote>
+<blockquote>
+<p>在实现单选的输入框中 我们可以通过给不同选项的input标签<br>设置同一个name 不同的value<br>以此来实现单选</p>
+</blockquote>
+<p>剩下的input的属性就简单列一下了</p>
+<table><thead><tr><th>属性</th><th>效果</th></tr></thead><tbody><tr><td>placeholder</td><td>提供 输入字段的简短描述或示例</td></tr><tr><td>required</td><td>指定输入字段是否为必填项</td></tr><tr><td>disabled</td><td>禁止输入字符 使其无法编辑或选择</td></tr><tr><td>readonly</td><td>将输入字段设置为只读 用户无法编辑但可查看</td></tr><tr><td>maxlength</td><td>限制输入字段的最大字符数</td></tr><tr><td>min</td><td>设置数字输入字段的最小值</td></tr><tr><td>max</td><td>设置数字输入字段的最大值</td></tr><tr><td>pattern</td><td>使用正则表达式指定输入字段的验证规则</td></tr></tbody></table>
+<p>在做选择类输入的时候 有的时候不想点那个圆圈 想要点击前面的文本也能生效  <br>我们可以通过 <code>label</code> 这个标签将文字与输入圈绑定</p>
+<pre><code>&lt;label for=&quot;icent&quot;&gt;你是icent吗?&lt;/label&gt;&lt;input id=&quot;icent&quot; type=&quot;radio&quot;&gt;
+&lt;!-- 这里的 id 要对应 label 的 for --&gt;</code></pre>
+<p>效果：</p>
+<p>&lt;label for="icent"&gt;你是icent吗?&lt;/label&gt;&lt;input id="icent" type="radio"&gt;</p>
+<p>然后是 <code>textarea</code> 这个标签 也可以实现用户的输入  <br>相较于 input 它适合多行输入 且不需要设置value</p>
+<p>textarea的文本框在网页上默认是可以进行拉伸的</p>
+<p>简单列一下属性</p>
+<table><thead><tr><th>属性</th><th>效果</th></tr></thead><tbody><tr><td>name</td><td>同上</td></tr><tr><td>cols</td><td>列数</td></tr><tr><td>rows</td><td>行数</td></tr><tr><td>readonly</td><td>将输入字段设置为只读 用户无法编辑但可查看</td></tr><tr><td>disabled</td><td>禁止输入字符 使其无法编辑或选择</td></tr><tr><td>placeholder</td><td>提供 输入字段的简短描述或示例</td></tr><tr><td>maxlength</td><td>限制输入字段的最大字符数</td></tr><tr><td>required</td><td>指定输入字段是否为必填项</td></tr></tbody></table>
+<p>输入的场景也不是只能通过 input 和 textarea 来实现  <br>也可以通过给各种标签添加 <code>contenteditable</code> 这个属性来实现</p>
+<h4><strong>PART 3.5.2 下拉列表</strong></h4>
+<p>必须是组合式的用法 先看 <code>select</code>  <br>用代码实例来看好了</p>
+<pre><code>&lt;select name=&quot;MySelect&quot;&gt;
+  &lt;option value=&quot;option1&quot;&gt;选项一&lt;/option&gt;
+  &lt;option value=&quot;option2&quot;&gt;选项二&lt;/option&gt;
+  &lt;option value=&quot;option3&quot;&gt;选项三&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+<p>效果：</p>
+<p>&lt;select name="MySelect"&gt;<br>  &lt;option value="option1"&gt;选项一&lt;/option&gt;<br>  &lt;option value="option2"&gt;选项二&lt;/option&gt;<br>  &lt;option value="option3"&gt;选项三&lt;/option&gt;<br>&lt;/select&gt;</p>
+<p>我们还可以通过 <code>optgroup</code>进行接着分组</p>
+<pre><code>&lt;select name=&quot;MySelect&quot;&gt;
+  &lt;optgrpup label=&quot;组一&quot;&gt;
+    &lt;option value=&quot;option1&quot;&gt;选项一&lt;/option&gt;
+    &lt;option value=&quot;option2&quot;&gt;选项二&lt;/option&gt;
+  &lt;/optgrpup&gt;
+  &lt;optgrpup label=&quot;组二&quot;&gt;
+    &lt;option value=&quot;option3&quot;&gt;选项三&lt;/option&gt;
+    &lt;option value=&quot;option4&quot;&gt;选项四&lt;/option&gt;
+  &lt;/optgrpup&gt;
+&lt;/select&gt;</code></pre>
+<p>效果:</p>
+<p>&lt;select name="MySelect"&gt;<br>  &lt;optgrpup label="组一"&gt;<br>    &lt;option value="option1"&gt;选项一&lt;/option&gt;<br>    &lt;option value="option2"&gt;选项二&lt;/option&gt;<br>  &lt;/optgrpup&gt;<br>  &lt;optgrpup label="组二"&gt;<br>    &lt;option value="option3"&gt;选项三&lt;/option&gt;<br>    &lt;option value="option4"&gt;选项四&lt;/option&gt;<br>  &lt;/optgrpup&gt;<br>&lt;/select&gt;</p>
+<p>用 input标签 配合 list标签 其实也可以达到类似的效果</p>
+<pre><code>&lt;input list=&quot;MySelect&quot;&gt;
+&lt;datalist id=&quot;MySelect&quot;&gt;
+  &lt;!-- id要对应list的值 --&gt;
+  &lt;option value=&quot;选项一&quot;&gt;
+  &lt;option value=&quot;选项二&quot;&gt;
+  &lt;option value=&quot;选项三&quot;&gt;
+&lt;/datalist&gt;</code></pre>
+<p>效果:</p>
+<p>&lt;input list="MySelect"&gt;<br>&lt;datalist id="MySelect"&gt;<br>  &lt;option value="选项一"&gt;<br>  &lt;option value="选项二"&gt;<br>  &lt;option value="选项三"&gt;<br>&lt;/datalist&gt;</p>
+<h4><strong>PART 3.5.3 表单结构</strong></h4>
+<p>在创建网页的适合 一般所有的表单都会写在 <code>&lt;form&gt;&lt;/form&gt;</code>中</p>
+<p>form有两个比较重要的属性 <code>method</code> 和 <code>action</code>  <br>method 设置的是发送请求的方法 比如GET POST  <br>action 设置的是一个地址或路径 用于将填写的表单数据发送到这个地址</p>
+<p>一般来说 发送地址这个行为需要一个动作来作为信号 常用的就是用按钮  <br>按钮的标签为 <code>button</code></p>
+<pre><code>&lt;button&gt;submit&lt;/button&gt;</code></pre>
+<p>效果:</p>
+<p>&lt;button&gt;submit&lt;/button&gt;</p>
+<p>button的属性一般用type 列举一下type的参数</p>
+<table><thead><tr><th>参数</th><th>效果</th></tr></thead><tbody><tr><td>submit(默认)</td><td>将表单数据提交给服务器</td></tr><tr><td>reset</td><td>重置表单所有组件为初始值</td></tr><tr><td>button</td><td>此按钮没有默认行为</td></tr></tbody></table>
+<p>我们可以用<code>&lt;filedset&gt;&lt;/filedset&gt;</code>在 form 中划分“区块”  <br><code>&lt;legend&gt;&lt;/legend&gt;</code>来设置这个区块的名称 比如：</p>
+<pre><code>&lt;form&gt;
+  &lt;filedset&gt;
+    &lt;legend&gt;区块一&lt;/legend&gt;
+    我是表单内容
+  &lt;/filedset&gt;
+
+  &lt;filedset&gt;
+    &lt;legend&gt;区块二&lt;/legend&gt;
+    我是表单内容
+  &lt;/filedset&gt;
+
+  &lt;filedset&gt;
+    &lt;legend&gt;区块三&lt;/legend&gt;
+    我是表单内容
+  &lt;/filedset&gt;
+&lt;/form&gt;</code></pre>
+<p>效果：</p>
+<p>&lt;form&gt;<br>  &lt;filedset&gt;<br>    &lt;legend&gt;区块一&lt;/legend&gt;<br>    我是表单内容<br>  &lt;/filedset&gt;</p>
+<p>  &lt;filedset&gt;<br>    &lt;legend&gt;区块二&lt;/legend&gt;<br>    我是表单内容<br>  &lt;/filedset&gt;</p>
+<p>  &lt;filedset&gt;<br>    &lt;legend&gt;区块三&lt;/legend&gt;<br>    我是表单内容<br>  &lt;/filedset&gt;<br>&lt;/form&gt;</p>
+<h3><strong>PART 3.6 表格相关标签</strong></h3>
+<p>一般来说不太常用 但还是写一点吧</p>
+<p>表格内容一般都包含在<code>&lt;table&gt;&lt;/table&gt;</code>之间(参考form)  <br>在 table标签 内我们还可以包含表格相关的标签</p>
+<table><thead><tr><th>标签</th><th>效果</th></tr></thead><tbody><tr><td>caption</td><td>表格标题</td></tr><tr><td>thead</td><td>表头</td></tr><tr><td>tbody</td><td>表体</td></tr><tr><td>tr</td><td>单行</td></tr><tr><td>th</td><td>表头单列的标题</td></tr><tr><td>td</td><td>表体单个单元格的内容</td></tr></tbody></table>
+<p>然后还有些td的属性  <br><code>rowspan</code> 和 <code>colspan</code> 可以跨行跨列</p>
+<p>简单用一下好了</p>
+<pre><code>&lt;table&gt;
+  &lt;caption&gt;表格标题&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;标题一&lt;/th&gt;
+      &lt;th&gt;标题二&lt;/th&gt;
+      &lt;th&gt;标题三&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td rowspan=&quot;2&quot;&gt;内容一&lt;/td&gt;
+      &lt;td&gt;内容二&lt;/td&gt;
+      &lt;td &gt;内容三&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;内容四&lt;/td&gt;
+      &lt;td&gt;内容五&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;内容六&lt;/td&gt;
+      &lt;td&gt;内容七&lt;/td&gt;
+      &lt;td&gt;内容八&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+<p>效果：</p>
+<p>&lt;table&gt;<br>  &lt;caption&gt;表格标题&lt;/caption&gt;<br>  &lt;thead&gt;<br>    &lt;tr&gt;<br>      &lt;th&gt;标题一&lt;/th&gt;<br>      &lt;th&gt;标题二&lt;/th&gt;<br>      &lt;th&gt;标题三&lt;/th&gt;<br>    &lt;/tr&gt;<br>  &lt;/thead&gt;<br>  &lt;tbody&gt;<br>    &lt;tr&gt;<br>      &lt;td rowspan="2"&gt;内容一&lt;/td&gt;<br>      &lt;td&gt;内容二&lt;/td&gt;<br>      &lt;td &gt;内容三&lt;/td&gt;<br>    &lt;/tr&gt;<br>    &lt;tr&gt;<br>      &lt;td&gt;内容四&lt;/td&gt;<br>      &lt;td&gt;内容五&lt;/td&gt;<br>    &lt;/tr&gt;<br>    &lt;tr&gt;<br>      &lt;td&gt;内容六&lt;/td&gt;<br>      &lt;td&gt;内容七&lt;/td&gt;<br>      &lt;td&gt;内容八&lt;/td&gt;<br>    &lt;/tr&gt;<br>  &lt;/tbody&gt;<br>&lt;/table&gt;</p>
+<h3><strong>PART 3.7 页面焦点</strong></h3>
+<p>当你将鼠标移到一个元素上 比如输入框 点击  <br>你会发现输入框出现了一个闪动的 <code>|</code> 类似这样的状态称为焦点</p>
+<p>我们按下 <code>tab</code> 可以切换至下一个焦点 <code>shift</code> + <code>tab</code> 可以切换至下一个焦点</p>
+<p>在一个页面中 同时只能存在一个焦点 且不是所有的标签都可以成为焦点  <br>能让元素成为焦点的标签有:</p>
+<ul><li>a</li><li>button</li><li>input</li><li>select</li><li>textarea</li><li>iframe(tab键无法获得 需要鼠标去点)</li><li>contenteditable属性 为 true 的标签(tab键无法获得 需要鼠标去点)</li></ul>
+<p>为标签设置 autofocus 这个属性 可以让页面自动以该元素为焦点  <br><code>&lt;input type="text" autofocus&gt;</code>  <br>而为标签设置 tabindex 属性 可以决定按下tab键时焦点切换的顺序  <br>序数越小优先级越高</p>
+<p>写法参考：</p>
+<pre><code>&lt;input type=&quot;text&quot; autofocus tabindex=&quot;1&quot;&gt;
+&lt;input type=&quot;text&quot; tabindex=&quot;5&quot;&gt;
+&lt;input type=&quot;text&quot; tabindex=&quot;4&quot;&gt;
+&lt;input type=&quot;text&quot; tabindex=&quot;3&quot;&gt;
+&lt;input type=&quot;text&quot; tabindex=&quot;2&quot;&gt;</code></pre>
+<p>由于这个涉及到焦点的转换 就不把效果拿出来了</p>
+<h2><strong>PART 4 零碎知识补充</strong></h2>
+<h3><strong>PART 4.1 实体符号</strong></h3>
+<p>我们可以用 <strong>实体符号</strong> 来表示一些特殊符号 浏览器会识别它们  <br>这里只罗列 还是以查找为主 不要死背</p>
+<table><thead><tr><th>实体符号</th><th>对应符号</th><th>效果</th></tr></thead><tbody><tr><td><code>&amp;amp;</code></td><td>和符号</td><td>&amp;amp;</td></tr><tr><td><code>&amp;lt;</code></td><td>小于符号</td><td>&amp;lt;</td></tr><tr><td><code>&amp;gt;</code></td><td>大于符号</td><td>&amp;gt;</td></tr><tr><td><code>&amp;quot;</code></td><td>双引号</td><td>&amp;quot;</td></tr><tr><td><code>&amp;apos;</code></td><td>单引号</td><td>&amp;apos;</td></tr><tr><td><code>&amp;nbsp;</code></td><td>非断行空格</td><td>&amp;nbsp;</td></tr><tr><td><code>&amp;copy;</code></td><td>版权符号</td><td>&amp;copy;</td></tr><tr><td><code>&amp;reg;</code></td><td>注册商标符号</td><td>&amp;reg;</td></tr><tr><td><code>&amp;trade;</code></td><td>商标符号</td><td>&amp;trade;</td></tr><tr><td><code>&amp;euro;</code></td><td>欧元符号</td><td>&amp;euro;</td></tr><tr><td><code>&amp;pound;</code></td><td>英镑符号</td><td>&amp;pound;</td></tr><tr><td><code>&amp;yen;</code></td><td>中元符号</td><td>&amp;yen;</td></tr><tr><td><code>&amp;cent;</code></td><td>分符号</td><td>&amp;cent;</td></tr><tr><td><code>&amp;dollar;</code></td><td>美元符号</td><td>&amp;dollar;</td></tr><tr><td><code>&amp;sect;</code></td><td>小节符号</td><td>&amp;sect;</td></tr><tr><td><code>&amp;deg;</code></td><td>度符号</td><td>&amp;deg;</td></tr><tr><td><code>&amp;plusmn;</code></td><td>正负号</td><td>&amp;plusmn;</td></tr><tr><td><code>&amp;times;</code></td><td>乘号</td><td>&amp;times;</td></tr><tr><td><code>&amp;divide;</code></td><td>除号</td><td>&amp;divide;</td></tr></tbody></table>
+<h3><strong>PART 4.2 网页图标</strong></h3>
+<p>就是在浏览器最上面一栏中 网页标题左侧的小图标</p>
+<p>准备一个 1:1 的图片 然后运用于一些转化工具把它转为ICO格式  <br><a href="https://www.icoconverter.com/">这里提供一个</a></p>
+<p>一般用于网页图标的话 会选择 16 或者 32 分辨率的  <br>位深度上 32位 有透明通道 颜色相比 8位 要更丰富 按需选择即可</p>
+<p>获取.ico文件后 把文放入项目文件夹中 并且位置上与相应html文件平级  <br>命名为 <code>favicon.ico</code></p>
+<blockquote>
+<p>测试的时候可能会发现刷新了页面 图标依旧没有显示  <br>这是缓存的原因 只需要清除浏览器的缓存即可</p>
+</blockquote>
+<p>也可以在 <code>&lt;header&gt;&lt;/header&gt;</code> 中使用 <code>&lt;link&gt;</code> 来引入图标</p>

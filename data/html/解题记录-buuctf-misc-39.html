@@ -1,0 +1,16 @@
+<h1>john-in-the-middle</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：binwalk Wireshark foremost Stegsolve</p>
+<p>拿到附件 pcap文件</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/39d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>不着急分析流量 试着 <strong>binwalk</strong> 一下</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/39d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现有压缩数据和png 试着提取 发现只提取出压缩数据  <br>直接用 <strong>Wireshark</strong> 看看文件有啥</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/39d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>看起来是一个网页的各种文件 html和css、js暂时懒得看 先看图片  <br>换一个工具直接提取 用 <strong>foremost</strong></p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/39d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>得到5张png图片</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/39d5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>直接看看不出啥 不过第一个图的标志是个旗子 猜测这个可能性最大  <br>经过一通工具分析 最后在 <strong>Stegsolve</strong> 调轨道发现了内容</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/39d6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为  <br><code>flag{J0hn_th3_Sn1ff3r}</code></p>

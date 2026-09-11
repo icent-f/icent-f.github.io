@@ -1,0 +1,443 @@
+<h1>HnuCTF2025寒假招新赛</h1>
+<div class="post-meta"><span class="chip">解题记录 · HnuCTF</span><span>2026-07-28</span></div>
+<h2><strong>Sound of Cipher</strong></h2>
+<p>题目描述：被吃掉了  <br>工具：DeepSound</p>
+<p>拿到附件 wav文件</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=1a1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>打开听听 发现是一首歌 这种音频音质好的可以考虑 Deepsound隐写  <br>因为 Deepsound 是最低位隐写 对听感影响不大  <br>用 <strong>Deepsound</strong> 打开</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=1a6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>解出flag.txt 内容为</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=1a7.png" alt="" referrerpolicy="no-referrer"></p>
+<p>有flag结构 像凯撒密码那一系 先试凯撒</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=1a8.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 取得flag flag为  <br><code>HnuCTF{7h3_5ound_0f_c1ph3r_wh15p3r5}</code></p>
+<h2><strong>What's This</strong></h2>
+<p>题目描述：被吃掉了  <br>工具：binwalk 010Editor zipinfo bkcrack</p>
+<p>拿到附件 没后缀名</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=2a1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>file命令看一下</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=2a2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>ok啥也不告我 <strong>binwalk</strong> 呢</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=2a3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>啥也不是说是</p>
+<p><strong>010Editor</strong> 看一看 还就是16进制 但是读不出文件  <br>考虑文件被处理过了 可能是逆序</p>
+<p>试试 <code>50 4B 03 04</code> 倒着搜 <code>40 30 B4 05</code></p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=2a4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>抓到了 而且在文件后半段 不过不是完全的尾部 有点怪  <br>不过先翻转过来再说 写个脚本</p>
+<pre><code># 逆序输出十六进制文件
+def rev(file):
+
+    with open(file, &quot;rb&quot;) as f:
+        data = f.read()
+
+    # 将二进制数据转为十六进制字符串
+    hex_str = data.hex()
+
+    # 将十六进制字符串反转
+    reversed_hex_str = hex_str[::-1]
+
+    # 将反转后的十六进制字符串转回二进制数据
+    reversed_data = bytes.fromhex(reversed_hex_str)
+
+    with open(&quot;output&quot;, &quot;wb&quot;) as f:
+        f.write(reversed_data)
+
+if __name__ == &quot;__main__&quot;:
+    file_name = &quot;What&#x27;s This&quot;
+    rev(file_name)</code></pre>
+<p>得到文件output <strong>binwalk</strong> 查看一下</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=2a5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>ok有压缩包了 <strong>zipinfo</strong> 压缩了什么</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=2a6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>flag.txt 和 rfc9897.txt</p>
+<p>刚刚binwalk的时候 前面字节有没识别的东西  <br>用 <strong>010Editor</strong> 再看看</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=2a7.png" alt="" referrerpolicy="no-referrer"></p>
+<p>这里能看见下面是有个文件头的 但是对应的是 rfc9897.txt  <br>上面的字节里有 flag.txt  <br>猜测是缺了文件头 补上 加上后缀<code>.zip</code></p>
+<blockquote>
+<p>这里担心搞错 所以直接复制了个文件改 命名 test.zip</p>
+</blockquote>
+<p>尝试解压 发现要密码  <br>不是伪加密 在各种地方找了挺久 也试了字典爆破 无果  <br>看到rfc9897 觉得可能是hint 查一下</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=2a8.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现是一系列标准 而且直接搜到了有rfc9897这个标准 还能下到原txt文件</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=2a9.png" alt="" referrerpolicy="no-referrer"></p>
+<p>字节和压缩包里的还一样 都是127383字节 大概率明文攻击  <br>保险起见 用 <strong>bkcrack</strong> 再查下加密方式</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=2a10.png" alt="" referrerpolicy="no-referrer"></p>
+<p>ZipCrypto 打他</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=2a11.png" alt="" referrerpolicy="no-referrer"></p>
+<p>拿到key <code>d3f959ac</code> <code>2c409a7e</code> <code>2f3ca393</code> 提取 flag.txt</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=2a12.png" alt="" referrerpolicy="no-referrer"></p>
+<p>成功 打开</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=2a13.png" alt="" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为  <br><code>HnuCTF{publ1c_f1l3_r3v34l5_7h3_z1p}</code></p>
+<h2><strong>Dual Vision</strong></h2>
+<p>题目描述：被吃掉了  <br>工具：QR_Research 010Editor Stegsolve Python</p>
+<p>附件给的rar</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=3a1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>解压 得到 stream2.png</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=3a2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>二维码 用 <strong>QR_Research</strong></p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=3a3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>得到hint</p>
+<pre><code>HnuCTF{Nooooooooooooo!!!!!A_f@k3_fLa9}
+不过可以给你个提示，好像有什么东西被藏起来了
+不近又不远处，就在这张图片的后面</code></pre>
+<p>被藏起来了 把常见方法先试一遍  <br>zsteg 无果 pngcheck 无果 stegsolve 无果</p>
+<p>注意到题目 “双重视觉” 以及图片 “stream2.png”  <br>猜测可能有 stream1.png</p>
+<p>回到rar文件看看 用 <strong>010Editor</strong> 打开</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=3a4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>联想到今早上buu的一道题 用wsl解压rar</p>
+<pre><code># 用unrar
+unrar x &#x27;Dual Vision.rar&#x27;
+# 用rar
+rar x &#x27;Dual Vision.rar&#x27;
+# 用7z
+7z x &#x27;Dual Vision.rar&#x27;</code></pre>
+<p>7z能解压出来 但打不开</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=3a5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>这里问了ai 给了个powershell命令</p>
+<pre><code>Get-Content -Path .\stream2.png -Stream stream1.png -Encoding Byte | Set-Content -Path .\stream1.png -Encoding Byte</code></pre>
+<p>得到</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=3a6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>像二维码 扫不出来 以为是类似汉信码的小众码 找了半天没找见  <br>问学长 学长说不一定要拿来扫</p>
+<p>联想到题目“视觉” 可不可能需要和 stream2.png 一起处理</p>
+<p>用 <strong>Stegsolve</strong> 打开 stream1.png  <br>再用 <code>Image Combiner</code> 功能把 stream2.png 堆上去</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=3a7.png" alt="" referrerpolicy="no-referrer"></p>
+<p>第一个异或就出货了 保存图片 用 <strong>QR_Research</strong> 扫一下</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=3a8.png" alt="" referrerpolicy="no-referrer"></p>
+<p>得到</p>
+<pre><code>[42, 15943, 5272, 40, 20245, 18, 2881, 21, 19525, 10092, 18, 80, 23738, 21, 88, 2012, 78, 23, 65, 25, 74, 21, 65, 25, 84, 1665, 95]
+
+相信聪明的你一定知道这串数字的含义吧！
+
+……或者，问问万能的deepseek？</code></pre>
+<p>那就问</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=3a11.png" alt="" referrerpolicy="no-referrer"></p>
+<p>何意味</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=3a9.png" alt="" referrerpolicy="no-referrer"></p>
+<p>那 那问问万能的学长吧（bushi</p>
+<p>“问问万能的deepseek” 是hint  <br>意思是用deepseek的transformer把上面的token矩阵转换成文本</p>
+<pre><code>from transformers import AutoTokenizer
+
+tokenizer = AutoTokenizer.from_pretrained(&quot;deepseek-ai/DeepSeek-V3&quot;)
+token_ids = [42, 15943, 5272, 40, 20245, 18, 2881, 21, 19525, 10092, 18, 80, 23738, 21, 88, 2012, 78, 23, 65, 25, 74, 21, 65, 25, 84, 1665, 95]
+text = tokenizer.decode(token_ids)
+
+print(text)</code></pre>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=3a10.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 取得flag flag为  <br><code>HnuCTF{d0ubl3_v1510n_r3v34l5_7h3_7ruth}</code></p>
+<h2><strong>The Serpent's Shadow</strong></h2>
+<p>题目描述：被吃掉了  <br>工具：pyinstxtractor python</p>
+<p>zip解压得到exe</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=4a1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>运行一下</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=4a2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>跑不了 不过学长说不影响做题  <br>exe文件 试试 IDA 打开</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=4a3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>tab可以看各个函数的反编译</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=4a4.png" alt="" referrerpolicy="no-referrer"></p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=4a5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>看了半小时 一堆函数给我看力竭了</p>
+<p>换个思路呢 刚刚IDA看的时候能看出来这是Python写的  <br>用python反汇编试试</p>
+<p>问了ai <strong>pyinstxtractor</strong> 这个工具可以把exe转成pyc</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=4a6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>成功了 看看文件</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=4a7.png" alt="" referrerpolicy="no-referrer"></p>
+<p>看文件名 这个文件应该就是主文件</p>
+<p>pyc文件还没法直接读取 需要再反编译一下</p>
+<p>再次问ai uncompyle6 可以做到</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=4a8.png" alt="" referrerpolicy="no-referrer"></p>
+<p>好的它做不到 不支持python3.9版本</p>
+<p>再拷打ai 爆出个<a href="https://pylingual.io/">在线网站</a></p>
+<blockquote>
+<p>这个在线网站要排队 得等一会</p>
+</blockquote>
+<p>得到源码</p>
+<pre><code># Decompiled with PyLingual (https://pylingual.io)
+# Internal filename: &#x27;gluttonous_snake_source.py&#x27;
+# Bytecode version: 3.9.0beta5 (3425)
+# Source timestamp: 1970-01-01 00:00:00 UTC (0)
+
+import pygame
+import sys
+import random
+import base64
+import math
+FLAG_PARTS = [(&#x27;TVkrL08vTFl7ZEhrUFltZA==&#x27;, 30), (&#x27;QSspKVdBSGN6dSEoQGNbYFQoISQ=&#x27;, 25), (&#x27;e15IcHspKic=&#x27;, 26)]
+class SnakeGame:
+    def __init__(self):
+        pygame.init()
+        pygame.key.set_repeat(0)
+        self.W, self.H = (820, 680)
+        self.screen = pygame.display.set_mode((self.W, self.H))
+        pygame.display.set_caption(&#x27;Gluttonous Snake&#x27;)
+        self.clock = pygame.time.Clock()
+        self.start_score = 0
+        self.cell = 16
+        self.grid_w = 40
+        self.grid_h = 30
+        self.map_w = self.grid_w * self.cell
+        self.map_h = self.grid_h * self.cell
+        self.map_x = (self.W - self.map_w) // 2
+        self.map_y = 120
+        self.move_interval = 0.18
+        self.move_timer = 0.0
+        self.f_big = pygame.font.SysFont(&#x27;arial&#x27;, 56, True)
+        self.f = pygame.font.SysFont(&#x27;arial&#x27;, 32)
+        self.f_s = pygame.font.SysFont(&#x27;arial&#x27;, 22)
+        self.C = {&#x27;bg&#x27;: (12, 18, 28), &#x27;panel&#x27;: (25, 35, 50), &#x27;border&#x27;: (90, 160, 255), &#x27;snake_head&#x27;: (40, 220, 120), &#x27;snake_body&#x27;: (30, 200, 110), &#x27;snake_tail&#x27;: (20, 180, 100), &#x27;snake_outline&#x27;: (10, 160, 90), &#x27;food&#x27;: (255, 90, 90), &#x27;food_stem&#x27;: (139, 69, 19), &#x27;text&#x27;: (230, 230, 230), &#x27;hi&#x27;: (255, 210, 90)}
+        self.state = &#x27;menu&#x27;
+        self.paused = False
+        self.reset_game()
+    def reset_game(self):
+        self.snake = [(self.grid_w // 2, self.grid_h // 2), (self.grid_w // 2 - 1, self.grid_h // 2)]
+        self.direction = (1, 0)
+        self.next_direction = self.direction
+        self.can_turn = True
+        self.score = self.start_score
+        self.food = self.spawn_food()
+        self.move_timer = 0.0
+        self.paused = False
+    def spawn_food(self):
+        # ***&lt;module&gt;.SnakeGame.spawn_food: Failure: Different control flow
+        p = (random.randint(0, self.grid_w - 1), random.randint(0, self.grid_h - 1))
+        if p not in self.snake:
+            pass
+        return p
+    def handle_events(self):
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if e.type!= pygame.KEYDOWN:
+                continue
+            else:
+                if e.key == pygame.K_ESCAPE:
+                    self.state = &#x27;menu&#x27;
+                    self.paused = False
+                    return
+                else:
+                    if self.state == &#x27;menu&#x27;:
+                        if e.key == pygame.K_SPACE:
+                            self.reset_game()
+                            self.state = &#x27;playing&#x27;
+                    else:
+                        if self.state == &#x27;playing&#x27;:
+                            if e.key == pygame.K_SPACE:
+                                self.paused = not self.paused
+                                self.can_turn = True
+                            if not self.paused and self.can_turn:
+                                    if e.key in (pygame.K_w, pygame.K_UP):
+                                        self.next_direction = (0, (-1))
+                                    else:
+                                        if e.key in (pygame.K_s, pygame.K_DOWN):
+                                            self.next_direction = (0, 1)
+                                        else:
+                                            if e.key in (pygame.K_a, pygame.K_LEFT):
+                                                self.next_direction = ((-1), 0)
+                                            else:
+                                                if e.key in (pygame.K_d, pygame.K_RIGHT):
+                                                    self.next_direction = (1, 0)
+                                    self.can_turn = False
+    def reached_target(self):
+        return self.score // 1000 &gt;= 9 and self.score % 1000 &gt;= 999
+    def update(self, dt):
+        if self.state!= &#x27;playing&#x27; or self.paused:
+            return None
+        else:
+            if self.reached_target():
+                self.state = &#x27;victory&#x27;
+                return None
+            else:
+                if (self.next_direction[0] + self.direction[0], self.next_direction[1] + self.direction[1])!= (0, 0):
+                    self.direction = self.next_direction
+                self.move_timer += dt
+                if self.move_timer &gt;= self.move_interval:
+                    self.move_timer = 0.0
+                    self.move_snake()
+                    self.can_turn = True
+    def move_snake(self):
+        hx, hy = self.snake[0]
+        dx, dy = self.direction
+        nx, ny = (hx + dx, hy + dy)
+        if nx &lt; 0 or nx &gt;= self.grid_w or ny &lt; 0 or (ny &gt;= self.grid_h):
+            self.state = &#x27;game_over&#x27;
+            return None
+        else:
+            body = self.snake[:(-1)]
+            if (nx, ny) in body:
+                self.state = &#x27;game_over&#x27;
+                return None
+            else:
+                self.snake.insert(0, (nx, ny))
+                if (nx, ny) == self.food:
+                    gain = random.randint(1, 10)
+                    self.score += gain
+                    self.food = self.spawn_food()
+                else:
+                    self.snake.pop()
+    def decrypt_flag(self):
+        result = bytearray()
+        for data, key in FLAG_PARTS:
+            xor_data = base64.b64decode(data)
+            b64_data = bytes([b ^ key for b in xor_data])
+            plain_bytes = base64.b64decode(b64_data)
+            result.extend(plain_bytes)
+        return result.decode()
+    def draw_snake_head(self, x, y, direction):
+        &quot;&quot;&quot;绘制蛇头&quot;&quot;&quot;
+        cell = self.cell
+        center_x = self.map_x + x * cell + cell // 2
+        center_y = self.map_y + y * cell + cell // 2
+        radius = cell // 2 - 2
+        pygame.draw.circle(self.screen, self.C[&#x27;snake_head&#x27;], (center_x, center_y), radius)
+        pygame.draw.circle(self.screen, self.C[&#x27;snake_outline&#x27;], (center_x, center_y), radius, 1)
+        eye_radius = cell // 5
+        eye_offset = cell // 3
+        if direction == (1, 0):
+            left_eye = (center_x + eye_offset, center_y - eye_offset // 2)
+            right_eye = (center_x + eye_offset, center_y + eye_offset // 2)
+        else:
+            if direction == ((-1), 0):
+                left_eye = (center_x - eye_offset, center_y - eye_offset // 2)
+                right_eye = (center_x - eye_offset, center_y + eye_offset // 2)
+            else:
+                if direction == (0, (-1)):
+                    left_eye = (center_x - eye_offset // 2, center_y - eye_offset)
+                    right_eye = (center_x + eye_offset // 2, center_y - eye_offset)
+                else:
+                    left_eye = (center_x - eye_offset // 2, center_y + eye_offset)
+                    right_eye = (center_x + eye_offset // 2, center_y + eye_offset)
+        pygame.draw.circle(self.screen, (255, 255, 255), left_eye, eye_radius)
+        pygame.draw.circle(self.screen, (255, 255, 255), right_eye, eye_radius)
+        pygame.draw.circle(self.screen, (30, 30, 50), left_eye, eye_radius // 2)
+        pygame.draw.circle(self.screen, (30, 30, 50), right_eye, eye_radius // 2)
+    def draw_snake_body(self, x, y, index, total_length):
+        &quot;&quot;&quot;绘制蛇身&quot;&quot;&quot;
+        cell = self.cell
+        center_x = self.map_x + x * cell + cell // 2
+        center_y = self.map_y + y * cell + cell // 2
+        radius = cell // 2 - 2
+        color_factor = 1.0 - index / total_length * 0.3
+        body_color = (int(self.C[&#x27;snake_body&#x27;][0] * color_factor), int(self.C[&#x27;snake_body&#x27;][1] * color_factor), int(self.C[&#x27;snake_body&#x27;][2] * color_factor))
+        pygame.draw.circle(self.screen, body_color, (center_x, center_y), radius)
+        pygame.draw.circle(self.screen, self.C[&#x27;snake_outline&#x27;], (center_x, center_y), radius, 1)
+        scale_radius = radius // 2
+        pygame.draw.circle(self.screen, (body_color[0] // 2, body_color[1] // 2, body_color[2] // 2), (center_x, center_y), scale_radius)
+    def draw_snake_tail(self, x, y):
+        &quot;&quot;&quot;绘制蛇尾&quot;&quot;&quot;
+        cell = self.cell
+        center_x = self.map_x + x * cell + cell // 2
+        center_y = self.map_y + y * cell + cell // 2
+        radius = cell // 3
+        pygame.draw.circle(self.screen, self.C[&#x27;snake_tail&#x27;], (center_x, center_y), radius)
+        pygame.draw.circle(self.screen, self.C[&#x27;snake_outline&#x27;], (center_x, center_y), radius, 1)
+    def draw_food(self, x, y):
+        &quot;&quot;&quot;绘制食物&quot;&quot;&quot;
+        cell = self.cell
+        center_x = self.map_x + x * cell + cell // 2
+        center_y = self.map_y + y * cell + cell // 2
+        radius = cell // 2 - 2
+        pygame.draw.circle(self.screen, self.C[&#x27;food&#x27;], (center_x, center_y), radius)
+        detail_radius = radius // 2
+        pygame.draw.circle(self.screen, (self.C[&#x27;food&#x27;][0] // 2, self.C[&#x27;food&#x27;][1] // 2, self.C[&#x27;food&#x27;][2] // 2), (center_x, center_y), detail_radius)
+        stem_start = (center_x, center_y - radius)
+        stem_end = (center_x, center_y - radius - cell // 4)
+        pygame.draw.line(self.screen, self.C[&#x27;food_stem&#x27;], stem_start, stem_end, 2)
+    def draw_game(self):
+        pygame.draw.rect(self.screen, self.C[&#x27;border&#x27;], (self.map_x - 3, self.map_y - 3, self.map_w + 6, self.map_h + 6), 3)
+        snake_len = len(self.snake)
+        for i, (x, y) in enumerate(self.snake):
+            if i == 0:
+                self.draw_snake_head(x, y, self.direction)
+            else:
+                if i == snake_len - 1:
+                    self.draw_snake_tail(x, y)
+                else:
+                    self.draw_snake_body(x, y, i, snake_len)
+        fx, fy = self.food
+        self.draw_food(fx, fy)
+        sc = self.f.render(f&#x27;Score: {self.score}/9999&#x27;, True, self.C[&#x27;text&#x27;])
+        self.screen.blit(sc, (20, 30))
+    def draw_paused(self):
+        &quot;&quot;&quot;绘制暂停界面&quot;&quot;&quot;
+        overlay = pygame.Surface((self.W, self.H), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 128))
+        self.screen.blit(overlay, (0, 0))
+        panel_w, panel_h = (400, 200)
+        panel_x = (self.W - panel_w) // 2
+        panel_y = (self.H - panel_h) // 2
+        pygame.draw.rect(self.screen, (30, 45, 65), (panel_x, panel_y, panel_w, panel_h), border_radius=12)
+        pygame.draw.rect(self.screen, self.C[&#x27;hi&#x27;], (panel_x, panel_y, panel_w, panel_h), 3, border_radius=12)
+        title = self.f_big.render(&#x27;PAUSED&#x27;, True, self.C[&#x27;hi&#x27;])
+        self.screen.blit(title, (self.W // 2 - title.get_width() // 2, panel_y + 25))
+        tips = [&#x27;Press SPACE to resume&#x27;, &#x27;Press ESC to return to menu&#x27;, &#x27;&#x27;, &#x27;Game progress is saved&#x27;]
+        for i, tip in enumerate(tips):
+            text = self.f_s.render(tip, True, self.C[&#x27;text&#x27;])
+            self.screen.blit(text, (self.W // 2 - text.get_width() // 2, panel_y + 100 + i * 30))
+    def draw_menu(self):
+        t = self.f_big.render(&#x27;GLUTTONOUS SNAKE&#x27;, True, self.C[&#x27;hi&#x27;])
+        self.screen.blit(t, (self.W // 2 - t.get_width() // 2, 160))
+        tips = [&#x27;Reach the target score to get the flag&#x27;, &#x27;That\&#x27;s ez to do, right?&#x27;, &#x27;&#x27;, &#x27;↑/↓/←/→ : Move&#x27;, &#x27;SPACE : Start / Pause&#x27;, &#x27;ESC   : Menu&#x27;]
+        for i, l in enumerate(tips):
+            s = self.f.render(l, True, self.C[&#x27;text&#x27;])
+            self.screen.blit(s, (self.W // 2 - s.get_width() // 2, 300 + i * 40))
+    def draw_game_over(self):
+        o = pygame.Surface((self.W, self.H), pygame.SRCALPHA)
+        o.fill((0, 0, 0, 160))
+        self.screen.blit(o, (0, 0))
+        t = self.f_big.render(&#x27;GAME OVER&#x27;, True, (255, 80, 80))
+        self.screen.blit(t, (self.W // 2 - t.get_width() // 2, 300))
+    def draw_victory(self):
+        overlay = pygame.Surface((self.W, self.H), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 180))
+        self.screen.blit(overlay, (0, 0))
+        panel_w, panel_h = (600, 260)
+        panel_x = (self.W - panel_w) // 2
+        panel_y = (self.H - panel_h) // 2
+        pygame.draw.rect(self.screen, (30, 45, 65), (panel_x, panel_y, panel_w, panel_h), border_radius=12)
+        pygame.draw.rect(self.screen, self.C[&#x27;hi&#x27;], (panel_x, panel_y, panel_w, panel_h), 3, border_radius=12)
+        title = self.f_big.render(&#x27;VICTORY!&#x27;, True, (0, 255, 160))
+        self.screen.blit(title, (self.W // 2 - title.get_width() // 2, panel_y + 25))
+        flag = self.decrypt_flag()
+        flag_text = self.f.render(f&#x27;Flag: {flag}&#x27;, True, (230, 230, 230))
+        self.screen.blit(flag_text, (self.W // 2 - flag_text.get_width() // 2, panel_y + 120))
+        hint = self.f_s.render(&#x27;You found another way. Well done.&#x27;, True, (180, 180, 180))
+        self.screen.blit(hint, (self.W // 2 - hint.get_width() // 2, panel_y + 180))
+    def run(self):
+        while True:
+            dt = self.clock.tick(60) / 1000.0
+            self.handle_events()
+            if self.state == &#x27;playing&#x27; and (not self.paused):
+                    self.update(dt)
+            self.screen.fill(self.C[&#x27;bg&#x27;])
+            if self.state == &#x27;menu&#x27;:
+                self.draw_menu()
+            else:
+                self.draw_game()
+                if self.state == &#x27;game_over&#x27;:
+                    self.draw_game_over()
+                else:
+                    if self.state == &#x27;victory&#x27;:
+                        self.draw_victory()
+                    else:
+                        if self.paused:
+                            self.draw_paused()
+            pygame.display.flip()
+if __name__ == &#x27;__main__&#x27;:
+    SnakeGame().run()</code></pre>
+<p>分析源码 把flag相关的内容提取出来</p>
+<pre><code>import base64
+
+FLAG_PARTS = [(&#x27;TVkrL08vTFl7ZEhrUFltZA==&#x27;, 30), (&#x27;QSspKVdBSGN6dSEoQGNbYFQoISQ=&#x27;, 25), (&#x27;e15IcHspKic=&#x27;, 26)]
+
+result = bytearray()
+for data, key in FLAG_PARTS:
+        xor_data = base64.b64decode(data)
+        b64_data = bytes([b ^ key for b in xor_data])
+        plain_bytes = base64.b64decode(b64_data)
+        result.extend(plain_bytes)
+
+print(result.decode())</code></pre>
+<p>运行</p>
+<p><img src="content/所有文章/解题记录/HnuCTF/图片/v0m=4a9.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 取得flag flag为  <br><code>HnuCTF{5n4k3_m45t3r_5c0r3_h4ck}</code></p>

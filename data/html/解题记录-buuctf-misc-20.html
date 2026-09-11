@@ -1,0 +1,10 @@
+<h1>easycap</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：Wireshark</p>
+<p>拿到附件 解压 发现是个 pcap文件</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/20d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>那就要用到 <strong>Wireshark</strong></p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/20d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>现在的问题在于 题目描述啥也没有 我们不知道要抓什么  <br>点了点也没什么头绪 倒是发现全是TCP协议 试试追踪一下TCP流</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/20d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>额 出了？ 其实没看懂这题目想干嘛 但是总之flag有了  <br>复制 套上一层 <code>flag{}</code> 取得flag flag为  <br><code>flag{385b87afc8671dee07550290d16a8071}</code></p>

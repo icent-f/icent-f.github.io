@@ -1,0 +1,4 @@
+<h1>foremost</h1>
+<div class="post-meta"><span class="chip">知识笔记 · Misc / 工具</span><span>2026-09-11</span></div>
+<p>foremost 是一个基于文件头和文件尾特征的数据雕复（data carving）工具  <br>常用于从磁盘镜像、内存 dump、网络流量抓包 甚至单个文件中快速分离和恢复隐藏/删除的文件</p>
+<table><thead><tr><th>选项</th><th>说明</th></tr></thead><tbody><tr><td><code>-i 输入文件</code></td><td>指定输入文件</td></tr><tr><td><code>-o 输出目录</code></td><td>指定输出目录（必须为空或不存在）</td></tr><tr><td><code>-t type</code></td><td>指定要恢复的文件类型 多个用逗号分隔 如 <code>-t jpg,pdf,doc</code></td></tr><tr><td><code>-a</code></td><td>不检测文件系统边界 扫描整个输入</td></tr><tr><td><code>-b size</code></td><td>设置块大小（默认 512 字节）</td></tr><tr><td><code>-v</code></td><td>详细模式，显示更多过程信息</td></tr><tr><td><code>-q</code></td><td>快速模式，只搜索文件头，不校验文件尾</td></tr><tr><td><code>-c file</code></td><td>使用自定义配置文件（自定义签名）</td></tr><tr><td><code>-s num</code></td><td>跳过输入文件开头的指定扇区数（优化扫描）</td></tr></tbody></table>

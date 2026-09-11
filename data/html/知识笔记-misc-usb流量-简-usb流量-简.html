@@ -1,0 +1,114 @@
+<h1>USB流量（简）</h1>
+<div class="post-meta"><span class="chip">知识笔记 · Misc / USB流量（简）</span><span>2026-09-07</span></div>
+<p>USB流量可以用来传输多种交互式设备的操作 比如鼠标、键盘、手柄</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片15.png" alt="\图片.png" referrerpolicy="no-referrer"></p>
+<p>这个文章只简单介绍鼠标以及键盘的USB流量 并且附加两个工具的简单使用</p>
+<h2>鼠标协议</h2>
+<h3>简述</h3>
+<p>虽然鼠标移动表现为连续性 但是实际上计算机的一切连续性内容是用离散数据模拟的</p>
+<p>所以鼠标移动的数据也会被打包成一个个离散的USB流量包传输</p>
+<p>我们简单看一个鼠标流量</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片1.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>途中被选中的部分即为鼠标流量的数据区 如图所示 鼠标流量的数据由四个字节表述</p>
+<ul><li>第1个字节代表按键 即左键右键中健\(部分鼠标还有侧键\)</li><li>取 <code>00</code> 时 代表没按键</li></ul>
+<ul><li>取 <code>01</code> 时 代表按左键</li></ul>
+<ul><li>取 <code>02</code> 时 代表按右键</li></ul>
+<ul><li>第2个字节类似一个 signed byte 类型 其最高位为符号位</li><li>值为 <code>01</code>\~<code>7F</code>（最高位为0 正数）时 代表向右移动像素</li></ul>
+<ul><li>值为 <code>80</code>\~<code>FF</code>（最高位为1 负数）时 代表向左移动像素</li></ul>
+<ul><li>值为 <code>00</code> 时 代表不移动</li></ul>
+<ul><li>第3个字节与第二个字节类似 只不过从左右变成了上下</li><li>值为 <code>01</code>\~<code>7F</code>（最高位为0 正数）时 代表向上移动像素</li></ul>
+<ul><li>值为 <code>80</code>\~<code>FF</code>（最高位为1 负数）时 代表向下移动像素</li></ul>
+<ul><li>值为 <code>00</code> 时 代表不移动</li></ul>
+<ul><li>第4个字节代表中键滚动值 不滚动就是<code>00</code></li></ul>
+<p>有了这些映射 我们就可以复原鼠标移动的轨迹</p>
+<p>这里直接用现成的工具就好</p>
+<p>事实上 也有8字节数据长度的鼠标流量</p>
+<ul><li>第1个字节代表按键 即左键右键中健(部分鼠标还有侧键)</li><li>取 <code>00</code> 时 代表没按键</li></ul>
+<ul><li>取 <code>01</code> 时 代表按左键</li></ul>
+<ul><li>取 <code>02</code> 时 代表按右键</li></ul>
+<ul><li>第2个字节是保留位 通常是 <code>00</code> 解析时忽略即可</li></ul>
+<ul><li>第3个字节是 X（左右方向）的低位字节</li></ul>
+<ul><li>第4个字节是 X 的高位字节（16 位小端，符号扩展）</li><li>高位为 <code>00</code>（即 X 为正）时 代表向右移动像素</li></ul>
+<ul><li>高位为 <code>ff</code>（即 X 为负）时 代表向左移动像素</li></ul>
+<ul><li>第5个字节是 Y（上下方向）的低位字节</li></ul>
+<ul><li>第6个字节是 Y 的高位字节（16 位小端，符号扩展）</li><li>高位为 <code>00</code>（即 Y 为正）时 代表向上移动像素</li></ul>
+<ul><li>高位为 <code>ff</code>（即 Y 为负）时 代表向下移动像素</li></ul>
+<ul><li>第7、第8字节是保留位 通常为 <code>00</code></li></ul>
+<h3>工具：<a href="https://github.com/WangYihang/USB-Mouse-Pcap-Visualizer">USB-Mouse-Pcap-Visualizer</a></h3>
+<p>这个工具可以从 pcap 里提取鼠标包 按上面4字节还原按键状态与相对位移 再累加成可视的轨迹 产出csv文件</p>
+<pre><code>python usb-mouse-pcap-visualizer.py -i &lt;输入.pcap&gt; -o &lt;输出.csv&gt;</code></pre>
+<h3>例题：[NUAACTF-2017]<strong>traffic</strong></h3>
+<p><a href="https://ctf.bugku.com/challenges/detail/id/241.html"><strong>题目地址</strong></a></p>
+<p><strong>题目描述：</strong>Emmm，这是什么流量...</p>
+<p><strong>工具：</strong>Wireshark USB-Mouse-Pcap-Visualizer</p>
+<p>拿到附件 pcap文件</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p><strong>Wireshark </strong>打开</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片12.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现全是USB流量 随便点开一个看看</p>
+<p>利用 <strong>USB-Mouse-Pcap-Visualizer</strong> 得到csv文件</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片14.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>起一个本地服务(因为wsl没有可视化ui 起服务可以用原windows访问)</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片13.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>访问</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片7.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>点击 <code>assets/</code></p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片3.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>在这里上传刚刚产出的csv文件即可</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片16.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>(这字丑死了) 用完记得 <code>Ctrl+c</code> 关服务</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片6.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为</p>
+<p><code>nuaactf{usb_mouse}</code></p>
+<h2>键盘协议</h2>
+<h3>简述</h3>
+<p>依旧简单的看一个键盘流量</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片11.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>选择的区域就是键盘流量的数据区 可以看到长度为8字节 击键信息集中在第3个字节</p>
+<ul><li>第1个字节是修饰键</li><li><code>01</code> 左 Ctrl <code>02</code> 左 Shift <code>04</code> 左 Alt <code>08</code> 左 Win(GUI)</li></ul>
+<ul><li><code>10</code> 右 Ctrl <code>20</code> 右 Shift <code>40</code> 右 Alt <code>80</code> 右 Win</li></ul>
+<ul><li>例：<code>0x02</code> = 按左 Shift → 配合键码决定是<strong>大写/上档字符</strong>（如 <code>a</code> → <code>A</code>，<code>1</code> → <code>!</code>）</li></ul>
+<ul><li>第2个字节是保留位 通常是 <code>00</code> 解析时忽略即可</li></ul>
+<ul><li>第3个字节本身是 HID Usage ID 可以查 HID Usage Table 映射表还原成字符</li><li>松开一个键时 该字节回 <code>0x00</code></li></ul>
+<ul><li>第4-8字节 多键位 忽略即可</li></ul>
+<p>完整映射表放在最后</p>
+<h3>工具：<a href="https://github.com/WangYihang/UsbKeyboardDataHacker">UsbKeyboardDataHacker</a></h3>
+<p>可以把pcap中的usb键盘流量映射为可读的键盘字符</p>
+<pre><code>python UsbKeyboardDataHacker.py --input &lt;输入.pcap&gt;</code></pre>
+<h3>例题：[NISACTF 2022]破损的flag</h3>
+<p><a href="https://www.nssctf.cn/problem/2048"><strong>题目链接</strong></a></p>
+<p><strong>题目描述：</strong>flag真的是flag吗？</p>
+<p>Tips：flag格式为NSSCTF{}</p>
+<p>ps:记得补全单词哦，单词和单词之间记得加\_哦</p>
+<p><strong>工具：</strong>Wireshark UsbKeyboardDataHacker</p>
+<p>拿到附件 位置格式文件</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片4.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>用 file 命令查看文件类型</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片9.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现是pcap文件 改后缀 用 <strong>Wireshark </strong>打开</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片5.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现都是usb流量 随便点开一条查看数据长度</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片2.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现是8字节 猜测是键盘流量 使用 <strong>UsbKeyboardDataHacker</strong></p>
+<p>（因为我的工具依赖在虚拟环境里 所以命令行命令和上文写的不同）</p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片10.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片8.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>最后得到</p>
+<pre><code>ujkonjk,tfvbhyhjipokrdcvgrdcvgpokqwsztfvbhujkowazxdqasewsdrpokxdfviklpnjkwsdrrfgyrdcvguhnmkbhjmyhji</code></pre>
+<p>这是键盘包围密码 因为这个文章主要是讲USB的 所以这个后续单独写个文章讲 直接解密就行</p>
+<p>得到 <code>imgulfflagiswelcometfjnu</code></p>
+<p>断句得到 <code>im gulf flag is welcome t fjnu</code></p>
+<p>根据题目描述“补全单词” 应该是 <code>im gulf flag is welcome to fjnu</code></p>
+<p>将flag部分拿出来 加上<code>_</code></p>
+<p>取得flag flag为</p>
+<p>NSSCTF{welcome_to_fjnu}</p>
+<h2>其他</h2>
+<p>写一点小tip</p>
+<p>有些小阴间会把4字节的鼠标流量填充成8字节(并非正常的8字节鼠标流量)</p>
+<p>伪装成键盘流量 导致键盘流量工具空输出</p>
+<p><strong>第1字节 修饰键映射表</strong></p>
+<table><thead><tr><th>位值 (Hex)</th><th>含义</th></tr></thead><tbody><tr><td>0x01</td><td>左 Ctrl</td></tr><tr><td>0x02</td><td>左 Shift</td></tr><tr><td>0x04</td><td>左 Alt</td></tr><tr><td>0x08</td><td>左 Win / GUI</td></tr><tr><td>0x10</td><td>右 Ctrl</td></tr><tr><td>0x20</td><td>右 Shift</td></tr><tr><td>0x40</td><td>右 Alt</td></tr><tr><td>0x80</td><td>右 Win / GUI</td></tr></tbody></table>
+<p><strong>第3字节 键盘 HID 主键码映射表</strong></p>
+<table><thead><tr><th>Usage ID (Hex)</th><th>Dec</th><th>键 (无修饰/普通)</th><th>键 (Shift/上档)</th><th>备注</th></tr></thead><tbody><tr><td>0x04</td><td>4</td><td>a</td><td>A</td><td></td></tr><tr><td>0x05</td><td>5</td><td>b</td><td>B</td><td></td></tr><tr><td>0x06</td><td>6</td><td>c</td><td>C</td><td></td></tr><tr><td>0x07</td><td>7</td><td>d</td><td>D</td><td></td></tr><tr><td>0x08</td><td>8</td><td>e</td><td>E</td><td></td></tr><tr><td>0x09</td><td>9</td><td>f</td><td>F</td><td></td></tr><tr><td>0x0A</td><td>10</td><td>g</td><td>G</td><td></td></tr><tr><td>0x0B</td><td>11</td><td>h</td><td>H</td><td></td></tr><tr><td>0x0C</td><td>12</td><td>i</td><td>I</td><td></td></tr><tr><td>0x0D</td><td>13</td><td>j</td><td>J</td><td></td></tr><tr><td>0x0E</td><td>14</td><td>k</td><td>K</td><td></td></tr><tr><td>0x0F</td><td>15</td><td>l</td><td>L</td><td></td></tr><tr><td>0x10</td><td>16</td><td>m</td><td>M</td><td></td></tr><tr><td>0x11</td><td>17</td><td>n</td><td>N</td><td></td></tr><tr><td>0x12</td><td>18</td><td>o</td><td>O</td><td></td></tr><tr><td>0x13</td><td>19</td><td>p</td><td>P</td><td></td></tr><tr><td>0x14</td><td>20</td><td>q</td><td>Q</td><td></td></tr><tr><td>0x15</td><td>21</td><td>r</td><td>R</td><td></td></tr><tr><td>0x16</td><td>22</td><td>s</td><td>S</td><td></td></tr><tr><td>0x17</td><td>23</td><td>t</td><td>T</td><td></td></tr><tr><td>0x18</td><td>24</td><td>u</td><td>U</td><td></td></tr><tr><td>0x19</td><td>25</td><td>v</td><td>V</td><td></td></tr><tr><td>0x1A</td><td>26</td><td>w</td><td>W</td><td></td></tr><tr><td>0x1B</td><td>27</td><td>x</td><td>X</td><td></td></tr><tr><td>0x1C</td><td>28</td><td>y</td><td>Y</td><td></td></tr><tr><td>0x1D</td><td>29</td><td>z</td><td>Z</td><td></td></tr><tr><td>0x1E</td><td>30</td><td>1</td><td>!</td><td></td></tr><tr><td>0x1F</td><td>31</td><td>2</td><td>@</td><td></td></tr><tr><td>0x20</td><td>32</td><td>3</td><td>#</td><td></td></tr><tr><td>0x21</td><td>33</td><td>4</td><td>$</td><td></td></tr><tr><td>0x22</td><td>34</td><td>5</td><td>%</td><td></td></tr><tr><td>0x23</td><td>35</td><td>6</td><td>^</td><td></td></tr><tr><td>0x24</td><td>36</td><td>7</td><td>\&amp;</td><td></td></tr><tr><td>0x25</td><td>37</td><td>8</td><td>\*</td><td></td></tr><tr><td>0x26</td><td>38</td><td>9</td><td>(</td><td></td></tr><tr><td>0x27</td><td>39</td><td>0</td><td>)</td><td></td></tr><tr><td>0x28</td><td>40</td><td>Enter (Return)</td><td>Enter</td><td>回车</td></tr><tr><td>0x29</td><td>41</td><td>Escape</td><td>Escape</td><td>ESC</td></tr><tr><td>0x2A</td><td>42</td><td>Backspace</td><td>Backspace</td><td>退格</td></tr><tr><td>0x2B</td><td>43</td><td>Tab</td><td>Tab</td><td>制表</td></tr><tr><td>0x2C</td><td>44</td><td>Space</td><td>Space</td><td>空格</td></tr><tr><td>0x2D</td><td>45</td><td>-</td><td>\_</td><td></td></tr><tr><td>0x2E</td><td>46</td><td>=</td><td>+</td><td></td></tr><tr><td>0x2F</td><td>47</td><td>[</td><td>{</td><td></td></tr><tr><td>0x30</td><td>48</td><td>]</td><td>}</td><td></td></tr><tr><td>0x31</td><td>49</td><td>\</td><td>\</td><td></td><td>反斜杠</td></tr><tr><td>0x32</td><td>50</td><td>Non-US # / \~</td><td>—</td><td>非美式 #</td></tr><tr><td>0x33</td><td>51</td><td>;</td><td>:</td><td></td></tr><tr><td>0x34</td><td>52</td><td>'</td><td>"</td><td></td></tr><tr><td>0x35</td><td>53</td><td>`</td><td>\~</td><td>反引号</td></tr><tr><td>0x36</td><td>54</td><td>,</td><td>\&lt;</td><td></td></tr><tr><td>0x37</td><td>55</td><td>.</td><td>&gt;</td><td></td></tr><tr><td>0x38</td><td>56</td><td>/</td><td>?</td><td></td></tr><tr><td>0x39</td><td>57</td><td>Caps Lock</td><td>—</td><td>大写锁定</td></tr><tr><td>0x3A</td><td>58</td><td>F1</td><td>F1</td><td></td></tr><tr><td>0x3B</td><td>59</td><td>F2</td><td>F2</td><td></td></tr><tr><td>0x3C</td><td>60</td><td>F3</td><td>F3</td><td></td></tr><tr><td>0x3D</td><td>61</td><td>F4</td><td>F4</td><td></td></tr><tr><td>0x3E</td><td>62</td><td>F5</td><td>F5</td><td></td></tr><tr><td>0x3F</td><td>63</td><td>F6</td><td>F6</td><td></td></tr><tr><td>0x40</td><td>64</td><td>F7</td><td>F7</td><td></td></tr><tr><td>0x41</td><td>65</td><td>F8</td><td>F8</td><td></td></tr><tr><td>0x42</td><td>66</td><td>F9</td><td>F9</td><td></td></tr><tr><td>0x43</td><td>67</td><td>F10</td><td>F10</td><td></td></tr><tr><td>0x44</td><td>68</td><td>F11</td><td>F11</td><td></td></tr><tr><td>0x45</td><td>69</td><td>F12</td><td>F12</td><td></td></tr></tbody></table>
+<p><strong>额外：导航 / 编辑键（功能键区之后）</strong></p>
+<table><thead><tr><th>Usage ID (Hex)</th><th>Dec</th><th>键</th><th>备注</th></tr></thead><tbody><tr><td>0x46</td><td>70</td><td>PrintScreen</td><td>截图</td></tr><tr><td>0x47</td><td>71</td><td>Scroll Lock</td><td>滚动锁定</td></tr><tr><td>0x48</td><td>72</td><td>Pause</td><td>暂停</td></tr><tr><td>0x49</td><td>73</td><td>Insert</td><td>插入</td></tr><tr><td>0x4A</td><td>74</td><td>Home</td><td></td></tr><tr><td>0x4B</td><td>75</td><td>Page Up</td><td></td></tr><tr><td>0x4C</td><td>76</td><td>Delete (Del)</td><td>前向删除</td></tr><tr><td>0x4D</td><td>77</td><td>End</td><td></td></tr><tr><td>0x4E</td><td>78</td><td>Page Down</td><td></td></tr><tr><td>0x4F</td><td>79</td><td>Right Arrow</td><td>→</td></tr><tr><td>0x50</td><td>80</td><td>Left Arrow</td><td>←</td></tr><tr><td>0x51</td><td>81</td><td>Down Arrow</td><td>↓</td></tr><tr><td>0x52</td><td>82</td><td>Up Arrow</td><td>↑</td></tr><tr><td>0x53</td><td>83</td><td>Num Lock</td><td>数字锁定</td></tr><tr><td>0x54</td><td>84</td><td>Keypad /</td><td>小键盘 /</td></tr><tr><td>0x55</td><td>85</td><td>Keypad \*</td><td>小键盘 \*</td></tr><tr><td>0x56</td><td>86</td><td>Keypad -</td><td>小键盘 -</td></tr><tr><td>0x57</td><td>87</td><td>Keypad +</td><td>小键盘 +</td></tr><tr><td>0x58</td><td>88</td><td>Keypad Enter</td><td>小键盘回车</td></tr><tr><td>0x59</td><td>89</td><td>Keypad 1 / End</td><td></td></tr><tr><td>0x5A</td><td>90</td><td>Keypad 2 / ↓</td><td></td></tr><tr><td>0x5B</td><td>91</td><td>Keypad 3 / PgDn</td><td></td></tr><tr><td>0x5C</td><td>92</td><td>Keypad 4 / ←</td><td></td></tr><tr><td>0x5D</td><td>93</td><td>Keypad 5</td><td></td></tr><tr><td>0x5E</td><td>94</td><td>Keypad 6 / →</td><td></td></tr><tr><td>0x5F</td><td>95</td><td>Keypad 7 / Home</td><td></td></tr><tr><td>0x60</td><td>96</td><td>Keypad 8 / ↑</td><td></td></tr><tr><td>0x61</td><td>97</td><td>Keypad 9 / PgUp</td><td></td></tr><tr><td>0x62</td><td>98</td><td>Keypad 0 / Insert</td><td></td></tr><tr><td>0x63</td><td>99</td><td>Keypad . / Delete</td><td>小键盘小数点</td></tr><tr><td>0x64</td><td>100</td><td>Non-US \</td><td>非美式反斜杠</td></tr></tbody></table>

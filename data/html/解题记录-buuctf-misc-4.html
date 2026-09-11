@@ -1,0 +1,23 @@
+<h1>二维码</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：QR_Research 010Editor ARCHPR</p>
+<p>拿到附件 解压 发现里面是一张png文件 内容是个二维码</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/4d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>用 <strong>QR_Research</strong> 扫一下看看</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/4d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>显示 <code>secret is here</code>  <br>查看图片的属性试试</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/4d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>空的</p>
+<p>因为是png文件 所以猜测是否可能有隐写  <br>使用 <strong>Stegsolve</strong> 看看 检查各个轨道  <br>各个轨道都没有问题 猜测可能是 <strong>LSB隐写</strong>  <br>点击 <code>Analyse</code> 点击 <code>Data Extract</code>  <br>勾选 LSB First 将 Red Green Bule 勾选为0</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/4d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>无果 换个思路 用 <strong>010Editor</strong> 看看</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/4d5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>显示运行 <code>png.bt</code> 的时候报错了 那说明这个图片确实有问题  <br>点 <code>ignore</code> 忽略它</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/4d6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>我们发现 除了 <code>PNG</code> 文件里还有 <code>PK</code>  <br><code>PK</code> 是 zip 文件头的标志 试试看  <br>把PK前的数据直接删了 将后缀名改为 zip</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/4d7.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现里面有个 <code>4number.txt</code> 试着打开 发现需要密码  <br>根据文件名称 应该是四位数字密码 这里用 <strong>ARCHPR</strong> 爆破  <br>设置数字爆破 0000到9999</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/4d8.png" alt="" referrerpolicy="no-referrer"></p>
+<p>成功 密码为 <code>7639</code> 打开 <code>4number.txt</code></p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/4d9.png" alt="" referrerpolicy="no-referrer"></p>
+<p>将 <code>CTF</code> 改为 <code>flag</code> 取得flag  <br><code>flag{vjpw_wnoei}</code></p>

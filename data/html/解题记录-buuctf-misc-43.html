@@ -1,0 +1,22 @@
+<h1>谁赢了比赛？</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：小光非常喜欢下围棋。一天，他找到了一张棋谱，但是看不出到底是谁赢了。你能帮他看看到底是谁赢了么？注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：binwalk ARCHPR Stegsolve</p>
+<p>拿到附件 png文件</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/43d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p>说实话这个png第一眼很像二维码 不过扫不出东西  <br>先 <strong>binwalk</strong> 一下</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/43d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p>目前只能提取出rar 先看看rar</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/43d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>要密码 用 <strong>ARCHPR</strong> 爆破一下</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/43d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>密码1020</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/43d5.png" alt="" referrerpolicy="no-referrer"></p>
+<p>解压得到txt和gif txt内容如下</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/43d6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>无帮助 看看gif 发现是有帧数的 <strong>Stegsolve</strong> 逐帧读取</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/43d7.png" alt="" referrerpolicy="no-referrer"></p>
+<p>310帧有东西 虽然看起来没用 但是出题人这么敢一定有他的道理 保存  <br>我觉得棋盘像二维码也有它的道理 所以接着用 <strong>Stegsolve</strong> 查看 翻轨道</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/43d8.png" alt="" referrerpolicy="no-referrer"></p>
+<p>果然二维码 扫它</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/43d9.png" alt="" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为  <br><code>flag{shanxiajingwu_won_the_game}</code></p>

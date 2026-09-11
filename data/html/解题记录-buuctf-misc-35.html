@@ -1,0 +1,45 @@
+<h1>梅花香之苦寒来</h1>
+<div class="post-meta"><span class="chip">解题记录 · BUUCTF / Misc</span><span>2026-09-09</span></div>
+<p><strong>题目描述</strong>：注意：得到的 flag 请包上 flag{} 提交  <br><strong>工具</strong>：binwalk 010Editor Cyberchef Python QR_Research</p>
+<p>拿到附件 jpg图片</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/35d1.png" alt="" referrerpolicy="no-referrer"></p>
+<p><strong>binwalk</strong> 一下 发现有东西</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/35d2.png" alt="" referrerpolicy="no-referrer"></p>
+<p><strong>010Editor</strong> 看看是什么</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/35d3.png" alt="" referrerpolicy="no-referrer"></p>
+<p>十六进制 <strong>Cyberchef</strong> 解密一下看看是什么</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/35d4.png" alt="" referrerpolicy="no-referrer"></p>
+<p>发现是一堆类似坐标的东西 猜测可能要用这些坐标画图  <br>把坐标存到 test.txt 里面</p>
+<p>用Python写个脚本</p>
+<pre><code class="language-python"># 坐标点画图
+import matplotlib.pyplot as plt
+
+# 直接使用 eval 读取（注意：仅当文件来源可信时使用）
+def read_coordinates_simple(filename):
+    points = []
+    with open(filename, &#x27;r&#x27;) as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                # 将字符串 &quot;(7,7)&quot; 转换为元组 (7,7)
+                point = eval(line)
+                points.append(point)
+    return points
+
+# 使用
+points = read_coordinates_simple(&#x27;test.txt&#x27;)
+x_coords = [p[0] for p in points]
+y_coords = [p[1] for p in points]
+
+plt.figure(figsize=(12, 10))
+plt.scatter(x_coords, y_coords, s=1, c=&#x27;blue&#x27;, alpha=0.6)
+plt.title(f&#x27;Coordinates Plot ({len(points)} points)&#x27;)
+plt.xlabel(&#x27;X&#x27;)
+plt.ylabel(&#x27;Y&#x27;)
+plt.grid(True, alpha=0.3)
+plt.show()</code></pre>
+<p>得到</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/35d5.png" alt="" referrerpolicy="no-referrer"></p>
+<p><strong>QR_Research</strong> 扫码</p>
+<p><img src="content/所有文章/解题记录/BUUCTF/Misc/图片/35d6.png" alt="" referrerpolicy="no-referrer"></p>
+<p>复制 取得flag flag为  <br><code>flag{40fc0a979f759c8892f4dc045e28b820}</code></p>
