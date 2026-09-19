@@ -126,6 +126,7 @@
     root.classList.toggle("dark", dark);
     if (modeLabel) modeLabel.textContent = dark ? "深色模式" : "浅色模式";
     if (modeBtn) modeBtn.title = dark ? "切换到浅色模式" : "切换到深色模式";
+    if (Blog.syncGiscusTheme) Blog.syncGiscusTheme();   // 留言板跟着换配色
   }
   let savedDark = false;
   try { savedDark = localStorage.getItem(MODE_KEY) === "dark"; } catch (e) {}
@@ -292,6 +293,7 @@
     document.body.appendChild(t);
     setTimeout(() => t.remove(), 2400);
   }
+  Blog.toast = toast;   // 暴露给内容层（拖拽引用时提示用）
 
   /* ---------- 欢迎提示 ---------- */
   function greet() {

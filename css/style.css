@@ -740,6 +740,41 @@ html.theme-anim *::after {
 .pg-gap { color: var(--ink-faint); padding: 0 2px; }
 .pager-info { font-size: 12.5px; color: var(--ink-faint); margin-left: 8px; }
 
+/* ---------- 卡片拖拽 ---------- */
+.card[data-post] { cursor: grab; }
+.card[data-post]:active { cursor: grabbing; }
+body.dragging-card { cursor: grabbing; user-select: none; -webkit-user-select: none; }
+
+/* 跟随光标的拖拽预览 */
+.card-ghost {
+  position: fixed;
+  z-index: 99998;
+  width: 190px;
+  margin: 0;
+  pointer-events: none;
+  opacity: .94;
+  transform: rotate(-1.5deg);
+  border-color: var(--accent) !important;
+  box-shadow: 0 14px 30px rgba(30, 60, 52, .34);
+}
+
+/* ---------- 留言板 ---------- */
+.board-view { padding-bottom: 18px; }
+.board-drop {
+  margin: 0 14px;
+  padding: 8px;
+  border-radius: 14px;
+  border: 2px dashed transparent;
+  min-height: 180px;
+  transition: border-color .15s ease, background-color .15s ease;
+}
+body.dragging-card .board-drop { border-color: var(--line); }   /* 只在拖拽时提示可放 */
+.board-drop.over {
+  border-color: var(--accent);
+  background: var(--accent-ghost);
+}
+.giscus-slot { min-height: 140px; }
+
 /* 归档列表 */
 .archive-list { list-style: none; }
 .archive-list li { margin-bottom: 2px; border-radius: 8px; }

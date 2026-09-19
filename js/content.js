@@ -22,6 +22,22 @@
       { icon: "assets/icons/mail.svg",    label: "邮箱",        href: "#" },
       { icon: "assets/icons/rss.svg",     label: "RSS 订阅",    href: "#" },
     ],
+    /* ---------- 留言板（giscus）----------
+       配置步骤见 README「留言板」一节：
+         1. 仓库 Settings → General → Features → 勾选 Discussions
+         2. 到 https://github.com/apps/giscus 安装到本仓库
+         3. 打开 https://giscus.app，填入仓库名，选一个 Discussion 分类
+         4. 把页面生成的 data-repo-id 和 data-category-id 抄到下面
+       填好之前，留言板窗口会显示配置说明。
+    ------------------------------------ */
+    giscus: {
+      repo: "icent-f/icent-f.github.io",
+      repoId: "",                  // ← data-repo-id
+      category: "Announcements",   // ← 你选的 Discussion 分类名
+      categoryId: "",              // ← data-category-id
+      mapping: "specific",         // 固定一个讨论串当留言板
+      term: "留言板",
+    },
   };
 
   /* ---------- 桌面图标：全部文章 + 顶层文件夹（自动生成）+ 归档 ---------- */
@@ -243,13 +259,30 @@
       paint();
     },
 
-    /* 灵感 / 随记（占位：开发中） */
+    /* 留言板（giscus / GitHub Discussions） */
     notes(bodyEl) {
+      const g = META.giscus || {};
+      const ready = !!(g.repoId && g.categoryId);
+
       bodyEl.innerHTML =
-        '<div class="folder-view">' +
-          '<div class="folder-toolbar"><img class="ft-ic" src="assets/icons/notes.svg" alt="" /><span>灵感速记 · 本地草稿</span></div>' +
-          '<div class="empty-state">这里放一些随手记下的点子、待办、或者灵感碎片。正在开发中......</div>' +
+        '<div class="folder-view board-view">' +
+          '<div class="folder-toolbar">' +
+            '<img class="ft-ic" src="assets/icons/notes.svg" alt="" />' +
+            "<span>留言板 · GitHub Discussions</span>" +
+            '<span class="count">把文章卡片拖到这里可引用</span>' +
+          "</div>" +
+          '<div class="board-drop" id="board-drop">' +
+            (ready
+              ? '<div class="giscus-slot" id="giscus-slot"></div>'
+              : '<div class="empty-state">留言板还没配置好。<br /><br />' +
+                "需要先在 <code>js/content.js</code> 的 <code>META.giscus</code> 里填入 " +
+                "<code>repoId</code> 与 <code>categoryId</code>（在 " +
+                '<a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a> 生成），' +
+                "并确认仓库已开启 Discussions、已安装 giscus App。</div>") +
+          "</div>" +
         "</div>";
+
+      if (ready) mountGiscus(bodyEl.querySelector("#giscus-slot"));
     },
 
     /* 设置（伪设置，演示交互） */
@@ -411,10 +444,172 @@
     paint();
   }
 
+  /* ============================================================
+     留言板：giscus
+     ============================================================ */
+  function giscusTheme() {
+    return document.documentElement.classList.contains("dark") ? "dark_dimmed" : "light";
+  }
+
+  function mountGiscus(slot) {
+    const g = META.giscus || {};
+    if (!slot) return;
+    const mapping = g.mapping || "specific";
+    const attrs = {
+      "data-repo": g.repo,
+      "data-repo-id": g.repoId,
+      "data-category": g.category,
+      "data-category-id": g.categoryId,
+      "data-mapping": mapping,
+      "data-strict": "0",
+      "data-reactions-enabled": "1",
+      "data-emit-metadata": "0",
+      "data-input-position": "top",
+      "data-theme": giscusTheme(),
+      "data-lang": "zh-CN",
+      "data-loading": "lazy",
+    };
+    if (mapping === "specific") attrs["data-term"] = g.term || "留言板";
+
+    slot.innerHTML = "";
+    const s = document.createElement("script");
+    s.src = "https://giscus.app/client.js";
+    s.async = true;
+    s.crossOrigin = "anonymous";
+    Object.keys(attrs).forEach((k) => s.setAttribute(k, attrs[k]));
+    slot.appendChild(s);
+  }
+
+  /* 主题切换时同步 giscus 内部配色 */
+  function syncGiscusTheme() {
+    const f = document.querySelector("iframe.giscus-frame");
+    if (!f || !f.contentWindow) return;
+    try {
+      f.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: giscusTheme() } } }, "https://giscus.app");
+    } catch (e) {}
+  }
+
+  /* ============================================================
+     卡片拖拽
+       拖到桌面空白处 → 在该位置打开文章
+       拖到留言板     → 复制该文章的 Markdown 引用（giscus 无法程序化发帖）
+     ============================================================ */
+  let dragEndAt = 0;          // 刚拖完的时间戳，用来吃掉随后的 click
+
+  function popToast(msg) {
+    if (global.Blog && typeof global.Blog.toast === "function") global.Blog.toast(msg);
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).then(() => true).catch(() => legacyCopy(text));
+    }
+    return Promise.resolve(legacyCopy(text));
+  }
+  function legacyCopy(text) {
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand("copy");
+      ta.remove();
+      return ok;
+    } catch (e) { return false; }
+  }
+
+  function makeGhost(card) {
+    const g = document.createElement("div");
+    g.className = "card card-ghost";
+    const cat = card.querySelector(".c-cat");
+    const title = card.querySelector(".c-title") || card.querySelector(".t");
+    const date = card.querySelector(".c-date") || card.querySelector(".d");
+    g.innerHTML =
+      (cat ? cat.outerHTML : "") +
+      '<div class="c-title">' +
+        esc(title ? title.textContent : (card.dataset.title || "")) +
+      "</div>" +
+      (date ? '<div class="c-date">' + esc(date.textContent) + "</div>" : "");
+    return g;
+  }
+
+  function clearDropHints() {
+    document.querySelectorAll(".board-drop.over").forEach((b) => b.classList.remove("over"));
+    document.body.classList.remove("dragging-card");
+  }
+
+  function handleCardDrop(card, x, y) {
+    const file = card.dataset.post;
+    if (!file) return;
+    const target = document.elementFromPoint(x, y);
+    if (!target) return;
+
+    // ① 拖到留言板 → 复制引用链接
+    if (target.closest(".board-drop")) {
+      const p = POSTS.find((it) => it.file === file) || {};
+      const base = global.location.origin + global.location.pathname;
+      const url = base + "#post-" + (p.id || "");
+      const md = "[" + (p.title || card.dataset.title || "文章") + "](" + url + ")";
+      copyText(md).then((ok) => {
+        popToast(ok ? "已复制文章引用，粘贴到留言框即可" : "复制失败，请手动复制：" + md);
+      });
+      return;
+    }
+
+    // ② 拖到桌面空白处 → 在该位置打开文章
+    if (!target.closest(".window") && target.closest("#desktop")) {
+      openPost(file, card.dataset.title, { x: x, y: y });
+    }
+  }
+
+  function startCardDrag(e, card) {
+    if (e.button !== 0) return;
+    const start = { x: e.clientX, y: e.clientY };
+    let ghost = null;
+
+    const move = (ev) => {
+      const dx = ev.clientX - start.x;
+      const dy = ev.clientY - start.y;
+      if (!ghost) {
+        if (Math.abs(dx) + Math.abs(dy) < 6) return;   // 抖动阈值，避免误拖
+        ghost = makeGhost(card);
+        document.body.appendChild(ghost);
+        document.body.classList.add("dragging-card");
+      }
+      const gw = ghost.offsetWidth || 180;
+      ghost.style.left = Math.max(0, Math.min(ev.clientX - gw / 2, global.innerWidth - gw)) + "px";
+      ghost.style.top = Math.max(0, ev.clientY - 24) + "px";
+
+      const t = document.elementFromPoint(ev.clientX, ev.clientY);
+      const overBoard = !!(t && t.closest(".board-drop"));
+      document.querySelectorAll(".board-drop").forEach((b) => b.classList.toggle("over", overBoard));
+    };
+
+    const up = (ev) => {
+      document.removeEventListener("mousemove", move);
+      document.removeEventListener("mouseup", up);
+      if (!ghost) return;                 // 没超过阈值 → 交给 click，正常打开
+      dragEndAt = Date.now();
+      ghost.remove();
+      clearDropHints();
+      handleCardDrop(card, ev.clientX, ev.clientY);
+    };
+
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", up);
+  }
+
   /* 为卡片 / 归档绑定点击 -> 打开文章窗口 */
   function bindPostLinks(root) {
     root.querySelectorAll("[data-post]").forEach((a) => {
-      a.addEventListener("click", () => openPost(a.dataset.post, a.dataset.title));
+      a.addEventListener("click", (e) => {
+        if (Date.now() - dragEndAt < 300) { e.preventDefault(); return; }   // 刚拖完，别当成点击
+        openPost(a.dataset.post, a.dataset.title);
+      });
+      a.addEventListener("mousedown", (e) => startCardDrag(e, a));
     });
   }
 
@@ -449,8 +644,9 @@
     return '<pre class="md-fallback">' + esc(md) + "</pre>";
   }
 
-  /* ---------- 打开文章窗口 ---------- */
-  function openPost(file, title) {
+  /* ---------- 打开文章窗口 ----------
+     pos 可选：{ x, y } —— 传了就在该位置打开（卡片拖到桌面松手时用） */
+  function openPost(file, title, pos) {
     const meta = POSTS.find((p) => p.file === file) || {};
     const isMd = /\.md$/i.test(file);
     const baseDir = file.replace(/[^/]*$/, "");   // 文章所在目录
@@ -460,7 +656,7 @@
       try { history.replaceState(null, "", "#post-" + meta.id); } catch (e) {}
     }
 
-    const win = WM.open({
+    const cfg = {
       id: "post_" + file,
       title: title || meta.title || "阅读文章",
       iconImg: "assets/icons/file.svg",
@@ -503,7 +699,26 @@
           loadSource();
         }
       },
-    });
+    };
+
+    // 拖到桌面松手：把窗口摆在落点附近（并夹在可视区内）
+    if (pos) {
+      const vw = global.innerWidth;
+      const vh = global.innerHeight;
+      const w = Math.max(560, Math.round(vw * 0.5));
+      const h = Math.max(400, vh - 72);
+      cfg.x = Math.round(Math.min(Math.max(0, pos.x - w / 2), Math.max(0, vw - w)));
+      cfg.y = Math.round(Math.min(Math.max(0, pos.y - 24), Math.max(0, vh - h)));
+    }
+
+    const win = WM.open(cfg);
+    // 窗口已存在时 WM 会直接复用，这里强制挪到落点
+    if (pos && win && win.el) {
+      win.x = cfg.x;
+      win.y = cfg.y;
+      win.el.style.left = cfg.x + "px";
+      win.el.style.top = cfg.y + "px";
+    }
     // 触发渲染
     if (win.onRender) win.onRender(win.bodyEl);
   }
@@ -654,6 +869,6 @@
   global.Blog = {
     META, RAIL_ITEMS, RAIL_SOCIALS, open, openPost, openFromHash,
     loadPosts, loadTree, desktopIcons, topFolders, postsIn, childFolders, catColor, catIcon,
-    mobileEnter, initMobile,
+    mobileEnter, initMobile, syncGiscusTheme,
   };
 })(window);
