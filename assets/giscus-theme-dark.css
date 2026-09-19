@@ -1,0 +1,29 @@
+/*! Pay3Cents 博客 · giscus 自定义主题（dark）
+ * 基于 giscus 官方主题（MIT, GitHub Inc.）改色，配色取自 css/style.css
+ * giscus 用 <link crossorigin="anonymous"> 加载，所以必须能跨域访问。
+ */
+main{--color-prettylights-syntax-comment:#7f958e;--color-prettylights-syntax-constant:#6fc3ac;--color-prettylights-syntax-entity:#8fd8c2;--color-prettylights-syntax-storage-modifier-import:#dcebe5;--color-prettylights-syntax-entity-tag:#6fc3ac;--color-prettylights-syntax-keyword:#e0708a;--color-prettylights-syntax-string:#8fd8c2;--color-prettylights-syntax-variable:#cbb96a;--color-prettylights-syntax-brackethighlighter-unmatched:#e0708a;--color-prettylights-syntax-invalid-illegal-text:#0c1a17;--color-prettylights-syntax-invalid-illegal-bg:#e0708a;--color-prettylights-syntax-carriage-return-text:#0c1a17;--color-prettylights-syntax-carriage-return-bg:#e0708a;--color-prettylights-syntax-string-regexp:#8fd8c2;--color-prettylights-syntax-markup-list:#a9c0b9;--color-prettylights-syntax-markup-heading:#6fc3ac;--color-prettylights-syntax-markup-italic:#dcebe5;--color-prettylights-syntax-markup-bold:#dcebe5;--color-prettylights-syntax-markup-deleted-text:#e0708a;--color-prettylights-syntax-markup-deleted-bg:rgba(224,112,138,.14);--color-prettylights-syntax-markup-inserted-text:#6fc3ac;--color-prettylights-syntax-markup-inserted-bg:rgba(111,195,172,.16);--color-prettylights-syntax-markup-changed-text:#cbb96a;--color-prettylights-syntax-markup-changed-bg:rgba(203,185,106,.18);--color-prettylights-syntax-markup-ignored-text:#12181a;--color-prettylights-syntax-markup-ignored-bg:#6fc3ac;--color-prettylights-syntax-meta-diff-range:#8fd8c2;--color-prettylights-syntax-brackethighlighter-angle:#a9c0b9;--color-prettylights-syntax-sublimelinter-gutter-mark:#7f958e;--color-prettylights-syntax-constant-other-reference-link:#8fd8c2;--color-btn-text:#dcebe5;--color-btn-bg:rgba(255,255,255,.08);--color-btn-border:rgba(150,195,182,.30);--color-btn-shadow:0 1px 0 rgba(0,0,0,.30);--color-btn-inset-shadow:inset 0 1px 0 rgba(255,255,255,.06);--color-btn-hover-bg:rgba(111,195,172,.20);--color-btn-hover-border:rgba(111,195,172,.45);--color-btn-active-bg:rgba(111,195,172,.28);--color-btn-active-border:rgba(111,195,172,.45);--color-btn-selected-bg:rgba(111,195,172,.22);--color-btn-primary-text:#0c1a17;--color-btn-primary-bg:#6fc3ac;--color-btn-primary-border:rgba(111,195,172,.80);--color-btn-primary-shadow:0 1px 0 rgba(0,0,0,.30);--color-btn-primary-inset-shadow:inset 0 1px 0 rgba(255,255,255,.20);--color-btn-primary-hover-bg:#8fd8c2;--color-btn-primary-hover-border:rgba(143,216,194,.80);--color-btn-primary-selected-bg:#57ae97;--color-btn-primary-selected-shadow:inset 0 1px 0 rgba(0,0,0,.20);--color-btn-primary-disabled-text:rgba(12,26,23,.55);--color-btn-primary-disabled-bg:#3d6b5f;--color-btn-primary-disabled-border:rgba(150,195,182,.2);--color-action-list-item-default-hover-bg:rgba(111,195,172,.16);--color-segmented-control-bg:rgba(111,195,172,.12);--color-segmented-control-button-bg:rgba(255,255,255,.08);--color-segmented-control-button-selected-border:rgba(111,195,172,.5);--color-fg-default:#dcebe5;--color-fg-muted:#a9c0b9;--color-fg-subtle:#7f958e;--color-canvas-default:transparent;--color-canvas-overlay:#1b2524;--color-canvas-inset:rgba(111,195,172,.09);--color-canvas-subtle:rgba(111,195,172,.12);--color-border-default:rgba(150,195,182,.30);--color-border-muted:rgba(150,195,182,.18);--color-neutral-muted:rgba(150,195,182,.14);--color-accent-fg:#6fc3ac;--color-accent-emphasis:#6fc3ac;--color-accent-muted:rgba(111,195,172,.40);--color-accent-subtle:rgba(111,195,172,.16);--color-success-fg:#6fc3ac;--color-attention-fg:#cbb96a;--color-attention-muted:rgba(203,185,106,.35);--color-attention-subtle:rgba(203,185,106,.16);--color-danger-fg:#e0708a;--color-danger-muted:rgba(224,112,138,.30);--color-danger-subtle:rgba(224,112,138,.14);--color-primer-shadow-inset:inset 0 1px 0 rgba(0,0,0,.25);--color-scale-gray-7:#373e47;--color-scale-blue-8:#143d79;--color-social-reaction-bg-hover:rgba(111,195,172,.16);--color-social-reaction-bg-reacted-hover:rgba(111,195,172,.26);--color-scale-gray-1:rgba(111,195,172,.14);--color-scale-blue-1:rgba(111,195,172,.24);}
+main .pagination-loader-container{background-image:url(https://github.com/images/modules/pulls/progressive-disclosure-line.svg)}
+main .gsc-loading-image{background-image:url(https://github.githubassets.com/images/mona-loading-default.gif)}
+
+/* ============================================================
+   结构覆盖：圆角 + 玻璃质感（对齐博客的窗口风格）
+   主题 CSS 在组件 CSS 之前加载，同权重会被组件样式盖掉，
+   所以统一加 main 前缀提高一级权重。
+   ============================================================ */
+html, body { background: transparent !important; }   /* 让窗口的毛玻璃透出来 */
+
+/* 默认圆角只有 .25rem（4px），太尖锐 */
+main .gsc-comment-box:not(.gsc-comment-box-is-reply) { border-radius: 14px; }
+main .gsc-comment-box-tabs { border-start-start-radius: 14px; border-start-end-radius: 14px; }
+main .gsc-comment-box-write,
+main .gsc-comment-box-textarea { border-radius: 10px; }
+main .gsc-comment-box-textarea-extras { border-end-start-radius: 10px; border-end-end-radius: 10px; }
+main .gsc-reply-box { border-end-start-radius: 12px; border-end-end-radius: 12px; }
+main .gsc-pagination-button { border-radius: 10px; }
+main .gsc-reactions-popover { border-radius: 12px; }
+
+/* 输入区给一点底色，否则透明画布下看不出是输入框 */
+main .gsc-comment-box-textarea { background: rgba(255,255,255,.06); }
+main .gsc-comment-box-textarea-extras { background: rgba(255,255,255,.04); }
+main .gsc-comment-box-write { background: transparent; }

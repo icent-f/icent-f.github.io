@@ -44,6 +44,8 @@
       categoryId: "DIC_kwDOUhL-f84DF8R1",  // ← data-category-id
       mapping: "specific",             // 固定一个讨论串当留言板
       term: "留言板",
+      customTheme: true,               // 用 assets/giscus-theme-*.css（博客配色）
+                                       // 改成 false 就退回 giscus 内置的 light / dark_dimmed
     },
   };
 
@@ -454,8 +456,18 @@
   /* ============================================================
      留言板：giscus
      ============================================================ */
+  /* 留言板主题：用博客配色的自定义 CSS（assets/giscus-theme-*.css）
+     giscus 是在它的 iframe 里用 <link crossorigin="anonymous"> 加载这个文件的，
+     所以：① 必须是绝对地址 ② 必须能跨域访问
+     （线上 GitHub Pages 自带 CORS；本地要用 tools/serve.py，它会给响应加 CORS 头） */
   function giscusTheme() {
-    return document.documentElement.classList.contains("dark") ? "dark_dimmed" : "light";
+    const dark = document.documentElement.classList.contains("dark");
+    if (META.giscus && META.giscus.customTheme === false) {
+      return dark ? "dark_dimmed" : "light";        // 退回 giscus 内置主题
+    }
+    const base = global.location.origin +
+                 global.location.pathname.replace(/[^/]*$/, "");
+    return base + "assets/giscus-theme-" + (dark ? "dark" : "light") + ".css";
   }
 
   function mountGiscus(slot) {

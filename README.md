@@ -209,12 +209,35 @@ python tools/build_index.py     # 或双击 build.bat
 
 **必须用 Open-Ended 格式的分类**（`General` 就是）。
 
+### 主题：跟博客配色统一
+
+giscus 自带的主题是 GitHub 那套（灰蓝 + 绿色按钮、4px 直角），跟本站的青绿毛玻璃不搭。
+所以本站用的是**自定义主题**，放在：
+
+```
+assets/giscus-theme-light.css
+assets/giscus-theme-dark.css
+```
+
+这两份是拿 giscus 官方主题（MIT, GitHub Inc.）的全部 82 个 CSS 变量改值生成的，配色直接取自
+`css/style.css` 的 `:root` / `.dark`，末尾追加了一段结构覆盖（圆角 14px、画布透明等）。
+
+`js/content.js` 的 `giscusTheme()` 会根据当前深浅色拼出**绝对地址**返回。
+想退回内置主题：把 `META.giscus.customTheme` 改成 `false` 即可。
+
+> ⚠️ **主题 CSS 必须能跨域访问。**
+> giscus 是在它自己的 iframe 里用 `<link crossorigin="anonymous">` 加载这个文件的，
+> 属于跨域请求。GitHub Pages 自带 `Access-Control-Allow-Origin: *`，没问题；
+> 但 `python -m http.server` **不发这个头**，本地会加载不出主题 ——
+> 所以本地预览请用 `tools/serve.py`（`start.bat` / `start.sh` 已经改成用它了），
+> 它除了加 CORS 头还会禁用缓存，改完刷新即生效。
+
 ### 其它说明
 
 - 用 `mapping: "specific"` + `term: "留言板"`，**所有留言集中在同一个讨论串**（留言板语义）
 - `data-strict="1"`：精确匹配或新建，避免 GitHub 模糊搜索抓错讨论串
-- 切换深色/浅色时，会通过 `postMessage` 同步 giscus 内部配色
-- 主题改动会影响**已有的**留言串：改名 `term` 会另起一个新串
+- 切换深色/浅色时，会通过 `postMessage` 同步重新加载 giscus 的主题
+- 改名 `term` 会另起一个新的讨论串（原来的评论还在 GitHub，只是不再显示）
 
 ---
 
