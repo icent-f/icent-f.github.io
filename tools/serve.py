@@ -11,6 +11,12 @@
    属于跨域请求。python 自带的 http.server 不发 CORS 头，
    缺了它本地就加载不出留言板主题（线上 GitHub Pages 自带 CORS，不受影响）。
 
+   另外还会处理 Private Network Access 预检：giscus.app 是公网站点，
+   浏览器默认禁止公网页面请求 127.0.0.1 这种私有网络地址，
+   需要响应里带 Access-Control-Allow-Private-Network: true 才放行。
+   （注意：部分浏览器还会因为「HTTPS 页面加载 HTTP 资源」直接拦掉，
+     那种情况本地怎么调都出不来主题，得看线上效果。）
+
 2. 禁用缓存
    改完 CSS / JS 刷新即生效，不用每次 Ctrl+F5。
 
@@ -29,10 +35,22 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
-    def end_headers(self):
+    def _cors(self):
         self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "*")
+        if self.headers.get("Access-Control-Request-Private-Network") == "true":
+            self.send_header("Access-Control-Allow-Private-Network", "true")
+
+    def end_headers(self):
+        self._cors()
         self.send_header("Cache-Control", "no-store, no-cache, must-revalidate")
         super().end_headers()
+
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self._cors()
+        self.end_headers()
 
     def log_message(self, *args):
         pass          # 静音，免得刷屏
