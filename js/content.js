@@ -39,9 +39,9 @@
     ------------------------------------ */
     giscus: {
       repo: "icent-f/blog-comments",   // ← 你实际建的评论仓库（owner/name）
-      repoId: "",                      // ← data-repo-id
+      repoId: "R_kgDOUhL-fw",          // ← data-repo-id
       category: "General",             // ← 必须是 Open-Ended 格式的分类
-      categoryId: "",                  // ← data-category-id
+      categoryId: "DIC_kwDOUhL-f84DF8R1",  // ← data-category-id
       mapping: "specific",             // 固定一个讨论串当留言板
       term: "留言板",
     },
