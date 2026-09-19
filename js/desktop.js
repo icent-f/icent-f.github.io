@@ -295,6 +295,37 @@
   }
   Blog.toast = toast;   // 暴露给内容层（拖拽引用时提示用）
 
+  /* ---------- Ctrl + 滚轮：只缩放「鼠标所在窗口」的内容 ----------
+     浏览器在 Ctrl+滚轮 时默认缩放整个页面，会把桌面布局直接搞崩，
+     所以这里必须 preventDefault 挡掉；又因为 Chrome 对 window/document/body
+     上的 wheel 默认是 passive，所以必须显式声明 { passive: false } 才拦得住。 */
+  const ZOOM_STEP = 0.1;
+  let zoomTipEl = null, zoomTipTimer = null;
+
+  function zoomTip(w) {
+    if (!zoomTipEl) {
+      zoomTipEl = document.createElement("div");
+      zoomTipEl.className = "toast";
+      document.body.appendChild(zoomTipEl);
+    }
+    zoomTipEl.textContent = w.title + " · 内容缩放 " + Math.round(w.zoom * 100) + "%";
+    zoomTipEl.style.display = "";
+    clearTimeout(zoomTipTimer);
+    zoomTipTimer = setTimeout(() => { if (zoomTipEl) zoomTipEl.style.display = "none"; }, 1100);
+  }
+
+  document.addEventListener("wheel", (e) => {
+    if (!e.ctrlKey && !e.metaKey) return;          // 普通滚动不干预
+    e.preventDefault();                            // ← 挡掉整页缩放（含触控板双指捏合）
+    const node = e.target && e.target.closest ? e.target.closest(".window") : null;
+    if (!node) return;                             // 指针不在任何窗口上：只拦截，不缩放
+    const w = WM.list().find((it) => it.el === node);
+    if (!w) return;
+    const before = w.zoom;
+    const after = w.setZoom(before + (e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP));
+    if (after !== before) zoomTip(w);
+  }, { passive: false });
+
   /* ---------- 欢迎提示 ---------- */
   function greet() {
     const h = new Date().getHours();

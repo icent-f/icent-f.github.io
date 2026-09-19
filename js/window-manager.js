@@ -102,6 +102,7 @@
       this.el = el;
       this.titleEl = tb.querySelector(".win-title");
       this.bodyEl = body;
+      this.zoom = 1;              // Ctrl + 滚轮控制的内容缩放倍数
 
       this._setSize(this.width, this.height);
       windowsLayer.appendChild(el);
@@ -231,6 +232,15 @@
     }
 
     setTitle(t) { this.title = t; this.titleEl.textContent = t; this._syncTaskbar(); }
+
+    /* 内容缩放（Ctrl + 滚轮）：只作用于本窗口，窗口之间互不影响 */
+    setZoom(z) {
+      const next = Math.min(2.2, Math.max(0.6, Math.round(z * 100) / 100));
+      if (next === this.zoom) return this.zoom;
+      this.zoom = next;
+      this.bodyEl.style.zoom = next === 1 ? "" : String(next);
+      return next;
+    }
 
     close() {
       if (this.closed) return;
