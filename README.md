@@ -159,6 +159,65 @@ python tools/build_index.py     # 或双击 build.bat
 
 ---
 
+## 留言板（giscus）
+
+「灵感」那个窗口是一个 **giscus 留言板** —— 评论存在 GitHub Discussions 里，不需要自己的数据库和服务器。
+
+评论放在一个**独立的公开仓库**里（默认 `icent-f/blog-comments`），跟博客仓库分开，这样以后换框架、换域名，评论都还在。
+
+### 配置步骤
+
+1. **新建评论仓库**
+   - 名字：`blog-comments`
+   - 可见性：**Public**（giscus 只认公开仓库）
+   - README / .gitignore / license 都不用勾
+
+2. **开启 Discussions**
+   打开那个仓库 → `Settings` → `General` → `Features` → 勾选 **Discussions**
+
+3. **安装 giscus App**
+   打开 <https://github.com/apps/giscus> → `Install` → 选 **Only select repositories** → 只勾**评论仓库**
+   （⚠️ 是装在评论仓库上，不是博客仓库）
+
+4. **在 giscus.app 生成配置**
+   打开 <https://giscus.app>：
+   - Repository：填**评论仓库**的全名，如 `icent-f/blog-comments`
+   - Discussion Category：选 **`General`**（见下方警告）
+   - Mapping：随便选，代码里写死了
+   - 抄下页面生成的 `data-repo-id` 和 `data-category-id`
+
+5. **填进 `js/content.js`**
+
+   ```js
+   giscus: {
+     repo: "icent-f/blog-comments",
+     repoId: "R_kgDO...",        // ← data-repo-id
+     category: "General",
+     categoryId: "DIC_kwDO...",  // ← data-category-id
+     mapping: "specific",
+     term: "留言板",
+   },
+   ```
+
+   填好之前，留言板窗口会显示一段配置说明，不会白屏。
+
+### ⚠️ 分类别选 Announcements
+
+`Announcements` 是 GitHub 的**受限分类**——只有仓库维护者能在那里开新帖。
+而 giscus 自动创建讨论串时，是以**留言者的身份**去创建的，GitHub 会拒绝，
+于是**第一个留言的人**会看到 `Discussion not found`，你只能每次手动去建讨论串。
+
+**必须用 Open-Ended 格式的分类**（`General` 就是）。
+
+### 其它说明
+
+- 用 `mapping: "specific"` + `term: "留言板"`，**所有留言集中在同一个讨论串**（留言板语义）
+- `data-strict="1"`：精确匹配或新建，避免 GitHub 模糊搜索抓错讨论串
+- 切换深色/浅色时，会通过 `postMessage` 同步 giscus 内部配色
+- 主题改动会影响**已有的**留言串：改名 `term` 会另起一个新串
+
+---
+
 ## 目录结构
 
 ```

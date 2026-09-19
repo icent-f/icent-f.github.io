@@ -23,22 +23,26 @@
       { icon: "assets/icons/rss.svg",     label: "RSS 订阅",    href: "#" },
     ],
     /* ---------- 留言板（giscus）----------
-       配置步骤见 README「留言板」一节：
-         1. 仓库 Settings → General → Features → 勾选 Discussions
-         2. 到 https://github.com/apps/giscus 安装到本仓库
-         3. 打开 https://giscus.app，填入仓库名，选一个 Discussion 分类
-         4. 把页面生成的 data-repo-id 和 data-category-id 抄到下面
+       用一个**独立的公开仓库**存放评论，与博客仓库分开。
+       完整步骤见 README「留言板（giscus）」一节，简述：
 
-       ⚠️ 分类必须选 Open-Ended 格式的（如 General），
-          不要选 Announcements —— 那个只有维护者能开帖，
-          会让第一个评论的人看到 "Discussion not found"。
+         1. 新建一个 public 仓库（默认名 blog-comments），不用勾 README
+         2. 那个仓库 → Settings → General → Features → 勾选 Discussions
+         3. https://github.com/apps/giscus → Install → 只授权评论仓库
+         4. https://giscus.app 填入「评论仓库」名，分类选 Open-Ended 格式
+         5. 把生成的 data-repo-id / data-category-id 抄到下面
+
+       ⚠️ 分类必须选 Open-Ended 格式的（如 General）。
+          不要选 Announcements —— 只有维护者能在那里开帖，
+          而 giscus 自动建串时是以「评论者」的身份创建，会被拒绝，
+          导致第一个人留言时报 "Discussion not found"。
     ------------------------------------ */
     giscus: {
-      repo: "icent-f/icent-f.github.io",
-      repoId: "",              // ← data-repo-id
-      category: "General",     // ← 必须是 Open-Ended 格式的分类
-      categoryId: "",          // ← data-category-id
-      mapping: "specific",     // 固定一个讨论串当留言板
+      repo: "icent-f/blog-comments",   // ← 你实际建的评论仓库（owner/name）
+      repoId: "",                      // ← data-repo-id
+      category: "General",             // ← 必须是 Open-Ended 格式的分类
+      categoryId: "",                  // ← data-category-id
+      mapping: "specific",             // 固定一个讨论串当留言板
       term: "留言板",
     },
   };
