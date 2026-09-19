@@ -18,7 +18,7 @@
     tags: ["MISC手", "CTF", "半个画师", "勉强算个人类", "蓝色大肥鱼"],
     socials: [
       { icon: "assets/icons/twitter.svg", label: "Twitter / X", href: "#" },
-      { icon: "assets/icons/github.svg",  label: "GitHub",      href: "#" },
+      { icon: "assets/icons/github.svg",  label: "GitHub",      href: "https://github.com/icent-f" },
       { icon: "assets/icons/mail.svg",    label: "邮箱",        href: "#" },
       { icon: "assets/icons/rss.svg",     label: "RSS 订阅",    href: "#" },
     ],
@@ -85,9 +85,9 @@
     { type: "settings", label: "设置",   icon: "assets/icons/settings.svg" },
   ];
 
-  /* 侧边栏社交链接（href 留空，后续填你自己的地址即可） */
+  /* 侧边栏社交链接（href 留空的会渲染成无效链接，填上你自己的地址即可） */
   const RAIL_SOCIALS = [
-    { label: "GitHub",   icon: "assets/icons/github.svg",   href: "" },
+    { label: "GitHub",   icon: "assets/icons/github.svg",   href: "https://github.com/icent-f" },
     { label: "Bilibili", icon: "assets/icons/bilibili.svg", href: "" },
   ];
 
