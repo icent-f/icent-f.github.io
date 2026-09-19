@@ -13,17 +13,25 @@ main .gsc-loading-image{background-image:url(https://github.githubassets.com/ima
    ============================================================ */
 html, body { background: transparent !important; }   /* 让窗口的毛玻璃透出来 */
 
-/* 默认圆角只有 .25rem（4px），太尖锐 */
+/* 外层评论框：组件默认圆角只有 .25rem（4px），太尖锐 */
 main .gsc-comment-box:not(.gsc-comment-box-is-reply) { border-radius: 14px; }
 main .gsc-comment-box-tabs { border-start-start-radius: 14px; border-start-end-radius: 14px; }
-main .gsc-comment-box-write,
-main .gsc-comment-box-textarea { border-radius: 10px; }
-main .gsc-comment-box-textarea-extras { border-end-start-radius: 10px; border-end-end-radius: 10px; }
+main .gsc-comment-box-write { border-radius: 12px; }
 main .gsc-reply-box { border-end-start-radius: 12px; border-end-end-radius: 12px; }
 main .gsc-pagination-button { border-radius: 10px; }
 main .gsc-reactions-popover { border-radius: 12px; }
 
-/* 输入区给一点底色，否则透明画布下看不出是输入框 */
-main .gsc-comment-box-textarea { background: rgba(255,255,255,.42); }
-main .gsc-comment-box-textarea-extras { background: rgba(255,255,255,.26); }
-main .gsc-comment-box-write { background: transparent; }
+/* 输入框只圆上面两个角 —— 这点很重要：
+   组件原本就是「文本框底部直角 + 虚线」再拼上下面那条工具条，
+   四个角都圆的话，文本框底部会拱出圆弧、和工具条的直角对不上，
+   中间会露出一道断口。所以上圆下直，和工具条的下圆上直正好拼成完整框。 */
+main .gsc-comment-box-textarea {
+  border-radius: 12px 12px 0 0;
+  border-color: rgba(120,180,165,.62);
+  background: rgba(255,255,255,.82);
+}
+main .gsc-comment-box-textarea-extras {
+  border-radius: 0 0 12px 12px;
+  border-color: rgba(120,180,165,.62);
+  background: rgba(255,255,255,.58);
+}
