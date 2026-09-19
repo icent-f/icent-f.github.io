@@ -28,10 +28,12 @@ main .gsc-reactions-popover { border-radius: 12px; }
 main .gsc-comment-box-textarea {
   border-radius: 12px 12px 0 0;
   border-color: rgba(150,195,182,.38);
-  background: rgba(255,255,255,.09);
+  background: rgba(255,255,255,.11);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.18);
 }
 main .gsc-comment-box-textarea-extras {
   border-radius: 0 0 12px 12px;
   border-color: rgba(150,195,182,.38);
-  background: rgba(255,255,255,.05);
+  background: rgba(255,255,255,.06);
 }
+main .gsc-comment-box-textarea::placeholder { color: #8ba39b; opacity: 1; }
