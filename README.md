@@ -161,7 +161,7 @@ python tools/build_index.py     # 或双击 build.bat
 
 ## 留言板（giscus）
 
-「灵感」那个窗口是一个 **giscus 留言板** —— 评论存在 GitHub Discussions 里，不需要自己的数据库和服务器。
+「留言板」那个窗口是一个 **giscus 留言板** —— 评论存在 GitHub Discussions 里，不需要自己的数据库和服务器。
 
 评论放在一个**独立的公开仓库**里（默认 `icent-f/blog-comments`），跟博客仓库分开，这样以后换框架、换域名，评论都还在。
 

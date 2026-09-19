@@ -164,7 +164,7 @@
       { label: "关于我 · " + Blog.META.owner, act: () => Blog.open("about") },
       { label: "全部文章", act: () => Blog.open("posts") },
       { label: "归档", act: () => Blog.open("archives") },
-      { label: "灵感", act: () => Blog.open("notes") },
+      { label: "留言板", act: () => Blog.open("notes") },
       { label: "设置", act: () => Blog.open("settings") },
       { label: "回到桌面", act: goHome },
       { label: "刷新桌面", act: () => location.reload() },

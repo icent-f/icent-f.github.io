@@ -80,7 +80,7 @@
   /* ---------- 左侧：鼠标移过去的侧边栏 ---------- */
   const RAIL_ITEMS = [
     { type: "home",     label: "首页",   icon: "assets/icons/home.svg" },
-    { type: "notes",    label: "灵感",   icon: "assets/icons/notes.svg" },
+    { type: "notes",    label: "留言板",  icon: "assets/icons/chat.svg" },
     { type: "about",    label: "关于我", icon: "assets/icons/user.svg" },
     { type: "settings", label: "设置",   icon: "assets/icons/settings.svg" },
   ];
@@ -274,7 +274,7 @@
       bodyEl.innerHTML =
         '<div class="folder-view board-view">' +
           '<div class="folder-toolbar">' +
-            '<img class="ft-ic" src="assets/icons/notes.svg" alt="" />' +
+            '<img class="ft-ic" src="assets/icons/chat.svg" alt="" />' +
             "<span>留言板 · GitHub Discussions</span>" +
             '<span class="count">把文章卡片拖到这里可引用</span>' +
           "</div>" +
@@ -759,7 +759,7 @@
       posts:     { id: "posts", title: "全部文章", iconImg: "assets/icons/folder-blue.svg", place: "right" },
       browse:    { id: "browse_" + (cfg.cat || ""), title: cfg.cat || "文件夹", iconImg: catIcon(cfg.cat), place: "right" },
       archives:  { id: "archives", title: "归档", iconImg: "assets/icons/archive.svg", place: "right" },
-      notes:     { id: "notes", title: "灵感", iconImg: "assets/icons/notes.svg", place: "right" },
+      notes:     { id: "notes", title: "留言板", iconImg: "assets/icons/chat.svg", place: "right" },
       settings:  { id: "settings", title: "设置", iconImg: "assets/icons/settings.svg", width: 600, height: 540 },
     };
     const d = defs[type];
