@@ -28,14 +28,17 @@
          2. 到 https://github.com/apps/giscus 安装到本仓库
          3. 打开 https://giscus.app，填入仓库名，选一个 Discussion 分类
          4. 把页面生成的 data-repo-id 和 data-category-id 抄到下面
-       填好之前，留言板窗口会显示配置说明。
+
+       ⚠️ 分类必须选 Open-Ended 格式的（如 General），
+          不要选 Announcements —— 那个只有维护者能开帖，
+          会让第一个评论的人看到 "Discussion not found"。
     ------------------------------------ */
     giscus: {
       repo: "icent-f/icent-f.github.io",
-      repoId: "",                  // ← data-repo-id
-      category: "Announcements",   // ← 你选的 Discussion 分类名
-      categoryId: "",              // ← data-category-id
-      mapping: "specific",         // 固定一个讨论串当留言板
+      repoId: "",              // ← data-repo-id
+      category: "General",     // ← 必须是 Open-Ended 格式的分类
+      categoryId: "",          // ← data-category-id
+      mapping: "specific",     // 固定一个讨论串当留言板
       term: "留言板",
     },
   };
@@ -461,7 +464,7 @@
       "data-category": g.category,
       "data-category-id": g.categoryId,
       "data-mapping": mapping,
-      "data-strict": "0",
+      "data-strict": "1",
       "data-reactions-enabled": "1",
       "data-emit-metadata": "0",
       "data-input-position": "top",
