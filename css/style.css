@@ -659,6 +659,9 @@ html.theme-anim *::after {
   border-radius: 11px;
   padding: 14px;
   cursor: pointer;
+  /* 卡片是「点开/拖拽」的控件，不允许选中文本，否则拖拽时会拖出一片蓝色高亮 */
+  user-select: none;
+  -webkit-user-select: none;
   transition: transform .12s, box-shadow .12s, border-color .12s;
 }
 .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); border-color: var(--accent-soft); }
@@ -783,6 +786,8 @@ body.dragging-card .board-drop { border-color: var(--line); }   /* 只在拖拽�
   padding: 8px 12px;
   color: var(--ink); text-decoration: none;
   border-radius: 8px; font-size: 14px;
+  user-select: none;          /* 同样是可拖拽条目，禁止选中 */
+  -webkit-user-select: none;
 }
 .archive-list a:hover { background: var(--accent-ghost); }
 .archive-list .d {

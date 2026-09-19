@@ -572,8 +572,17 @@
     }
   }
 
+  function clearTextSelection() {
+    try {
+      const sel = global.getSelection && global.getSelection();
+      if (sel && sel.removeAllRanges) sel.removeAllRanges();
+    } catch (e) {}
+  }
+
   function startCardDrag(e, card) {
     if (e.button !== 0) return;
+    e.preventDefault();          // 阻止浏览器从卡片开始拖选文本
+    clearTextSelection();
     const start = { x: e.clientX, y: e.clientY };
     let ghost = null;
 
@@ -582,6 +591,7 @@
       const dy = ev.clientY - start.y;
       if (!ghost) {
         if (Math.abs(dx) + Math.abs(dy) < 6) return;   // 抖动阈值，避免误拖
+        clearTextSelection();                          // 兜底：清掉残留选区
         ghost = makeGhost(card);
         document.body.appendChild(ghost);
         document.body.classList.add("dragging-card");
