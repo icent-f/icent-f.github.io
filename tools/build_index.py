@@ -169,14 +169,14 @@ def main():
         shutil.rmtree(OUT_HTML)
     os.makedirs(OUT_HTML, exist_ok=True)
     for p in posts:
-        with open(os.path.join(OUT_HTML, p["id"] + ".html"), "w", encoding="utf-8") as f:
+        with open(os.path.join(OUT_HTML, p["id"] + ".html"), "w", encoding="utf-8", newline="\n") as f:
             f.write(p.pop("_inner"))
 
     # ---- 写清单 / 目录树 ----
     os.makedirs(os.path.dirname(OUT_POSTS), exist_ok=True)
-    with open(OUT_POSTS, "w", encoding="utf-8") as f:
+    with open(OUT_POSTS, "w", encoding="utf-8", newline="\n") as f:
         json.dump(posts, f, ensure_ascii=False, indent=2)
-    with open(OUT_TREE, "w", encoding="utf-8") as f:
+    with open(OUT_TREE, "w", encoding="utf-8", newline="\n") as f:
         json.dump(sorted(folders), f, ensure_ascii=False, indent=2)
 
     # ---- RSS ----
@@ -199,7 +199,7 @@ def main():
            '  <title>%s</title>\n  <link>%s/</link>\n  <description>%s</description>\n'
            '  <language>zh-cn</language>\n%s\n</channel>\n</rss>\n'
            % (SITE_TITLE, SITE_URL, SITE_DESC, "\n".join(items)))
-    with open(os.path.join(ROOT, "rss.xml"), "w", encoding="utf-8") as f:
+    with open(os.path.join(ROOT, "rss.xml"), "w", encoding="utf-8", newline="\n") as f:
         f.write(rss)
 
     # ---- sitemap ----
@@ -210,7 +210,7 @@ def main():
     sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n'
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n%s\n</urlset>\n'
                % "\n".join(urls))
-    with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
+    with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8", newline="\n") as f:
         f.write(sitemap)
 
     print("文章 %d 篇 | 文件夹 %d 个 | 预渲染 HTML %d 个" % (len(posts), len(folders), len(posts)))

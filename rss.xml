@@ -6,6 +6,13 @@
   <description>记录未确定事件的观察、CTF 解题与生活碎碎念。</description>
   <language>zh-cn</language>
   <item>
+    <title>Volatility</title>
+    <link>https://icent-f.github.io/#post-知识笔记-forensics-内存取证-volatility</link>
+    <guid isPermaLink="false">知识笔记-forensics-内存取证-volatility</guid>
+    <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+    <description>Volatility是一款用python编写的开源的内存取证工具</description>
+  </item>
+  <item>
     <title>明文攻击</title>
     <link>https://icent-f.github.io/#post-知识笔记-misc-压缩包相关-明文攻击</link>
     <guid isPermaLink="false">知识笔记-misc-压缩包相关-明文攻击</guid>
