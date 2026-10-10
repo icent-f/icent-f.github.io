@@ -139,7 +139,7 @@ Win7 之后引入的“智能”选项 系统会自动判断选用哪种转储�
 >
 > 若BugCheck Code不同 参数的含义也会不同
 
-```Plain Text
+```
 Arg1: ffffee899137f78c, memory referenced.
 Arg2: 0000000000000002, X64: bit 0 set if the fault was due to a not-present PTE.
         bit 1 is set if the fault was due to a write, clear if a read.

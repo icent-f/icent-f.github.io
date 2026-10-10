@@ -12,7 +12,7 @@
 import html
 import re
 
-_FENCE = re.compile(r"^```\s*([\w+#.-]*)\s*$")
+_FENCE = re.compile(r"^```\s*([^`]*)$")
 _HEADING = re.compile(r"^(#{1,6})\s+(.*)$")
 _HR = re.compile(r"^\s*([-*_])\s*(\1\s*){2,}$")
 _QUOTE = re.compile(r"^\s*>")
@@ -83,7 +83,10 @@ def render(md):
         # 代码块
         m = _FENCE.match(line)
         if m:
-            lang = m.group(1)
+            # 语言名可能带空格（如 "Plain Text"、"Windows PowerShell"）：
+            # 取第一个词并清掉不适合做 class 的字符
+            _parts = m.group(1).split()
+            lang = re.sub(r"[^\w+#.-]", "", _parts[0]) if _parts else ""
             i += 1
             buf = []
             while i < n and not _FENCE.match(lines[i]):
