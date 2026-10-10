@@ -2,17 +2,17 @@
   {
     "id": "知识笔记-forensics-内存取证-如何利用windbg分析蓝屏崩溃",
     "title": "如何利用WinDbg分析蓝屏崩溃",
-    "date": "2026-10-10",
+    "date": "2026-10-09",
     "category": "知识笔记",
     "group": "Forensics / 内存取证",
     "folder": "知识笔记/Forensics/内存取证",
     "file": "content/所有文章/知识笔记/Forensics/内存取证/如何利用WinDbg分析蓝屏崩溃.md",
     "html": "data/html/知识笔记-forensics-内存取证-如何利用windbg分析蓝屏崩溃.html",
-    "excerpt": "WinDbg 是微软官方推出的一款Windows 调试工具"
+    "excerpt": "WinDbg是微软官方推出的一款Windows调试工具 这篇文章主要介绍它在蓝屏分析方面的用途"
   },
   {
     "id": "知识笔记-forensics-内存取证-volatility",
-    "title": "Volatility",
+    "title": "Volatility使用指南",
     "date": "2026-10-09",
     "category": "知识笔记",
     "group": "Forensics / 内存取证",
@@ -20,6 +20,17 @@
     "file": "content/所有文章/知识笔记/Forensics/内存取证/Volatility.md",
     "html": "data/html/知识笔记-forensics-内存取证-volatility.html",
     "excerpt": "Volatility是一款用python编写的开源的内存取证工具"
+  },
+  {
+    "id": "解题记录-hdctf-hdctf-misc",
+    "title": "HDCTF2026",
+    "date": "2026-09-12",
+    "category": "解题记录",
+    "group": "HDCTF",
+    "folder": "解题记录/HDCTF",
+    "file": "content/所有文章/解题记录/HDCTF/HDCTF-Misc.md",
+    "html": "data/html/解题记录-hdctf-hdctf-misc.html",
+    "excerpt": "海南大学CTF校赛2026 Misc方向部分题解"
   },
   {
     "id": "知识笔记-misc-压缩包相关-明文攻击",

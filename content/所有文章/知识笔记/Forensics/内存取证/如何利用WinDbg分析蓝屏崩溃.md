@@ -1,3 +1,9 @@
+---
+title: 如何利用WinDbg分析蓝屏崩溃
+date: 2026-10-09
+excerpt: WinDbg是微软官方推出的一款Windows调试工具 这篇文章主要介绍它在蓝屏分析方面的用途
+---
+
 # 如何利用WinDbg分析蓝屏崩溃
 
 ## PART 1 概述

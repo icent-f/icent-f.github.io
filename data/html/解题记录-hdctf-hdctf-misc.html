@@ -1,0 +1,496 @@
+<h1>HDCTF2026</h1>
+<div class="post-meta"><span class="chip">解题记录 · HDCTF</span><span>2026-09-12</span></div>
+<h2><strong>MISC</strong></h2>
+<h3><strong>Welcome</strong></h3>
+<p><strong>题目描述</strong>：快乐签到题</p>
+<p>关注"HnuSec"微信公众号，后台发送"签到"</p>
+<p>领取你的第一个flag吧^\_^</p>
+<p><strong>工具</strong>：Cyberchef</p>
+<p>签到题 找微信公众号发“签到”两个字就行</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/image.png" alt="image.png" referrerpolicy="no-referrer"></p>
+<p>base64 拿去 <strong>Cyberchef</strong> 解密</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/image-1.png" alt="image-1.png" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为</p>
+<p><code>HDCTF{W3lc0me_t0_HDCTF_2026_Lucky_D0g!!!}</code></p>
+<h3><strong>真的懂word吗</strong></h3>
+<p><strong>题目描述</strong>：这是一篇有关 HnuSec 战队的内部介绍文档，听说有战队成员在里面埋了一个隐藏彩蛋，找到它的人可以直接获得面试加分（假的，但Flag是真的）。</p>
+<p>顺便一提，这位成员最近迷上了“拿来主义”，不过借来的东西，总得留个署名。</p>
+<p><strong>工具</strong>：exiftool</p>
+<p>拿到附件 docx文件</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/image-2.png" alt="image-2.png" referrerpolicy="no-referrer"></p>
+<p>刚开始猜测全选文本 发现文本没东西</p>
+<p>word文件本质上是压缩包 改后缀为zip 解压看内容</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/image-3.png" alt="image-3.png" referrerpolicy="no-referrer"></p>
+<p>发现emoji 刚开始猜测base100 发现解出来乱码</p>
+<p>根据题目描述 有个署名 查exif 用 <strong>exiftool</strong></p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/image-4.png" alt="image-4.png" referrerpolicy="no-referrer"></p>
+<p>发现有个人名Deepankar 通过搜索 发现他是Txtmoji这种编码的创始人</p>
+<p>找到<a href="https://txtmoji.com/">在线网址</a></p>
+<p>解密emoji需要密码 没有找到明晃晃的文本 得靠猜</p>
+<p>猜测密码HnuSec 因为它在Creator显示了 而一般这里都是空的</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/image-5.png" alt="image-5.png" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为</p>
+<p><code>HDCTF{w0rd_Rev1sion_1s_dangerous}</code></p>
+<h3><strong>雾都的秘密</strong></h3>
+<p><strong>题目描述</strong>：审计系统发现，一台内网主机在雾都的深夜产生了异常的 ping 与 DNS 流量。</p>
+<p>值班人员只来得及保存这份抓包：secret.pcapng。</p>
+<p>请还原被传出的内容，并提交其中的 flag。</p>
+<p><strong>工具</strong>：Wireshark tshark python</p>
+<p>拿到附件 pcapng文件</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/image-37.png" alt="image-37.png" referrerpolicy="no-referrer"></p>
+<p><strong>Wireshark</strong> 打开</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/image-38.png" alt="image-38.png" referrerpolicy="no-referrer"></p>
+<p>发现只有少量http和tcp协议 大部分是icmp协议 还有些udp和dns</p>
+<p>过滤http流 发现notice.txt 追踪http流</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/image-39.png" alt="image-39.png" referrerpolicy="no-referrer"></p>
+<p>得到hint 图片藏在 ICMP echo 里 文字藏在"只被问一次"的 DNS 查询里</p>
+<p>利用 <strong>tshark</strong> 对DNS全量枚举</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/image-40.png" alt="image-40.png" referrerpolicy="no-referrer"></p>
+<p>发现14个 然后因为"exfil" 就是 exfiltration（数据外泄）的缩写 所以选择先看这个</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2045.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%205.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>汇总一下得到的信息</p>
+<p>数据在 ICMP</p>
+<p>id1337是十六进制（=4919）</p>
+<p>type=8 请求 出向</p>
+<p>32×32 网格 起点 (44,32) 步长 (13,9) 蓝色通道LSB</p>
+<p>Hilbert 曲线 5 阶 左上原点</p>
+<p>分包总数与最终长度 校验值 可用来验证重组是否正确</p>
+<p>二级载荷结构</p>
+<p>位序是 MSB-first</p>
+<p>CRC16-CCITT poly 0x1021 init 0xFFFF，大端</p>
+<p>现在需要 ICMP 重组 用 <strong>tshark</strong> 提取</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/image-42.png" alt="image-42.png" referrerpolicy="no-referrer"></p>
+<p>4949 取前两个 然后 载荷开头有个自定义头 是20字节</p>
+<p>取475个分片 去掉前20字节 合并获取图片</p>
+<blockquote>
+<p>注意这里9个包的载荷被误判成hipercontracer协议了</p>
+<p>要加<code> --disable-protocol hipercontracer</code></p>
+</blockquote>
+<div class="code-block"><div class="code-lang">Python</div><pre><code class="language-Python">import subprocess, zlib
+
+out = subprocess.run(
+    &#x27;tshark -r secret.pcapng --disable-protocol hipercontracer &#x27;
+    &#x27;-Y &quot;icmp.ident==0x1337 &amp;&amp; icmp.type==8&quot; -T fields -e icmp.seq -e data.data&#x27;,
+    shell=True, capture_output=True, text=True).stdout
+
+rows = []
+for line in out.splitlines():
+    if not line.strip():
+        continue
+    raw = bytes.fromhex(line.split(&quot;\t&quot;)[1])
+    seq, body = int.from_bytes(raw[8:10], &quot;big&quot;), raw[20:]
+    assert raw[:4] == b&quot;IGPK&quot;
+    assert zlib.crc32(body) &amp; 0xFFFFFFFF == int.from_bytes(raw[16:20], &quot;big&quot;)
+    rows.append((seq, body))
+
+data = b&quot;&quot;.join(b for _, b in sorted(rows))
+png = data[:data.index(b&quot;IEND&quot;) + 8]
+open(&quot;hidden.png&quot;, &quot;wb&quot;).write(png)
+print(f&quot;{len(rows)} 分片 {len(data)} 字节 -&gt; hidden.png {len(png)} 字节&quot;)</code></pre></div>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/image-43.png" alt="image-43.png" referrerpolicy="no-referrer"></p>
+<p>得到</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/image-44.png" alt="image-44.png" referrerpolicy="no-referrer"></p>
+<p>根据刚刚的信息 看MSB 还要用Hilbert 曲线5阶</p>
+<div class="code-block"><div class="code-lang">Python</div><pre><code class="language-Python">import numpy as np
+from PIL import Image
+a = np.array(Image.open(&quot;hidden.png&quot;).convert(&quot;RGB&quot;))
+
+def d2xy(n, d):
+    x = y = 0; t, s = d, 1
+    while s &lt; n:
+        rx = 1 &amp; (t &gt;&gt; 1); ry = 1 &amp; (t ^ rx)
+        if ry == 0:
+            if rx == 1: x, y = s-1-x, s-1-y
+            x, y = y, x
+        x += s*rx; y += s*ry; t &gt;&gt;= 2; s &lt;&lt;= 1
+    return x, y
+
+pts  = [d2xy(32, d) for d in range(1024)]
+bits = [int(a[32 + 9*gy, 44 + 13*gx, 2]) &amp; 1 for gx, gy in pts]
+out  = bytearray()
+for i in range(0, 1024, 8):
+    v = 0
+    for b in bits[i:i+8]: v = (v &lt;&lt; 1) | b
+    out.append(v)
+
+print(out.decode(&#x27;latin1&#x27;))</code></pre></div>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/image-45.png" alt="image-45.png" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为</p>
+<p><code>HDCTF{wh0_w1ll_f1nd_h1lb3rt_wh3n_th3_f0g_l1fts}</code></p>
+<h3><strong>自定义</strong></h3>
+<p><strong>题目描述</strong>：有人把音乐做成了自己的样子，也把文件做成了自己的样子</p>
+<p><strong>工具</strong>：010 Editor Cyberchef sqlitebrowser</p>
+<p>这个题目流程很长 所以加了很多小标题</p>
+<p>拿到附件，十个文件</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2011.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>这些文件名是许嵩的歌名 先看自定义.vae吧 没见过这个后缀名 <strong>010Editor</strong> 打开</p>
+<h4>浅看 自定义.vae</h4>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2038.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>文件名魔数<code>VAEMUSIC</code> 还发现这里有明文json</p>
+<p>010里有乱码 提出来看看</p>
+<div class="code-block"><div class="code-lang">JSON</div><pre><code class="language-JSON">{
+  &quot;title&quot;: &quot;多余的解释&quot;,
+  &quot;format&quot;: &quot;wav&quot;,
+  &quot;track&quot;: 2,
+  &quot;indexed_chunks&quot;: [
+    {
+      &quot;type&quot;: 2,
+      &quot;name&quot;: &quot;多余的解释.wav&quot;
+    }
+  ]
+}</code></pre></div>
+<p>发现这里可能藏了wav音频 不过目前还不知道怎么解出来</p>
+<p>看下许蒿的专辑 发现这个文件的歌名序列是乱的 正确顺序是这样的</p>
+<div class="code-block"><div class="code-lang">Markdown</div><pre><code class="language-Markdown">1. 如果当时
+2. 多余的解释
+3. 有何不可
+4. 坏孩子
+5. 清明雨上
+6. 城府
+7. 认错
+8. 内线
+9. 星座书上</code></pre></div>
+<p>猜测仿照的ISCC的卜肆残局 每个附件提取一部分内容 然后合起来base64</p>
+<h4>如果当时.jpg</h4>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2026.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现2009年的1-9日都被划了 如果单日日期 那可能是 20090110</p>
+<p>010打开</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2033.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现exif有内容 VAEFRAG是base64</p>
+<p>而且日期确实如我们猜想 是 20090110</p>
+<p>取得第一段</p>
+<p>VkFFMXxMRXxEQVRFPTIwMDkwMTEwf</p>
+<h4>多余的解释.txt</h4>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2015.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>叽里咕噜说啥呢</p>
+<p>取得第二段</p>
+<p>EtERj1TSEEyNTYoVkFFTVVTSUN8fE</p>
+<h4>有何不可.bin</h4>
+<p>010打开</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2043.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>看起来是乱码 过根据文件名 “不可” 可以联想NOT非运算</p>
+<p>使用 <strong>Cyberchef</strong></p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2010.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>得到可读内容</p>
+<p>取得第三段</p>
+<p>RBVEUpfEtFWT1OT1Q+QUVTMTI4RUN</p>
+<h4>坏孩子.json</h4>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%206.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现id3有个base64 <code>TdUQMZELFxkNxUEUZRVPL5UVINEfC</code> 而且提示让reverse</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2039.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>取得第四段</p>
+<p>CfENIVU5LPVRZUEUxNkxFLEZMQUdT</p>
+<h4>清明雨上.wav</h4>
+<p>先听一下 发现听起来没什么 010打开</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2025.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>句末发现有内容 是VAEFRAG</p>
+<p>取得第五段</p>
+<p>MTZMRSxMRU4zMkxFLENSQzMyfENL</p>
+<h4>城府.zip</h4>
+<p>解压后得到100个chunk</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2014.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现zip头 说明chunk应该需要通过某种方式合起来得到新的zip</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>检查了一会 发现100个chunk字节上是连续的 只需要拼接即可 得到新的压缩包后再次解压</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%202.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>这次是50个chunk 010接着读 发现好像在循环字符串 repeed 逆序是 deeper 直觉告诉我xor</p>
+<p>那这里就先拼接 再逆序 再xor deeper</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2012.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>得到新压缩包 解压</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2013.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现要密码 经过尝试发现是伪加密 010手动修复</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2032.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>解压得到 fragment.dat 010打开</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2019.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>得到 VAEFRAG</p>
+<p>取得第六段</p>
+<p>RVk9U0hBMjU2KFNFRUR8fFRZUEUX</p>
+<h4>认错.log</h4>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2020.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现一堆base64</p>
+<p>可以直接暴力点 都扔进Cyberchef 哪个解出内容哪个就是我们要的</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%208.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现有条解出了可读字符 一条条检验一下</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2027.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>取得第七段</p>
+<p>NkxFfHxMRU4zMkxFKXxLU0E9U0VF</p>
+<h4>内线.idx</h4>
+<p>010打开</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2040.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现有一段文本</p>
+<pre><code>IDX8P9F]Y^B\nMF[Yr9Y\MNB\fp]ELA1INNER/1
+byte -&gt; divmod(36) -&gt; two symbols
+symbol -&gt; matrix(row,col)
+block = 36 symbols
+transform = all rows, then all columns, repack by coordinate pairs
+the alphabet is not stored here
+</code></pre>
+<p>一种解密方式 提供了一个操作步骤</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2023.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>但是它又说 <code>the alphabet is not stored here</code> 表明字符表不在这里</p>
+<p>猜测这个信息可能后面才会用 先留着</p>
+<p>这里有文件魔数 IDX 想了很久 最后发现魔数后面跟的 8 是线索 最后试出来是xor</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%207.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>可以看到得到了一段形似base64的明文 解base64检验一下 确实是我们要的内容</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2031.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>取得第八段</p>
+<p>X1NUQVJTfENSQz1QTEFJTnxUMDI9AFFMZ</p>
+<h4>星座书上.db</h4>
+<p>db文件 <strong>sqlitebrowser </strong>打开</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2036.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现有两个表 先查第一个constellations</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2028.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2044.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现没什么内容 查第二个表pages</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2024.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>直译十二登录说是 然后给了段文本</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2041.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>星星的顺序不是文件的顺序</p>
+<p>然后另一个直译是256页</p>
+<p>得到一个算法KSA</p>
+<div class="code-block"><div class="code-lang">Plain Text</div><pre><code class="language-Plain">KSA:
+S=0..255;
+j=(j+S[i]+K[i%32])&amp;255;
+swap(S[i],S[j]).
+
+STREAM:
+a=n&amp;255;
+b=S[(a+S[a])&amp;255];
+c=S[(S[a^0x5A]+b)&amp;255];
+out=S[(a+b+c)&amp;255].</code></pre></div>
+<p>还得到了fragment</p>
+<p>取得第九段</p>
+<p>SU5ERVhFRHxUMDg9VU5JTkRFWEVE</p>
+<h4>第一轮总结</h4>
+<p>先理一下目前得到了什么</p>
+<p>9段base64</p>
+<div class="code-block"><div class="code-lang">Plain Text</div><pre><code class="language-Plain">1 VkFFMXxMRXxEQVRFPTIwMDkwMTEwf
+2 EtERj1TSEEyNTYoVkFFTVVTSUN8fE
+3 RBVEUpfEtFWT1OT1Q+QUVTMTI4RUN
+4 CfENIVU5LPVRZUEUxNkxFLEZMQUdT
+5 MTZMRSxMRU4zMkxFLENSQzMyfENL
+6 RVk9U0hBMjU2KFNFRUR8fFRZUEUx
+7 NkxFfHxMRU4zMkxFKXxLU0E9U0VF
+8 X1NUQVJTfENSQz1QTEFJTnxUMDI9
+9 SU5ERVhFRHxUMDg9VU5JTkRFWEVE</code></pre></div>
+<p>自定义.vae中得到的json</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2018.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>如果当时.jpg中得到的日期</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2029.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>内线.idx中得到的操作步骤</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2017.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>星座书上.db中得到KSA算法与文本</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%204.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>这里星星的顺序不是文件的顺序 应该是指我们开头就做过的专辑歌名排序</p>
+<p>但这里有一个点让人在意 这里说的是12 但我们只有10个文件</p>
+<p>可能意味着我们需要通过现有的材料再解出两个新文件</p>
+<p>这和我们开始分析的vae里面可能藏了wav音频这一点对上了</p>
+<p>那么不难确定 我们下一个方向应该就是研究 自定义\.vae</p>
+<p>先按照顺序 解密我们得到的9段base64</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%209.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>得到</p>
+<div class="code-block"><div class="code-lang">Plain Text</div><pre><code class="language-Plain">VAE1|LE|DATE=20090110|KDF=SHA256(VAEMUSIC||DATE)|KEY=NOT&gt;AES128ECB|CHUNK=TYPE16LE,FLAGS16LE,LEN32LE,CRC32|CKEY=SHA256(SEED||TYPE16LE||LEN32LE)|KSA=SEE_STARS|CRC=PLAIN|T02=INDEXED|T08=UNINDEXED</code></pre></div>
+<p>VAE1\|LE -&gt; 小端序</p>
+<p>DATE=20090110 -&gt; DATE为20090110</p>
+<p>KDF=SHA256(VAEMUSIC||DATE) -&gt; 可解KDF</p>
+<p>KEY=NOT&gt;AES128ECB -&gt; 可解KEY</p>
+<p>CHUNK=TYPE16LE,FLAGS16LE,LEN32LE,CRC32 -&gt; Chunk Header</p>
+<p>CKEY=SHA256(SEED||TYPE16LE||LEN32LE) -&gt; 每个CHUNK都给一个CKEY</p>
+<p>KSA=SEE_STARS -&gt; 提示KSA的算法去看星星 也就是 星座书上.db 拿到的算法</p>
+<p>CRC=PLAIN -&gt; CRC校验数据</p>
+<p>T02=INDEXED -&gt; Type02被索引</p>
+<p>T08=UNINDEXED -&gt; Type08 没有被索引 那可能这里藏了数据</p>
+<h4>解析 自定义.vae 头</h4>
+<p>通过🔨出题人 得到vae文件的结构（卡壳很久 没办法了）</p>
+<div class="code-block"><div class="code-lang">C++</div><pre><code class="language-C++">struct VAEHeader {
+    char     magic[8];        // VAEMUSIC
+    uint8_t  version;         // 1
+    uint8_t  flags;           // 1
+    uint16_t header_size;     // 32
+    uint32_t key_size;        // 48
+    uint32_t meta_size;       // 111
+    uint32_t chunk_count;     // 1
+    uint32_t data_offset;     // 191
+    uint32_t header_crc32;    // 0x1a3547f0
+};</code></pre></div>
+<p>由此 我们知道vae文件中 有keyblock(size48)和metadata(size32)</p>
+<p>而且发现metadata就是我们先前发现的json</p>
+<div class="code-block"><div class="code-lang">JSON</div><pre><code class="language-JSON">{
+  &quot;title&quot;: &quot;多余的解释&quot;,
+  &quot;format&quot;: &quot;wav&quot;,
+  &quot;track&quot;: 2,
+  &quot;indexed_chunks&quot;: [
+    {
+      &quot;type&quot;: 2,
+      &quot;name&quot;: &quot;多余的解释.wav&quot;
+    }
+  ]
+}</code></pre></div>
+<p>这里的json对应的就是 <code>T02=INDEXED</code> 对应的文件是 多余的解释\.wav<br>那我们还差一个 <code>T08=UNINDEXED</code> 这里应该也能解出文件 这样就是12个文件了</p>
+<h4>解密 KeyBlock</h4>
+<p>说明书给了方法 <code>KDF=SHA256(VAEMUSIC||DATE)</code> 和 <code>KEY=NOT&gt;AES128ECB</code></p>
+<p>然后我们还知道了keyblock 这里就可以解SEED</p>
+<div class="code-block"><div class="code-lang">Python</div><pre><code class="language-Python">import hashlib
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+
+# 日期来自「如果当时.jpg」的日历：2009 年 1 月，1-9 日划掉，10 日保留
+master = hashlib.sha256(b&quot;VAEMUSIC&quot; + b&quot;20090110&quot;).digest()
+print(master.hex())
+
+
+# KeyBlock 先整体 NOT，再用 master 前 16 字节做 AES-128-ECB 解密
+dec = Cipher(algorithms.AES(master[:16]), modes.ECB()).decryptor()
+pt = dec.update(bytes(~b &amp; 0xFF for b in keyblock)) + dec.finalize()
+
+print(pt[:7])
+seed = pt[7:-pt[-1]]   # 去掉尾部 PKCS#7 填充（尾部 9 个 0x09）
+print(seed.hex())</code></pre></div>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%201.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<h4>解出 CKEY</h4>
+<p>根据 <code>CHUNK=TYPE16LE,FLAGS16LE,LEN32LE,CRC32</code> 可以知道CHUNK的结构</p>
+<div class="code-block"><div class="code-lang">C++</div><pre><code class="language-C++">struct VAEChunk {
+    uint16_t type;
+    uint16_t flags;
+    uint32_t length;
+    uint32_t crc32;
+};</code></pre></div>
+<p>提取需要解密的两个chunk(0x02和0x08)</p>
+<div class="code-block"><div class="code-lang">Python</div><pre><code class="language-Python">import struct
+d = open(&quot;自定义.vae&quot;, &quot;rb&quot;).read()
+
+pos = struct.unpack_from(&quot;&lt;I&quot;, d, 24)[0]        # data_offset = 191
+while pos + 12 &lt;= len(d):
+    typ, fl, n, crc = struct.unpack_from(&quot;&lt;HHII&quot;, d, pos)
+    if not (0 &lt; n &lt;= len(d) - pos - 12):
+        break
+    print(f&quot;type=0x{typ:02X} flags={fl} len={n} crc=0x{crc:08X} @{pos}&quot;)
+    pos += 12 + n</code></pre></div>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2035.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>由 <code>CKEY=SHA256(SEED||TYPE16LE||LEN32LE)</code> 和刚刚解KeyBlock得到的SEED 就可以求CKEY</p>
+<div class="code-block"><div class="code-lang">Python</div><pre><code class="language-Python">import hashlib
+
+seed = bytes.fromhex(&quot;13fa58afb99a4d3a0bfe946e3ca9ec17791b3a7409aeffa3a7b6bdfb9bb6785c&quot;)
+
+for typ, n in [(0x02, 7938220), (0x08, 15876116)]:
+    ckey = hashlib.sha256(seed + typ.to_bytes(2, &quot;little&quot;) + n.to_bytes(4, &quot;little&quot;)).digest()
+    print(f&quot;0x{typ:02X}  ckey = {ckey.hex()}&quot;)</code></pre></div>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2034.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<h4>解出剩下的两个文件</h4>
+<p>用 星座书上.db 提供的算法</p>
+<div class="code-block"><div class="code-lang">Python</div><pre><code class="language-Python">def build_keystream(chunk_key):
+    # KSA: S=0..255; j=(j+S[i]+K[i%32])&amp;255; swap(S[i],S[j])
+    S = list(range(256))
+    j = 0
+    for i in range(256):
+        j = (j + S[i] + chunk_key[i % 32]) &amp; 255
+        S[i], S[j] = S[j], S[i]
+
+    # STREAM: a=n&amp;255; b=S[(a+S[a])&amp;255]; c=S[(S[a^0x5A]+b)&amp;255]; out=S[(a+b+c)&amp;255]
+    per = bytearray(256)
+    for n in range(256):
+        a = n &amp; 255
+        b = S[(a + S[a]) &amp; 255]
+        c = S[(S[a ^ 0x5A] + b) &amp; 255]
+        per[n] = S[(a + b + c) &amp; 255]
+    return bytes(per)</code></pre></div>
+<p>KSA和STREAM解密 并通过crc和输出前12个字节校验内容</p>
+<div class="code-block"><div class="code-lang">Python</div><pre><code class="language-Python">enc = d[pos + 12 : pos + 12 + n]
+plain = bytes(x ^ y for x, y in zip(enc, (per * (n // 256 + 2))[:n]))
+ok = (zlib.crc32(plain) &amp; 0xFFFFFFFF) == crc
+
+print(f&quot;0x{typ:02X} len={n:9d} crc {&#x27;OK&#x27; if ok else &#x27;BAD&#x27;} head={plain[:12]!r}&quot;)
+if ok:
+    Path(f&quot;chunk_{typ:02X}.bin&quot;).write_bytes(plain)
+pos += 12 + n</code></pre></div>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2030.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>发现 <code>RIFF</code> 说明我们解对了 解出了wav音频<br>还发现了 <code>INNERDAT</code> 这下12个文件齐全了</p>
+<p>提取出来</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2042.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>010看看</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2016.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>内线.dat有点迷了 暂时先不看 先看wav</p>
+<h4>多余的解释.wav</h4>
+<p>010发现文件末尾有内容</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%203.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<div class="code-block"><div class="code-lang">Plain Text</div><pre><code class="language-Plain">fLaG
+HDCTF{th1s_3xpl4n4t10n_1s_r3dund4nt_k33p_l00k1ng}
+JUNK
+Nothing useful here. Keep looking.
+map6
+AM09nz66
+stg1
+0800000001018900D9070000</code></pre></div>
+<p>这个flag是fakeflag 和 junk 都是再说接着找<br>map6这个有点眼熟的 很像ISCC2026的扭曲的真相</p>
+<p>AM09nz66 实际上是字符表 A-M 0-9 n-z</p>
+<p>至于66 猜测是6x6矩阵 因为对于第一轮获得的内容 我们就剩内线.idx的内容没有用了</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2021.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>字符表就是 ABCDEFGHIJKLM0123456789nopqrstuvwxyz</p>
+<p>映射矩阵就是</p>
+<div class="code-block"><div class="code-lang">Plain Text</div><pre><code class="language-Plain">A B C D E F
+G H I J K L
+M 0 1 2 3 4
+5 6 7 8 9 n
+o p q r s t
+u v w x y z</code></pre></div>
+<h4>解出 内线.wav</h4>
+<div class="code-block"><div class="code-lang">Python</div><pre><code class="language-Python">import struct, sys
+from pathlib import Path
+
+src, dst = Path(sys.argv[1]), Path(sys.argv[2])
+
+ALPHABET = &quot;ABCDEFGHIJKLM0123456789nopqrstuvwxyz&quot;      # AM09nz66
+POS = {c: i for i, c in enumerate(ALPHABET)}
+
+def inverse_block(s):                 # 36 个 symbol
+    nums = []
+    for ch in s:
+        v = POS[ch]
+        nums += [v // 6, v % 6]       # symbol -&gt; matrix(row,col)
+    rows, cols = nums[:36], nums[36:]  # 前半 row[]，后半 col[]
+    return &quot;&quot;.join(ALPHABET[rows[i] * 6 + cols[i]] for i in range(36))
+
+raw = src.read_bytes()
+body = raw[28:].decode(&quot;latin1&quot;)      # 跳过 28 字节 INNERDAT 头
+
+sym = &quot;&quot;.join(inverse_block(body[i:i+36]) for i in range(0, len(body) // 36 * 36, 36))
+
+out = bytearray()
+for i in range(0, len(sym) - 1, 2):
+    out.append(POS[sym[i]] * 36 + POS[sym[i+1]])
+
+wav = bytes(out)
+assert wav[:4] == b&quot;RIFF&quot; and wav[8:12] == b&quot;WAVE&quot;
+dst.write_bytes(wav)
+print(f&quot;{len(wav)} 字节 → {dst}&quot;)</code></pre></div>
+<p>得到内线.wav</p>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2022.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<h4>内线.wav 音频隐写</h4>
+<p>多余的解释.wav 得到的内容只剩stg1没看懂是要干什么了</p>
+<p>🔨出题人 得到stg1的结构</p>
+<div class="code-block"><div class="code-lang">C++</div><pre><code class="language-C++">struct {
+    uint8_t  channel;     // 1
+    uint8_t  bit_order;   // 1
+    uint16_t step;        // 137
+    uint32_t start;       // 2009
+};</code></pre></div>
+<p>看起来是音频隐写的指示</p>
+<p>右声道<br>start frame = 2009<br>每隔 137 frame 取一个 bit<br>MSB-first 组装 byte</p>
+<div class="code-block"><div class="code-lang">Python</div><pre><code class="language-Python">import io, struct, wave
+from pathlib import Path
+
+with wave.open(&quot;内线.wav&quot;, &quot;rb&quot;) as f:
+    frames = f.getnframes()
+    raw = f.readframes(frames)
+samples = struct.unpack(&quot;&lt;&quot; + &quot;h&quot; * (len(raw) // 2), raw)
+
+n_bits = (frames - 2009 + 136) // 137
+n_bytes = n_bits // 8
+
+bits = [samples[(2009 + i * 137) * 2 + 1] &amp; 1 for i in range(n_bits)]
+out = bytes(sum(bits[i*8 + j] &lt;&lt; (7 - j) for j in range(8)) for i in range(n_bytes))
+
+print(out)</code></pre></div>
+<p><img src="content/所有文章/解题记录/HDCTF/图片/图片%2037.png" alt="图片.png" referrerpolicy="no-referrer"></p>
+<p>取得flag flag为</p>
+<p><code>HDCTF{th3_1nn3r_l1n3_w4s_n3v3r_1n_th3_m3t4d4t4_233a8358}</code></p>

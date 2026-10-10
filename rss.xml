@@ -9,15 +9,22 @@
     <title>如何利用WinDbg分析蓝屏崩溃</title>
     <link>https://icent-f.github.io/#post-知识笔记-forensics-内存取证-如何利用windbg分析蓝屏崩溃</link>
     <guid isPermaLink="false">知识笔记-forensics-内存取证-如何利用windbg分析蓝屏崩溃</guid>
-    <pubDate>Sat, 10 Oct 2026 00:00:00 +0000</pubDate>
-    <description>WinDbg 是微软官方推出的一款Windows 调试工具</description>
+    <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+    <description>WinDbg是微软官方推出的一款Windows调试工具 这篇文章主要介绍它在蓝屏分析方面的用途</description>
   </item>
   <item>
-    <title>Volatility</title>
+    <title>Volatility使用指南</title>
     <link>https://icent-f.github.io/#post-知识笔记-forensics-内存取证-volatility</link>
     <guid isPermaLink="false">知识笔记-forensics-内存取证-volatility</guid>
     <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
     <description>Volatility是一款用python编写的开源的内存取证工具</description>
+  </item>
+  <item>
+    <title>HDCTF2026</title>
+    <link>https://icent-f.github.io/#post-解题记录-hdctf-hdctf-misc</link>
+    <guid isPermaLink="false">解题记录-hdctf-hdctf-misc</guid>
+    <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+    <description>海南大学CTF校赛2026 Misc方向部分题解</description>
   </item>
   <item>
     <title>明文攻击</title>
