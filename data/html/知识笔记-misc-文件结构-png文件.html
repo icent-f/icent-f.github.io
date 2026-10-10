@@ -11,7 +11,7 @@
 <h2>关键数据块</h2>
 <p>有 <code>IHDR(Image Header)</code> <code>PLTE(Palette)</code> <code>IDAT(Image Data)</code> <code>IEND(Image End)</code></p>
 <p>IHDR</p>
-<ul><li>位置：<code>89 50 4E 47 0D 0A 1A 0A</code>之后</li><li>长度：13字节</li><li>内容：</li><li>Width（4字节）：图像宽度</li><li>Height（4字节）：图像高度</li><li>Bit depth（1字节）：颜色深度</li><li>Color type（1字节）：颜色类型</li><li>0 -&gt; 灰度</li><li>2 -&gt; 真彩色</li><li>3 -&gt; 索引色</li><li>4 -&gt; 灰度+Alpha</li><li>6 -&gt; 真彩色+Alpha</li><li>Compression method（1字节）：压缩方法</li><li>目前只有 0 -&gt; deflate/inflate</li><li>Filter method（1字节）：滤波方法</li><li>目前只有 0</li><li>Interlace method（1字节）：隔行扫描方式</li><li>0 -&gt; 非隔行</li><li>1 -&gt; Adam7 隔行</li></ul>
+<ul><li>位置：<code>89 50 4E 47 0D 0A 1A 0A</code>之后</li><li>长度：13字节</li><li>内容：<ul><li>Width（4字节）：图像宽度</li><li>Height（4字节）：图像高度</li><li>Bit depth（1字节）：颜色深度</li><li>Color type（1字节）：颜色类型<ul><li>0 -&gt; 灰度</li><li>2 -&gt; 真彩色</li><li>3 -&gt; 索引色</li><li>4 -&gt; 灰度+Alpha</li><li>6 -&gt; 真彩色+Alpha</li></ul></li><li>Compression method（1字节）：压缩方法<ul><li>目前只有 0 -&gt; deflate/inflate</li></ul></li><li>Filter method（1字节）：滤波方法<ul><li>目前只有 0</li></ul></li><li>Interlace method（1字节）：隔行扫描方式<ul><li>0 -&gt; 非隔行</li><li>1 -&gt; Adam7 隔行</li></ul></li></ul></li></ul>
 <p>PLTE（可选）</p>
 <ul><li>当 IHER 中的 Color type 为 3（索引色）时必须</li><li>包含RGB调色板条目（每项3字节）</li></ul>
 <p>IDAT</p>

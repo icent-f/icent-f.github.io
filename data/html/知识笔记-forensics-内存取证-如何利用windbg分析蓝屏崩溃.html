@@ -24,18 +24,12 @@
 <p>顾名思义就是很小的内存转储文件 只有256KB左右 只保存最核心的线索</p>
 <p>默认存放在 <code>C:\Windows\Minidump</code>文件夹下</p>
 <p>包含：</p>
-<ul><li>蓝屏代码（Bug Check Code）</li></ul>
-<ul><li>四个参数（没有全局统一的固定含义 具体含义由当前的蓝屏代码界定）</li></ul>
-<ul><li>崩溃那一刻的调用栈</li></ul>
-<ul><li>已加载的驱动程序列表</li></ul>
+<ul><li>蓝屏代码（Bug Check Code）</li><li>四个参数（没有全局统一的固定含义 具体含义由当前的蓝屏代码界定）</li><li>崩溃那一刻的调用栈</li><li>已加载的驱动程序列表</li></ul>
 <h3>PART 2.3 核心内存转储</h3>
 <p>保存内核模式使用的所有内存 大小中等且不固定 通常约为物理内存的1/3</p>
 <p>默认保存至<code>C:\Windows\MEMORY.DMP</code></p>
 <p>除了小内存转储的内容 它还包含：</p>
-<ul><li>操作系统内核</li></ul>
-<ul><li>硬件抽象层</li></ul>
-<ul><li>所有加载的内核驱动</li></ul>
-<ul><li>崩溃时所有内核线程的调用栈</li></ul>
+<ul><li>操作系统内核</li><li>硬件抽象层</li><li>所有加载的内核驱动</li><li>崩溃时所有内核线程的调用栈</li></ul>
 <p>不包含用户模式程序的数据</p>
 <h3>PART 2.4 完整内存转储</h3>
 <p>顾名思义就是把完整的物理内存全刻进硬盘 32G就刻32G 64G就刻64G</p>
@@ -83,18 +77,7 @@ Arg2: 0000000000000002, X64: bit 0 set if the fault was due to a not-present PTE
 Arg3: fffff804814dda6f, If non-zero, the instruction address which referenced the bad memory
         address.
 Arg4: 0000000000000002, (reserved)</code></pre>
-<ul><li>Arg1: <code>ffffee899137f78c</code></li><li><code>memory referenced</code>直译是所引用的内存 也就是被访问的非法内存地址</li></ul>
-<ul><li>Arg2: <code>0000000000000002</code></li><li>X64：</li><li>如果该异常是由于 PTE（页表项）不存在 导致的 则 bit0置位</li></ul>
-<ul><li>如果该异常是由于 写操作 导致的，则 bit1置位；如果是由于 读操作 导致的 则该位清零</li></ul>
-<ul><li>如果处理器判定该异常是由于 PTE 损坏 导致的 则 bit3置位</li></ul>
-<ul><li>如果该异常是由于试图 执行一个不可执行的 PTE 导致的，则 bit4置位</li></ul>
-<ul><li>ARM64：</li><li>如果该异常是由于 写操作 导致的 则 bit 1 置位；如果是由于 读操作 导致的 则该位清零</li></ul>
-<ul><li>如果该异常是由于试图执行一个不可执行的 PTE 导致的 则 bit3置位</li></ul>
-<ul><li>这里为x64系统 数据<code>0000000000000002</code> 实际上就是 <code>0010</code> bit1置位</li></ul>
-<ul><li>也就是说该异常是由于 写操作 导致的</li></ul>
-<ul><li>Arg3: <code>fffff804814dda6f</code></li><li>如果该值非零，则表示引用了错误内存地址的那条指令的地址</li></ul>
-<ul><li><code>fffff804814dda6f</code>非零 也就是引用了错误内存地址的那条指令的地址</li></ul>
-<ul><li>Arg4: <code>0000000000000002</code></li><li>保留字段 忽略即可</li></ul>
+<ul><li>Arg1: <code>ffffee899137f78c</code><ul><li><code>memory referenced</code>直译是所引用的内存 也就是被访问的非法内存地址</li></ul></li><li>Arg2: <code>0000000000000002</code><ul><li>X64：<ul><li>如果该异常是由于 PTE（页表项）不存在 导致的 则 bit0置位</li><li>如果该异常是由于 写操作 导致的，则 bit1置位；如果是由于 读操作 导致的 则该位清零</li><li>如果处理器判定该异常是由于 PTE 损坏 导致的 则 bit3置位</li><li>如果该异常是由于试图 执行一个不可执行的 PTE 导致的，则 bit4置位</li></ul></li><li>ARM64：<ul><li>如果该异常是由于 写操作 导致的 则 bit 1 置位；如果是由于 读操作 导致的 则该位清零</li><li>如果该异常是由于试图执行一个不可执行的 PTE 导致的 则 bit3置位</li></ul></li><li>这里为x64系统 数据<code>0000000000000002</code> 实际上就是 <code>0010</code> bit1置位</li><li>也就是说该异常是由于 写操作 导致的</li></ul></li><li>Arg3: <code>fffff804814dda6f</code><ul><li>如果该值非零，则表示引用了错误内存地址的那条指令的地址</li><li><code>fffff804814dda6f</code>非零 也就是引用了错误内存地址的那条指令的地址</li></ul></li><li>Arg4: <code>0000000000000002</code><ul><li>保留字段 忽略即可</li></ul></li></ul>
 <p>题目问的是被异常访问的内存地址 也就是Arg1的<code>ffffee899137f78c</code></p>
 <p>而访问类型就是Arg2对应的 写操作 即<code>write</code></p>
 <p>所以答案为<code>ffffee899137f78c_write</code></p>
@@ -104,38 +87,11 @@ Arg4: 0000000000000002, (reserved)</code></pre>
 <p>通过Arg3的值 我们知道这条指令的地址<code>fffff804814dda6f</code></p>
 <p>我们往下翻<code>!analyze -v</code>的分析 找到这个地址对应的内容</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片20.png" alt="图片.png" referrerpolicy="no-referrer"></p>
-<ul><li>PROCESS_NAME: <code>System</code></li><li>进程名称：<code>System</code></li></ul>
-<ul><li>也就是触发这次崩溃的进程是系统进程 <code>System</code> 问题发生在内核而不是用户程序</li></ul>
-<ul><li>IP_IN_PAGED_CODE:</li><li>指令指针位于可分页代码中</li><li>意思是 当前出错时 CPU 正在执行的指令所在的内存页是“可分页”的</li></ul>
-<ul><li><code>nvlddmkm+16ada6f</code></li><li>表示出错指令位于模块<code>nvlddmkm</code>中 偏移为<code>0x16ada6f</code></li></ul>
-<ul><li><code>fffff804</code>814dda6f 0901 or dword ptr [rcx],eax`</li><li>出错的那条汇编指令</li></ul>
+<ul><li>PROCESS_NAME: <code>System</code><ul><li>进程名称：<code>System</code></li><li>也就是触发这次崩溃的进程是系统进程 <code>System</code> 问题发生在内核而不是用户程序</li></ul></li><li>IP_IN_PAGED_CODE:<ul><li>指令指针位于可分页代码中<ul><li>意思是 当前出错时 CPU 正在执行的指令所在的内存页是“可分页”的</li></ul></li><li><code>nvlddmkm+16ada6f</code><ul><li>表示出错指令位于模块<code>nvlddmkm</code>中 偏移为<code>0x16ada6f</code></li></ul></li><li><code>fffff804</code>814dda6f 0901 or dword ptr [rcx],eax`<ul><li>出错的那条汇编指令</li></ul></li></ul></li></ul>
 <p>通过这些 我们可以知道指令所在的模块为<code>nvlddmkm</code></p>
 <p>我们接着往下翻<code>!analyze -v</code>的分析 试着找出这个模块对应的驱动映像文件</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片21.png" alt="图片.png" referrerpolicy="no-referrer"></p>
-<ul><li>SYMBOL_NAME:<code>nvlddmkm+16ada6f</code></li><li>符号名称：<code>nvlddmkm+16ada6f</code></li></ul>
-<ul><li>表示出错位置在 <code>nvlddmkm</code> 模块内 偏移 <code>0x16ada6f</code></li></ul>
-<ul><li>如果这里有完整的符号 会展示具体的函数名</li></ul>
-<ul><li>MODULE_NAME:<code>nvlddmkm</code></li><li>模块名称：<code>nvlddmkm</code></li></ul>
-<ul><li>即出错的驱动模块</li></ul>
-<ul><li>IMAGE_NAME:<code>nvlddmkm.sys</code></li><li>映像名称：<code>nvlddmkm.sys</code></li></ul>
-<ul><li>STACK_COMMAND:<code>.process /r /p 0xffffaa09ab6d8040</code>;<code>.thread /r /p 0xffffaa09dc32b040</code>;<code>kb</code></li><li>栈命令:<code>.process /r /p 0xffffaa09ab6d8040</code>;<code>.thread /r /p 0xffffaa09dc32b040</code>;<code>kb</code></li></ul>
-<ul><li>这是 WinDbg 的命令 用于重现崩溃的场景</li><li><code>.process /r /p 0xffffaa09ab6d8040</code>：切换到地址为 <code>0xffffaa09ab6d8040</code> 的进程上下文</li></ul>
-<ul><li><code>.thread /r /p 0xffffaa09dc32b040</code>：切换到地址为 <code>0xffffaa09dc32b040</code> 的线程上下文</li></ul>
-<ul><li><code>kb</code>：打印当前调用栈</li></ul>
-<ul><li>BUCKET_ID_FUNC_OFFSET: <code>16ada6f</code></li><li>故障桶函数偏移：<code>16ada6f</code></li></ul>
-<ul><li>FAILURE_BUCKET_ID: <code>AV_nvlddmkm!unknown_function</code></li><li>故障桶 ID：<code>AV_nvlddmkm!unknown_function</code></li><li><code>AV</code>即<code>Access Violation</code> 表示非法访问内存</li></ul>
-<ul><li><code>nvlddmkm</code> 为出错模块</li></ul>
-<ul><li><code>unknown_function</code> 代表未知函数 因为缺少符号 无法定位到具体函数名</li></ul>
-<ul><li>OS_VERSION: <code>10.0.26100.1</code></li><li>操作系统版本：<code>10.0.26100.1</code></li></ul>
-<ul><li>对应 Windows 11 24H2（内部版本 26100）</li></ul>
-<ul><li>BUILDLAB_STR: <code>ge_release</code></li><li>生成实验室字符串：<code>ge_release</code></li></ul>
-<ul><li>微软内部用来标记系统编译分支的字符串 <code>ge_release</code>一般对应正式发布分支</li></ul>
-<ul><li>OSPLATFORM_TYPE: <code>x64</code></li><li>操作系统平台类型<code>x64</code> 也就是64位系统</li></ul>
-<ul><li>OSNAME: <code>Windows 10</code></li><li>操作系统名称：Windows 10</li></ul>
-<ul><li>这是调试器里的通用显示名 Win11也可能会被识别成Win10 以 OS_VERSION 为准</li></ul>
-<ul><li>FAILURE_ID_HASH:<code> {7eea5677-f68d-2154-717e-887e07e55cd3}</code></li><li>故障 ID 哈希：<code>{7eea5677-f68d-2154-717e-887e07e55cd3}</code></li></ul>
-<ul><li>Followup: <code>MachineOwner</code></li><li>后续处理：<code>机器所有者</code></li></ul>
-<ul><li>表示这个转储没有交给微软分析 默认由本机所有者自行处理 是普通用户机器的默认值</li></ul>
+<ul><li>SYMBOL_NAME:<code>nvlddmkm+16ada6f</code><ul><li>符号名称：<code>nvlddmkm+16ada6f</code></li><li>表示出错位置在 <code>nvlddmkm</code> 模块内 偏移 <code>0x16ada6f</code></li><li>如果这里有完整的符号 会展示具体的函数名</li></ul></li><li>MODULE_NAME:<code>nvlddmkm</code><ul><li>模块名称：<code>nvlddmkm</code></li><li>即出错的驱动模块</li></ul></li><li>IMAGE_NAME:<code>nvlddmkm.sys</code><ul><li>映像名称：<code>nvlddmkm.sys</code></li></ul></li><li>STACK_COMMAND:<code>.process /r /p 0xffffaa09ab6d8040</code>;<code>.thread /r /p 0xffffaa09dc32b040</code>;<code>kb</code><ul><li>栈命令:<code>.process /r /p 0xffffaa09ab6d8040</code>;<code>.thread /r /p 0xffffaa09dc32b040</code>;<code>kb</code></li><li>这是 WinDbg 的命令 用于重现崩溃的场景<ul><li><code>.process /r /p 0xffffaa09ab6d8040</code>：切换到地址为 <code>0xffffaa09ab6d8040</code> 的进程上下文</li><li><code>.thread /r /p 0xffffaa09dc32b040</code>：切换到地址为 <code>0xffffaa09dc32b040</code> 的线程上下文</li><li><code>kb</code>：打印当前调用栈</li></ul></li></ul></li><li>BUCKET_ID_FUNC_OFFSET: <code>16ada6f</code><ul><li>故障桶函数偏移：<code>16ada6f</code></li></ul></li><li>FAILURE_BUCKET_ID: <code>AV_nvlddmkm!unknown_function</code><ul><li>故障桶 ID：<code>AV_nvlddmkm!unknown_function</code><ul><li><code>AV</code>即<code>Access Violation</code> 表示非法访问内存</li><li><code>nvlddmkm</code> 为出错模块</li><li><code>unknown_function</code> 代表未知函数 因为缺少符号 无法定位到具体函数名</li></ul></li></ul></li><li>OS_VERSION: <code>10.0.26100.1</code><ul><li>操作系统版本：<code>10.0.26100.1</code></li><li>对应 Windows 11 24H2（内部版本 26100）</li></ul></li><li>BUILDLAB_STR: <code>ge_release</code><ul><li>生成实验室字符串：<code>ge_release</code></li><li>微软内部用来标记系统编译分支的字符串 <code>ge_release</code>一般对应正式发布分支</li></ul></li><li>OSPLATFORM_TYPE: <code>x64</code><ul><li>操作系统平台类型<code>x64</code> 也就是64位系统</li></ul></li><li>OSNAME: <code>Windows 10</code><ul><li>操作系统名称：Windows 10</li><li>这是调试器里的通用显示名 Win11也可能会被识别成Win10 以 OS_VERSION 为准</li></ul></li><li>FAILURE_ID_HASH:<code> {7eea5677-f68d-2154-717e-887e07e55cd3}</code><ul><li>故障 ID 哈希：<code>{7eea5677-f68d-2154-717e-887e07e55cd3}</code></li></ul></li><li>Followup: <code>MachineOwner</code><ul><li>后续处理：<code>机器所有者</code></li><li>表示这个转储没有交给微软分析 默认由本机所有者自行处理 是普通用户机器的默认值</li></ul></li></ul>
 <p>题目要的是执行这条异常内存访问指令的驱动映像文件</p>
 <p>那就是 IMAGE_NAME 对应的内容 <code>nvlddmkm.sys</code></p>
 <p>所以答案为 <code>nvlddmkm.sys</code></p>
@@ -156,48 +112,26 @@ Arg4: 0000000000000002, (reserved)</code></pre>
 <p>也就是故障进程为<code>System</code> 所以这道题的答案为<code>System</code></p>
 <p>如果要更严谨地按题目的意思 通过定位的faulting component 找进程的上下文</p>
 <p>可以用 <code>!process</code>命令 这里是<code>!process 0xffffaa09ab6d8040 0</code></p>
-<ul><li><code>!process [地址 | 进程ID | 0] [详细级别]</code></li><li><code>!process</code> 这个命令用于查询目标系统里的进程对象</li></ul>
-<ul><li>第二个参数是用来定位的 <code>0xffffaa09ab6d8040</code> 就是之前定位的进程的绝对地址</li><li>0 -&gt; 所有进程</li></ul>
-<ul><li>第三个参数是控制回显结果的详细程度的</li><li>0 -&gt; 进程基本信息（Image、PID、目录表基址等）</li></ul>
-<ul><li>1 -&gt; 加上线程列表（每个线程的栈、状态）</li></ul>
-<ul><li>2 -&gt; 加上线程的详细栈信息</li></ul>
-<ul><li>7 -&gt; 最详细 含有多种内部结构</li></ul>
+<ul><li><code>!process [地址 | 进程ID | 0] [详细级别]</code><ul><li><code>!process</code> 这个命令用于查询目标系统里的进程对象</li><li>第二个参数是用来定位的 <code>0xffffaa09ab6d8040</code> 就是之前定位的进程的绝对地址<ul><li>0 -&gt; 所有进程</li></ul></li><li>第三个参数是控制回显结果的详细程度的<ul><li>0 -&gt; 进程基本信息（Image、PID、目录表基址等）</li><li>1 -&gt; 加上线程列表（每个线程的栈、状态）</li><li>2 -&gt; 加上线程的详细栈信息</li><li>7 -&gt; 最详细 含有多种内部结构</li></ul></li></ul></li></ul>
 <p>我们就查个进程名 详细程度用<code>0</code> 即可</p>
 <p>在这个小黑框里输入并执行命令</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片22.png" alt="图片.png" referrerpolicy="no-referrer"></p>
 <p>回显如下</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片23.png" alt="图片.png" referrerpolicy="no-referrer"></p>
-<ul><li>PROCESS ffffaa09ab6d8040</li><li>进程对象地址：<code>ffffaa09ab6d8040</code></li></ul>
-<ul><li>SessionId: <code>none</code> Cid: <code>0004</code> Peb: <code>00000000</code> ParentCid: <code>0000</code></li><li>SessionId: <code>none</code></li><li>会话 ID 为 none 说明它不属于任何用户登录会话（不是交互式用户进程）</li></ul>
-<ul><li>Cid: <code>0004</code></li><li>Client ID 即进程ID（PID）= 4</li></ul>
-<ul><li>Peb: <code>00000000</code></li><li>进程环境块（PEB）地址为 0</li><li>System 进程没有用户态 PEB</li></ul>
-<ul><li>ParentCid: <code>0000</code></li><li>父进程 ID = 0 说明它没有父进程</li></ul>
-<ul><li>DirBase: <code>00a42000</code> ObjectTable: <code>ffff82874e2bf040</code> HandleCount: <code>&lt;Data Not Accessible&gt;</code></li><li>DirBase: <code>00a42000</code></li><li>页目录基址（CR3 的值）为<code>00a42000</code> 用于地址翻译</li></ul>
-<ul><li>ObjectTable: <code>ffff82874e2bf040</code></li><li>该进程的对象句柄表地址为 <code>ffff82874e2bf040</code></li></ul>
-<ul><li>HandleCount: <code>&lt;Data Not Accessible&gt;</code></li><li>句柄计数无法访问 显示这个是因为相关内存页可能已经不可读或已损坏</li></ul>
-<ul><li>Image: <code>System</code></li><li>映像名称：<code>System</code> 即：这是System进程</li></ul>
+<ul><li>PROCESS ffffaa09ab6d8040<ul><li>进程对象地址：<code>ffffaa09ab6d8040</code></li></ul></li><li>SessionId: <code>none</code> Cid: <code>0004</code> Peb: <code>00000000</code> ParentCid: <code>0000</code><ul><li>SessionId: <code>none</code><ul><li>会话 ID 为 none 说明它不属于任何用户登录会话（不是交互式用户进程）</li></ul></li><li>Cid: <code>0004</code><ul><li>Client ID 即进程ID（PID）= 4</li></ul></li><li>Peb: <code>00000000</code><ul><li>进程环境块（PEB）地址为 0<ul><li>System 进程没有用户态 PEB</li></ul></li></ul></li><li>ParentCid: <code>0000</code><ul><li>父进程 ID = 0 说明它没有父进程</li></ul></li></ul></li><li>DirBase: <code>00a42000</code> ObjectTable: <code>ffff82874e2bf040</code> HandleCount: <code>&lt;Data Not Accessible&gt;</code><ul><li>DirBase: <code>00a42000</code><ul><li>页目录基址（CR3 的值）为<code>00a42000</code> 用于地址翻译</li></ul></li><li>ObjectTable: <code>ffff82874e2bf040</code><ul><li>该进程的对象句柄表地址为 <code>ffff82874e2bf040</code></li></ul></li><li>HandleCount: <code>&lt;Data Not Accessible&gt;</code><ul><li>句柄计数无法访问 显示这个是因为相关内存页可能已经不可读或已损坏</li></ul></li></ul></li><li>Image: <code>System</code><ul><li>映像名称：<code>System</code> 即：这是System进程</li></ul></li></ul>
 <p>总而言之 这道题答案为<code>System</code></p>
 <h3>PART 3.6 崩溃发生时，系统正处于什么待机状态？</h3>
 <p>题目我们需要查询崩溃发生时的系统待机状态</p>
 <p>由于系统状态不在崩溃栈里 所以我们需要去查黑盒的内存</p>
 <p>我们先找到<code>!analyze -v</code>给出的这块内容</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片24.png" alt="图片.png" referrerpolicy="no-referrer"></p>
-<ul><li>BLACKBOXBSD: 1 (!blackboxbsd)</li><li>黑盒 BSD（蓝屏数据Blue Screen Data ）：1</li><li>表示转储文件里包含 BSD 黑盒信息</li></ul>
-<ul><li>可执行命令：<code>!blackboxbsd</code> 查看蓝屏时记录的关键状态数据</li></ul>
-<ul><li>BLACKBOXNTFS: 1 (!blackboxntfs)</li><li>黑盒 NTFS（NTFS文件系统）：1</li><li>表示转储文件里包含 NTFS 黑盒信息</li></ul>
-<ul><li>可执行命令：<code>!blackboxntfs</code> 查看崩溃时文件系统相关的状态</li></ul>
-<ul><li>BLACKBOXPNP: 1 (!blackboxpnp)</li><li>黑盒 PnP（即插即用管理器Plug and Play）：1</li><li>表示转储文件里包含 PnP 黑盒信息</li></ul>
-<ul><li>可执行命令：<code>!blackboxpnp</code> 查看崩溃时即插即用管理器相关的状态</li></ul>
-<ul><li>BLACKBOXWINLOGON: 1 (!blackboxwinlogon) (!blackboxwinlogonnotify)</li><li>黑盒 Winlogon（Windows 登录进程）：1</li><li>表示转储里包含 Winlogon 黑盒信息</li></ul>
-<ul><li>可执行命令：<code>!blackboxwinlogon</code>、<code>!blackboxwinlogonnotify</code></li><li><code>!blackboxwinlogon</code>：查看 Winlogon 进程相关状态</li></ul>
-<ul><li><code>!blackboxwinlogonnotify</code>：查看 Winlogon 通知事件相关状态</li></ul>
+<ul><li>BLACKBOXBSD: 1 (!blackboxbsd)<ul><li>黑盒 BSD（蓝屏数据Blue Screen Data ）：1<ul><li>表示转储文件里包含 BSD 黑盒信息</li></ul></li><li>可执行命令：<code>!blackboxbsd</code> 查看蓝屏时记录的关键状态数据</li></ul></li><li>BLACKBOXNTFS: 1 (!blackboxntfs)<ul><li>黑盒 NTFS（NTFS文件系统）：1<ul><li>表示转储文件里包含 NTFS 黑盒信息</li></ul></li><li>可执行命令：<code>!blackboxntfs</code> 查看崩溃时文件系统相关的状态</li></ul></li><li>BLACKBOXPNP: 1 (!blackboxpnp)<ul><li>黑盒 PnP（即插即用管理器Plug and Play）：1<ul><li>表示转储文件里包含 PnP 黑盒信息</li></ul></li><li>可执行命令：<code>!blackboxpnp</code> 查看崩溃时即插即用管理器相关的状态</li></ul></li><li>BLACKBOXWINLOGON: 1 (!blackboxwinlogon) (!blackboxwinlogonnotify)<ul><li>黑盒 Winlogon（Windows 登录进程）：1<ul><li>表示转储里包含 Winlogon 黑盒信息</li></ul></li><li>可执行命令：<code>!blackboxwinlogon</code>、<code>!blackboxwinlogonnotify</code><ul><li><code>!blackboxwinlogon</code>：查看 Winlogon 进程相关状态</li><li><code>!blackboxwinlogonnotify</code>：查看 Winlogon 通知事件相关状态</li></ul></li></ul></li></ul>
 <p>根据题目 我们要查系统的待机状态 是蓝屏时的状态数据</p>
 <p>所以执行命令<code>!blackboxbsd</code> 单击高亮文本即可</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片25.png" alt="图片.png" referrerpolicy="no-referrer"></p>
 <p>内容太多 再加上文章篇幅原因 就不像刚刚那样逐条解释了</p>
 <p>看待机状态 我们只要抓住相关的内容即可</p>
-<ul><li>Sleep in progress: <code>FALSE</code></li><li>也就是不属于传统睡眠进程（S3） 那就接着看</li></ul>
-<ul><li>Connected standby in progress: <code>TRUE</code></li><li>也就是连接待机正在进行 那么这个就是崩溃时的待机状态</li></ul>
+<ul><li>Sleep in progress: <code>FALSE</code><ul><li>也就是不属于传统睡眠进程（S3） 那就接着看</li></ul></li><li>Connected standby in progress: <code>TRUE</code><ul><li>也就是连接待机正在进行 那么这个就是崩溃时的待机状态</li></ul></li></ul>
 <p>所以这道题的答案为<code>connectedstandby</code></p>
 <h3>PART 3.7 最后一次电源状态参考记录距离系统崩溃相差多少毫秒？</h3>
 <p>电源状态也是状态 还是看刚刚<code>!blackboxbsd</code>的内容</p>
@@ -214,23 +148,9 @@ Arg4: 0000000000000002, (reserved)</code></pre>
 <p>崩溃时间 - 最后一次电源状态参考记录时间 = 747毫秒</p>
 <p>所以这道题的答案为747</p>
 <h3>PART 3.8 综合内存转储文件中的各条线索，下列哪一个结论是目前能够作出的最严谨判断？</h3>
-<ul><li>A. Windows 内核自身缺陷，与第三方驱动无关。</li></ul>
-<ul><li>B. Hyper-V 是此次蓝屏的根本原因。</li></ul>
-<ul><li>C. 现有证据可以定位直接故障点并还原部分崩溃现场，但不足以唯一确定更深层的根本原因。</li></ul>
-<ul><li>D. 可以确定用户进行了拔电操作，该操作直接导致 NVIDIA 驱动崩溃。</li></ul>
+<ul><li>A. Windows 内核自身缺陷，与第三方驱动无关。</li><li>B. Hyper-V 是此次蓝屏的根本原因。</li><li>C. 现有证据可以定位直接故障点并还原部分崩溃现场，但不足以唯一确定更深层的根本原因。</li><li>D. 可以确定用户进行了拔电操作，该操作直接导致 NVIDIA 驱动崩溃。</li></ul>
 <p>选择题 我们一个一个看</p>
-<ul><li>A选项</li><li>faulting instruction 的归属模块是 <code>nvlddmkm.sys</code></li></ul>
-<ul><li>这是第三方驱动（NVIDIA显卡驱动）不是 Windows 内核组件</li></ul>
-<ul><li>所以A选项错误</li></ul>
-<ul><li>B选项</li><li>虽然可以查询到Hyper-V的信息 但不代表是它的问题</li></ul>
-<ul><li>崩溃发生在NVIDIA显卡驱动 所以根因定位到Hyper-V并不合适</li></ul>
-<ul><li>所以B选项错误</li></ul>
-<ul><li>C选项</li><li>根据刚刚的分析 我们确实定位到了故障地址 并且还原了部分崩溃现场</li></ul>
-<ul><li>我们也只能简单的确定蓝屏位置是NVIDIA显卡驱动 没有定位到根因</li></ul>
-<ul><li>所以C选项正确</li></ul>
-<ul><li>D选项</li><li>直接看刚刚<code>!blackboxbsd</code>的分析结果</li></ul>
+<ul><li>A选项<ul><li>faulting instruction 的归属模块是 <code>nvlddmkm.sys</code></li><li>这是第三方驱动（NVIDIA显卡驱动）不是 Windows 内核组件</li><li>所以A选项错误</li></ul></li><li>B选项<ul><li>虽然可以查询到Hyper-V的信息 但不代表是它的问题</li><li>崩溃发生在NVIDIA显卡驱动 所以根因定位到Hyper-V并不合适</li><li>所以B选项错误</li></ul></li><li>C选项<ul><li>根据刚刚的分析 我们确实定位到了故障地址 并且还原了部分崩溃现场</li><li>我们也只能简单的确定蓝屏位置是NVIDIA显卡驱动 没有定位到根因</li><li>所以C选项正确</li></ul></li><li>D选项<ul><li>直接看刚刚<code>!blackboxbsd</code>的分析结果</li></ul></li></ul>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片29.png" alt="图片.png" referrerpolicy="no-referrer"></p>
-<ul><li>Power button last press time: <code>0x0</code></li></ul>
-<ul><li>电源按钮最后一次按下的时间显示0 也就是说电源按钮从未被按下过</li></ul>
-<ul><li>所以D选项错误</li></ul>
+<ul><li>Power button last press time: <code>0x0</code></li><li>电源按钮最后一次按下的时间显示0 也就是说电源按钮从未被按下过</li><li>所以D选项错误</li></ul>
 <p>所以这道题的答案为 <code>C</code></p>

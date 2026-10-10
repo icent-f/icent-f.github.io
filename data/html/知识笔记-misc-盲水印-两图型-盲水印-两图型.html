@@ -3,9 +3,7 @@
 <h2>概念（百度给出）</h2>
 <p>盲水印是一种肉眼不可见的数字水印技术，用于在不影响原始媒体质量的情况下嵌入版权或身份信息，并可在无需原始文件的情况下提取验证。</p>
 <p>有三个特性</p>
-<ul><li><strong>隐蔽性</strong>：水印不可见，不干扰用户体验，也不易被模仿</li></ul>
-<ul><li><strong>鲁棒性</strong>：即使经过压缩、裁剪、旋转或涂改，水印仍可被提取</li></ul>
-<ul><li><strong>不易移除性</strong>：即便被察觉，水印也难以被有意破坏或删除</li></ul>
+<ul><li><strong>隐蔽性</strong>：水印不可见，不干扰用户体验，也不易被模仿</li><li><strong>鲁棒性</strong>：即使经过压缩、裁剪、旋转或涂改，水印仍可被提取</li><li><strong>不易移除性</strong>：即便被察觉，水印也难以被有意破坏或删除</li></ul>
 <p>其中 鲁棒性是指经过正常的传递、压缩 依旧能保持较好的强健性 不易丢失</p>
 <p>而不易移除性指的是 攻击者刻意想要去除盲水印 使用涂改 裁切 擦除等方式 都难以去除盲水印的存在</p>
 <p>理论上 盲水印可以作用于大部分图片类型 png jpeg webp bmp 甚至gif 理论上都可以嵌入盲水印</p>
@@ -20,7 +18,7 @@
 <pre><code>f1 = np.fft.fft2(img)</code></pre>
 <p>接着把要隐写的盲水印叠加到转换得到的频谱上</p>
 <p>由于这里是线性加法 所以也为盲水印的可逆打下基础</p>
-<pre><code class="language-Python">f2 = f1 + alpha * rwm</code></pre>
+<div class="code-block"><div class="code-lang">Python</div><pre><code class="language-Python">f2 = f1 + alpha * rwm</code></pre></div>
 <p>这里涉及到两个参数 <code>alpha</code> <code>rwm</code></p>
 <p><code>alpha</code>(工具默认 3.0)就是水印强度 alpha数值越大 水印越明显 但对图片的损伤越大 隐蔽性就越差</p>
 <p><code>rwm</code> 就是处理过的水印图片（原水印图片叫wm） 处理过程放在理论的最下方 想了解可以看看</p>

@@ -610,6 +610,34 @@ html.theme-anim *::after {
   font-size: inherit;
   color: inherit;
 }
+
+/* 带语言标注的代码块：标签行 + 代码区共用一圈圆角 */
+.post-article .code-block {
+  margin: 14px 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, .06);
+  overflow: hidden;
+}
+.post-article .code-block .code-lang {
+  padding: 5px 14px;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: .03em;
+  color: var(--ink-faint);
+  background: rgba(0, 0, 0, .05);
+  border-bottom: 1px solid var(--line);
+  user-select: none;
+}
+.post-article .code-block pre {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+/* 列表层级：给子级一点额外缩进，视觉上更清楚 */
+.post-article li > ul,
+.post-article li > ol { margin: 6px 0 6px 20px; }
 .post-article table {
   width: 100%;
   border-collapse: collapse;

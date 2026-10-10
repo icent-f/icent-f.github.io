@@ -9,13 +9,7 @@
 <h2>PART 2 使用对象</h2>
 <p>Volatility3作用的文件都是内存镜像文件</p>
 <p>Volatility3 支持的内存镜像格式包括：</p>
-<ul><li>Raw（<code>.raw</code>/<code>.mem</code>/<code>.dmp</code>）</li></ul>
-<ul><li>Windows 崩溃转储（<code>.dmp</code>）</li></ul>
-<ul><li>VMware（<code>.vmem</code>）</li></ul>
-<ul><li>VirtualBox（<code>.sav</code>）</li></ul>
-<ul><li>Hyper-V（<code>.bin</code>）</li></ul>
-<ul><li>EWF</li></ul>
-<ul><li>LiME</li></ul>
+<ul><li>Raw（<code>.raw</code>/<code>.mem</code>/<code>.dmp</code>）</li><li>Windows 崩溃转储（<code>.dmp</code>）</li><li>VMware（<code>.vmem</code>）</li><li>VirtualBox（<code>.sav</code>）</li><li>Hyper-V（<code>.bin</code>）</li><li>EWF</li><li>LiME</li></ul>
 <h2>PART 3 使用方法</h2>
 <p>如果下载的是python源码 就用python加参数运行</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片%201.png" alt="图片.png" referrerpolicy="no-referrer"></p>
@@ -49,7 +43,7 @@
 <blockquote>
 <p>这题的检材基址vol3识别有点问题 用<code>-c</code>手动改一下基址<br>文件路径改成自己电脑的<br>当然直接用vol2可能会好一些 可能是Win7镜像的原因</p>
 </blockquote>
-<pre><code class="language-JSON">{
+<div class="code-block"><div class="code-lang">JSON</div><pre><code class="language-JSON">{
   &quot;dump&quot;: false,
   &quot;kernel.class&quot;: &quot;volatility3.framework.contexts.Module&quot;,
   &quot;kernel.layer_name.class&quot;: &quot;volatility3.framework.layers.intel.WindowsIntel32e&quot;,
@@ -67,7 +61,7 @@
   &quot;pid&quot;: [],
   &quot;timeliner&quot;: false
 }
-</code></pre>
+</code></pre></div>
 <h3>PART 4.1 请给出计算机内存创建北京时间？</h3>
 <p>[答案格式：2000-01-11 00:00:00]</p>
 <p>内存创建时间 已知镜像文件是windows镜像 所以采用插件 <code>windows.info</code></p>
@@ -100,9 +94,7 @@
 <p>用到的插件是 <code>windows.mftsacn</code></p>
 <p>注意 <code>windows.mftsacn</code> 是父插件 有三个子插件</p>
 <p>需要标注使用的子插件才可以正常使用</p>
-<ul><li><code>windows.mftscan.MFTScan</code></li><li>主插件 用于扫描内存中残留的 MFT 记录 并输出文件的元数据</li></ul>
-<ul><li><code>windows.mftscan.ADS</code></li><li>专门扫描 NTFS 的备用数据流（Alternate Data Streams） 用于检测隐藏数据</li></ul>
-<ul><li><code>windows.mftscan.ResidentData</code></li><li>提取存储在 MFT 记录内部的驻留数据（小文件的内容）</li></ul>
+<ul><li><code>windows.mftscan.MFTScan</code><ul><li>主插件 用于扫描内存中残留的 MFT 记录 并输出文件的元数据</li></ul></li><li><code>windows.mftscan.ADS</code><ul><li>专门扫描 NTFS 的备用数据流（Alternate Data Streams） 用于检测隐藏数据</li></ul></li><li><code>windows.mftscan.ResidentData</code><ul><li>提取存储在 MFT 记录内部的驻留数据（小文件的内容）</li></ul></li></ul>
 <p>数据量较大 用 <code>&gt; 1.txt</code> 重定向结果到txt文件里</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片%208.png" alt="图片.png" referrerpolicy="no-referrer"></p>
 <blockquote>

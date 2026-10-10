@@ -39,21 +39,13 @@
 <p>数字为<code>255</code>的部分为网络位 数字为<code>0</code>的部位为主机位</p>
 <p>子网掩码本质上也是二进制分段后转化的十进制 所以 <code>255.255.255.0</code> 其实是指  <br><code>11111111</code> <code>11111111</code> <code>11111111</code> <code>00000000</code>  <br>由于它有24位<code>1</code> 且代表了网络位 我们可以用它在表示IP地址的同时 顺带展示网络位：  <br><code>192.168.1.10/24</code> 这种方法被称为 <strong>CIDR表示法</strong></p>
 <p>IP地址中有几个特殊地址</p>
-<ul><li><strong><code>0.0.0.0</code></strong>: 通常代表任意地址或本机所有IP 若为服务器配置这个IP 可接收来自任意网卡的外部连接请求</li></ul>
-<ul><li><strong><code>127.0.0.1</code></strong>: 本地回环地址 代表设备自身 无论是否接入网络 这个地址都能联通 常用于测试本地网络的运行状态</li></ul>
-<ul><li><strong><code>255.255.255.255</code></strong>: 受限广播地址 若在该地址传输数据 同一局域网的所有设备都能接收到</li></ul>
+<ul><li><strong><code>0.0.0.0</code></strong>: 通常代表任意地址或本机所有IP 若为服务器配置这个IP 可接收来自任意网卡的外部连接请求</li><li><strong><code>127.0.0.1</code></strong>: 本地回环地址 代表设备自身 无论是否接入网络 这个地址都能联通 常用于测试本地网络的运行状态</li><li><strong><code>255.255.255.255</code></strong>: 受限广播地址 若在该地址传输数据 同一局域网的所有设备都能接收到</li></ul>
 <h4><strong>PART 2.2.2 域名的结构</strong></h4>
 <p>我们拿 <code>www.bilibili.com</code> 举例  <br>我们发现这个域名被 <code>.</code> 分成了三个部分 <code>www</code> <code>bilibili</code> <code>com</code></p>
-<ul><li><code>com</code>：好比省级</li><li><code>bilibili</code>：好比市级</li><li><code>www</code>：好比县级</li></ul>
-<ul><li><code>com</code>：顶级域名</li><li><code>bilibili.com</code>：一级域名</li><li><code>www.bilibili.com</code>：二级域名</li></ul>
+<ul><li><code>com</code>：好比省级</li><li><code>bilibili</code>：好比市级</li><li><code>www</code>：好比县级</li><li><code>com</code>：顶级域名</li><li><code>bilibili.com</code>：一级域名</li><li><code>www.bilibili.com</code>：二级域名</li></ul>
 <p><strong>顶级域名</strong></p>
 <p>域名管理机构为了管理方便 将虚拟的网络空间划分为多个顶级区域 且都规定了名字 这些就是顶级域名  <br>顶级域名可以划分为三类：</p>
-<ul><li>国家和地区顶级域名 ccTLDs(Country Code Top-level Domains)</li></ul>
-<p>  例如 中国是 <code>.cn</code> 日本是 <code>.jp</code></p>
-<ul><li>通用顶级域名 gTLDs(Generic Top-level Domains)  </li></ul>
-<p>  例如 工商企业 <code>com</code> 网络服务商 <code>net</code> 非营利组织 <code>org</code></p>
-<ul><li>新通用顶级域名 New gTLD(New Generic Top-level Domains)  </li></ul>
-<p>  例如 通用 <code>xyz</code> 高端 <code>top</code> 红色 <code>red</code> 人 <code>man</code></p>
+<ul><li>国家和地区顶级域名 ccTLDs(Country Code Top-level Domains)<br>例如 中国是 <code>.cn</code> 日本是 <code>.jp</code></li><li>通用顶级域名 gTLDs(Generic Top-level Domains)  <br>例如 工商企业 <code>com</code> 网络服务商 <code>net</code> 非营利组织 <code>org</code></li><li>新通用顶级域名 New gTLD(New Generic Top-level Domains)  <br>例如 通用 <code>xyz</code> 高端 <code>top</code> 红色 <code>red</code> 人 <code>man</code></li></ul>
 <p>在每个顶级域名中 又可以分为很多子区域 这些子区域就是 <strong>一级域名</strong>  <br>我们在域名注册商那里购买的域名就是 一级域名  <br>从一级域名开始 就能被用来指向IP地址了</p>
 <blockquote>
 <p>域名虽然有等级的划分 但它指向的IP的服务器是没有等级划分的</p>
@@ -83,7 +75,7 @@
 <p>通过查询参数 我们可以做到：</p>
 <ul><li>传递搜索关键词</li><li>指定分页信息</li><li>过滤或排序数据</li><li>传递会话标识或跟踪信息</li><li>向服务器传递配置选项</li></ul>
 <p>查询参数的特性：</p>
-<ul><li>无序性：参数的顺序通常不影响结果（除非服务器端特别处理）</li><li>可省略值：有些参数可能只有键没有值，如?print或?flag</li><li>URL编码：当值中包含特殊字符（空格、中文、=、&amp;等）时，需要进行URL编码</li><li>空格编码为 <code>%20</code> 或 <code>+</code></li><li><code>=</code> 编码为 <code>%3d</code></li><li><code>&amp;</code> 编码为 <code>%26</code></li><li><a href="https://www.toolhelper.cn/EncodeDecode/Url">列举一个编码解码网站</a></li><li>长度限制：不同浏览器对URL长度有限制（通常2048-8192字符），查询参数不宜过长</li><li>请求方式限制：查询参数通常用于GET请求，POST请求的数据通常在请求体中</li></ul>
+<ul><li>无序性：参数的顺序通常不影响结果（除非服务器端特别处理）</li><li>可省略值：有些参数可能只有键没有值，如?print或?flag</li><li>URL编码：当值中包含特殊字符（空格、中文、=、&amp;等）时，需要进行URL编码<ul><li>空格编码为 <code>%20</code> 或 <code>+</code></li><li><code>=</code> 编码为 <code>%3d</code></li><li><code>&amp;</code> 编码为 <code>%26</code></li><li><a href="https://www.toolhelper.cn/EncodeDecode/Url">列举一个编码解码网站</a></li></ul></li><li>长度限制：不同浏览器对URL长度有限制（通常2048-8192字符），查询参数不宜过长</li><li>请求方式限制：查询参数通常用于GET请求，POST请求的数据通常在请求体中</li></ul>
 <h3><strong>PART 2.6 锚点</strong></h3>
 <p>锚点 也称为 <strong>哈希</strong> 或 <strong>片段标识符</strong>  <br>形如：<code>#xxx</code>  <br>比如：<code>#installation</code></p>
 <p>锚点的特点:</p>
@@ -92,7 +84,7 @@
 <p>传统锚点内容对搜索引擎不可见，但现代搜索引擎已能处理部分情况</p>
 </blockquote>
 <p>通过锚点 我们可以做到：</p>
-<ul><li>配合前端语言设定的 <strong>id属性</strong> 实现同一页面不同位置的跳转</li><li>保存应用状态</li><li>实现前端路由</li><li>比如 <code>https://example.com/app#/users/passwd</code></li></ul>
+<ul><li>配合前端语言设定的 <strong>id属性</strong> 实现同一页面不同位置的跳转</li><li>保存应用状态</li><li>实现前端路由<ul><li>比如 <code>https://example.com/app#/users/passwd</code></li></ul></li></ul>
 <h3><strong>PART 2.7 URL分析</strong></h3>
 <p>来看看一个完整的URL 我们以刚刚的示例URL为例</p>
 <p><em><code>https://www.example.com:8080/path?query=123#fragment</code></em></p>

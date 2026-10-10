@@ -16,9 +16,13 @@ _FENCE = re.compile(r"^```\s*([^`]*)$")
 _HEADING = re.compile(r"^(#{1,6})\s+(.*)$")
 _HR = re.compile(r"^\s*([-*_])\s*(\1\s*){2,}$")
 _QUOTE = re.compile(r"^\s*>")
-_UL = re.compile(r"^\s*[-*+]\s+")
-_OL = re.compile(r"^\s*\d+\.\s+")
 _TABLE_SEP = re.compile(r"^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)+\|?\s*$")
+_LIST_ITEM = re.compile(r"^([ \t]*)([-*+]|\d+[.)])[ \t]+(.*)$")
+
+
+def _indent_w(ws):
+    """缩进宽度，tab 记 4"""
+    return sum(4 if c == "\t" else 1 for c in ws)
 
 
 def _inline(text):
@@ -71,6 +75,90 @@ def _split_row(line):
     return [c.strip() for c in line.split("|")]
 
 
+def _collect_list(lines, i, n):
+    """从 lines[i] 开始收集整个列表块。
+
+    返回 (entries, 下一个索引)，entries 为 [[缩进宽度, 是否有序, 文本], ...]。
+    缩进的后续行并入上一项的文本（渲染时变成 <br>）；
+    项与项之间的空行不打断列表（松散列表）。
+    """
+    entries = []
+    cont = []
+    while i < n:
+        s = lines[i]
+        m = _LIST_ITEM.match(s)
+        if m:
+            if cont:
+                entries[-1][2] += "\n" + "\n".join(cont)
+                cont = []
+            entries.append([_indent_w(m.group(1)), m.group(2)[0].isdigit(), m.group(3)])
+            i += 1
+            continue
+        if not s.strip():
+            j = i + 1
+            while j < n and not lines[j].strip():
+                j += 1
+            if j < n and _LIST_ITEM.match(lines[j]):
+                i = j
+                continue
+            break
+        if entries and s[:1] in (" ", "\t"):
+            cont.append(s.strip())
+            i += 1
+            continue
+        break
+    if cont:
+        entries[-1][2] += "\n" + "\n".join(cont)
+    return entries, i
+
+
+def _render_list(entries):
+    """按缩进层级渲染成嵌套的 <ul> / <ol>"""
+    out = []
+    stack = []          # [{"indent":, "tag":, "open": bool}]
+
+    for idx, (indent, ordered, text) in enumerate(entries):
+        tag = "ol" if ordered else "ul"
+        nxt = entries[idx + 1][0] if idx + 1 < len(entries) else -1
+
+        # 关掉所有比当前更深的层级（连同承载它们的 <li>）
+        while stack and stack[-1]["indent"] > indent:
+            lvl = stack.pop()
+            if lvl["open"]:
+                out.append("</li>")
+            out.append("</%s>" % lvl["tag"])
+
+        if stack and stack[-1]["indent"] == indent:
+            if stack[-1]["open"]:
+                out.append("</li>")
+                stack[-1]["open"] = False
+            if stack[-1]["tag"] != tag:          # 同层但换了类型
+                out.append("</%s>" % stack[-1]["tag"])
+                stack.pop()
+
+        if not stack:
+            out.append("<%s>" % tag)
+            stack.append({"indent": indent, "tag": tag, "open": False})
+        elif indent > stack[-1]["indent"]:
+            out.append("<%s>" % tag)
+            stack.append({"indent": indent, "tag": tag, "open": False})
+
+        out.append("<li>%s" % _inline(text))
+        stack[-1]["open"] = True
+
+        if nxt <= indent:                        # 没有子项，直接闭合
+            out.append("</li>")
+            stack[-1]["open"] = False
+
+    while stack:
+        lvl = stack.pop()
+        if lvl["open"]:
+            out.append("</li>")
+        out.append("</%s>" % lvl["tag"])
+
+    return "".join(out)
+
+
 def render(md):
     """Markdown -> HTML"""
     lines = md.replace("\r\n", "\n").replace("\r", "\n").split("\n")
@@ -83,9 +171,8 @@ def render(md):
         # 代码块
         m = _FENCE.match(line)
         if m:
-            # 语言名可能带空格（如 "Plain Text"、"Windows PowerShell"）：
-            # 取第一个词并清掉不适合做 class 的字符
-            _parts = m.group(1).split()
+            info = m.group(1).strip()          # 原始语言串，如 "Plain Text"
+            _parts = info.split()
             lang = re.sub(r"[^\w+#.-]", "", _parts[0]) if _parts else ""
             i += 1
             buf = []
@@ -93,8 +180,18 @@ def render(md):
                 buf.append(lines[i])
                 i += 1
             i += 1  # 跳过结束的 ```
+            code = html.escape("\n".join(buf))
             cls = ' class="language-%s"' % lang if lang else ""
-            out.append("<pre><code%s>%s</code></pre>" % (cls, html.escape("\n".join(buf))))
+            if info:
+                # 有语言标注：在代码块上方加一条标签行
+                out.append(
+                    '<div class="code-block">'
+                    '<div class="code-lang">%s</div>'
+                    "<pre><code%s>%s</code></pre>"
+                    "</div>" % (html.escape(info), cls, code)
+                )
+            else:
+                out.append("<pre><code>%s</code></pre>" % code)
             continue
 
         # 标题
@@ -135,18 +232,10 @@ def render(md):
             out.append("<table><thead><tr>%s</tr></thead><tbody>%s</tbody></table>" % (th, tb))
             continue
 
-        # 列表（连续同类项）
-        if _UL.match(line) or _OL.match(line):
-            ordered = bool(_OL.match(line))
-            pat = _OL if ordered else _UL
-            items = []
-            while i < n and pat.match(lines[i]):
-                items.append(pat.sub("", lines[i]))
-                i += 1
-            tag = "ol" if ordered else "ul"
-            out.append(
-                "<%s>%s</%s>" % (tag, "".join("<li>%s</li>" % _inline(x) for x in items), tag)
-            )
+        # 列表（支持缩进嵌套；有序/无序可混合）
+        if _LIST_ITEM.match(line):
+            entries, i = _collect_list(lines, i, n)
+            out.append(_render_list(entries))
             continue
 
         # 空行
@@ -162,8 +251,7 @@ def render(md):
                 _HEADING.match(nxt)
                 or _FENCE.match(nxt)
                 or _QUOTE.match(nxt)
-                or _UL.match(nxt)
-                or _OL.match(nxt)
+                or _LIST_ITEM.match(nxt)
                 or _HR.match(nxt)
             ):
                 break

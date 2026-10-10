@@ -8,13 +8,5 @@
 <p><code>&amp;&amp;</code> -&gt; 与<br><code>||</code> -&gt; 或<br><code>!</code> -&gt; 非<br><code>()</code> -&gt; 分组</p>
 <p>例：<code>http &amp;&amp; ip.src == 10.0.0.5</code>  <br>例：<code>tcp.port == 80 || tcp.port == 443</code></p>
 <p>还有一些常用的操作</p>
-<ul><li><strong>追踪流</strong>  </li></ul>
-<p>   右键任意包 -&gt; <code>Follow</code> -&gt; <code>TCP/UDP/HTTP Stream</code>  <br>   可完整查看请求内容与响应内容</p>
-<ul><li><strong>导出传输文件</strong>  </li></ul>
-<p>   <code>File</code> -&gt; <code>Export Objects</code> -&gt; <code>HTTP/IMF/FTP</code>  <br>   一键列出并保存所有通过 HTTP 等协议传输的文件</p>
-<ul><li><strong>搜索字符串</strong>  </li></ul>
-<p>   <code>Ctrl+F</code><br>  选择“String”，在包字节中搜索</p>
-<ul><li><strong>统计信息</strong></li><li><code>Statistics -&gt; Protocol Hierarchy</code>：查看流量协议分布</li><li><code>Statistics -&gt; Conversations</code>：查看 IP/端口间的会话</li><li><code>Statistics -&gt; HTTP → Requests</code>：统计所有 HTTP 请求</li></ul>
-<ul><li><strong>解密 TLS/SSL</strong>  </li></ul>
-<p>   <code>Edit → Preferences</code> → <code>Protocols</code> → <code>TLS/RSA Keys</code>  <br>   导入 Key File 或设置 <code>SSLKEYLOGFILE</code></p>
+<ul><li><strong>追踪流</strong>  <br>右键任意包 -&gt; <code>Follow</code> -&gt; <code>TCP/UDP/HTTP Stream</code><br>可完整查看请求内容与响应内容</li><li><strong>导出传输文件</strong>  <br><code>File</code> -&gt; <code>Export Objects</code> -&gt; <code>HTTP/IMF/FTP</code><br>一键列出并保存所有通过 HTTP 等协议传输的文件</li><li><strong>搜索字符串</strong>  <br><code>Ctrl+F</code><br>选择“String”，在包字节中搜索</li><li><strong>统计信息</strong><ul><li><code>Statistics -&gt; Protocol Hierarchy</code>：查看流量协议分布</li><li><code>Statistics -&gt; Conversations</code>：查看 IP/端口间的会话</li><li><code>Statistics -&gt; HTTP → Requests</code>：统计所有 HTTP 请求</li></ul></li><li><strong>解密 TLS/SSL</strong>  <br><code>Edit → Preferences</code> → <code>Protocols</code> → <code>TLS/RSA Keys</code><br>导入 Key File 或设置 <code>SSLKEYLOGFILE</code></li></ul>
 <p>Wireshark 还有个命令行工具叫 tshark</p>

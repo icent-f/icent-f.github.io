@@ -667,6 +667,14 @@
       let html = resolveRelativeUrls(global.marked.parse(md, { gfm: true, breaks: true }), baseDir);
       // 图片加 referrerpolicy，绕过部分图床防盗链
       html = html.replace(/<img (?![^>]*referrerpolicy)/g, '<img referrerpolicy="no-referrer" ');
+      // 带语言的代码块：在 <pre> 上方补一条语言标签（与构建版 md2html.py 的输出保持一致）
+      html = html.replace(
+        /<pre><code class="language-([^"]+)">([\s\S]*?)<\/code><\/pre>/g,
+        function (_m, lang, body) {
+          return '<div class="code-block"><div class="code-lang">' + lang + "</div>" +
+            '<pre><code class="language-' + lang + '">' + body + "</code></pre></div>";
+        }
+      );
       return html;
     }
     // 没加载到 marked 时兜底成纯文本
