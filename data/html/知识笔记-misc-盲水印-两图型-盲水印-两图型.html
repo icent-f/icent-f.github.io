@@ -1,13 +1,13 @@
 <h1>盲水印（两图型）</h1>
 <div class="post-meta"><span class="chip">知识笔记 · Misc / 盲水印（两图型）</span><span>2026-09-07</span></div>
-<h2>概念（百度给出）</h2>
+<h2 id="概念-百度给出">概念（百度给出）</h2>
 <p>盲水印是一种肉眼不可见的数字水印技术，用于在不影响原始媒体质量的情况下嵌入版权或身份信息，并可在无需原始文件的情况下提取验证。</p>
 <p>有三个特性</p>
 <ul><li><strong>隐蔽性</strong>：水印不可见，不干扰用户体验，也不易被模仿</li><li><strong>鲁棒性</strong>：即使经过压缩、裁剪、旋转或涂改，水印仍可被提取</li><li><strong>不易移除性</strong>：即便被察觉，水印也难以被有意破坏或删除</li></ul>
 <p>其中 鲁棒性是指经过正常的传递、压缩 依旧能保持较好的强健性 不易丢失</p>
 <p>而不易移除性指的是 攻击者刻意想要去除盲水印 使用涂改 裁切 擦除等方式 都难以去除盲水印的存在</p>
 <p>理论上 盲水印可以作用于大部分图片类型 png jpeg webp bmp 甚至gif 理论上都可以嵌入盲水印</p>
-<h2>理论</h2>
+<h2 id="理论">理论</h2>
 <p>将图片进行 <strong>离散余弦 小波 </strong>或者<strong>傅里叶变换</strong> 得到图片的频谱信息</p>
 <p>再将水印的编码信息叠加到图片的频谱上 最后再进行一次逆变换</p>
 <p><strong>离散余弦 小波 傅里叶变换</strong> 这三种方式在盲水印上的作用几乎相同 都是将图片转化为频谱数据</p>
@@ -62,7 +62,7 @@ for i in range(hwm.shape[0]):
         rwm[i][j] = hwm[i][j]
         rwm[rwm.shape[0]-i-1][rwm.shape[1]-j-1] = hwm[i][j]</code></pre>
 <p><code>seed</code> 是除 <code>alpha</code> 外的第二个参数 工具默认 <code>seed=20160930</code></p>
-<h2>工具</h2>
+<h2 id="工具">工具</h2>
 <p>工具名为 <strong>BlindWaterMark</strong><a href="https://github.com/chishaxie/BlindWaterMark#blindwatermark">github网址</a></p>
 <p>注意工具需要python包依赖 需要自己手动安装</p>
 <p>工具的使用说明在 README 写的很详细 这里就简单写写做题时常用的命令</p>
@@ -91,7 +91,7 @@ python bwm.py decode &lt;原图.png&gt; &lt;嵌入盲水印的图片.png&gt; &lt
 或者
 python bwmforpy3.py decode &lt;原图.png&gt; &lt;嵌入盲水印的图片.png&gt; &lt;提取结果.png&gt; --seed &lt;int数值&gt; --oldseed</code></pre>
 <p>当然 <code>alpha</code> 和 <code>seed</code> 这两个参数也可以一起使用</p>
-<h2>例题</h2>
+<h2 id="例题">例题</h2>
 <p><a href="https://ctf.show/challenges">题目地址</a> 进去后在菜狗杯检索题目名即可</p>
 <p><strong>题目名称：</strong>You and me</p>
 <p><strong>工具：</strong>BlindWaterMark</p>

@@ -8,7 +8,7 @@
 <p>而每个 chunk 都由四个部分组成</p>
 <table><thead><tr><th>部分</th><th>大小（字节）</th><th>内容</th></tr></thead><tbody><tr><td>Length</td><td>4</td><td>数据字段的大小（只包含Chunk Data）</td></tr><tr><td>Chunk Type</td><td>4</td><td>块类型（比如 IHDR IDAT）</td></tr><tr><td>Chunk Data</td><td>非固定</td><td>实际数据内容</td></tr><tr><td>CRC</td><td>4</td><td>循环冗余校验码（对 Chunk Type + Chunk Data 计算）</td></tr></tbody></table>
 <p>数据块中 有必然存在的 <strong>关键数据块</strong> 与 可能存在的 <strong>辅助数据块</strong></p>
-<h2>关键数据块</h2>
+<h2 id="关键数据块">关键数据块</h2>
 <p>有 <code>IHDR(Image Header)</code> <code>PLTE(Palette)</code> <code>IDAT(Image Data)</code> <code>IEND(Image End)</code></p>
 <p>IHDR</p>
 <ul><li>位置：<code>89 50 4E 47 0D 0A 1A 0A</code>之后</li><li>长度：13字节</li><li>内容：<ul><li>Width（4字节）：图像宽度</li><li>Height（4字节）：图像高度</li><li>Bit depth（1字节）：颜色深度</li><li>Color type（1字节）：颜色类型<ul><li>0 -&gt; 灰度</li><li>2 -&gt; 真彩色</li><li>3 -&gt; 索引色</li><li>4 -&gt; 灰度+Alpha</li><li>6 -&gt; 真彩色+Alpha</li></ul></li><li>Compression method（1字节）：压缩方法<ul><li>目前只有 0 -&gt; deflate/inflate</li></ul></li><li>Filter method（1字节）：滤波方法<ul><li>目前只有 0</li></ul></li><li>Interlace method（1字节）：隔行扫描方式<ul><li>0 -&gt; 非隔行</li><li>1 -&gt; Adam7 隔行</li></ul></li></ul></li></ul>
@@ -18,6 +18,6 @@
 <ul><li>存在一个或多个 且多个时 必定连续出现</li><li>存储经过 滤波 和 deflate 压缩后的像素数据</li><li>所有 IDAT 块的数据拼接后解压得到原始扫描行数据</li></ul>
 <p>IEND</p>
 <ul><li>位置：最后</li><li>长度：0</li><li>作用：标志png文件结束</li></ul>
-<h2>辅助数据块</h2>
+<h2 id="辅助数据块">辅助数据块</h2>
 <p>提供额外的信息 解码器可选择忽略</p>
 <table><thead><tr><th>辅助数据块</th><th>内容</th></tr></thead><tbody><tr><td>tRNS</td><td>透明度（用于 灰度 真彩色 调色板图像 的 Alpha 通道替代）</td></tr><tr><td>gAMA</td><td>伽马校正信息</td></tr><tr><td>cHRM</td><td>主色度坐标</td></tr><tr><td>sRGB</td><td>标准 RGB 色彩空间</td></tr><tr><td>iCCP</td><td>嵌入 ICC 色彩配置文件</td></tr><tr><td>tEXt/zTXt/iTXt</td><td>文本信息</td></tr><tr><td>bKGD</td><td>背景色建议</td></tr><tr><td>pHYs</td><td>物理像素尺寸（用于打印 DPI）</td></tr><tr><td>tIME</td><td>图像最后修改时间</td></tr></tbody></table>

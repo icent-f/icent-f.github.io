@@ -2,7 +2,7 @@
 <div class="post-meta"><span class="chip">解题记录 · MoeCTF / moectf2025</span><span>2026-02-12</span></div>
 <p>西电终端这几天好像出问题了 所以就在本地打了</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=0m1.png" alt="" referrerpolicy="no-referrer"></p>
-<h2><strong>Enchantment</strong></h2>
+<h2 id="enchantment"><strong>Enchantment</strong></h2>
 <p><strong>题目描述</strong>：题目附件：enchantment.pcapng  <br>哇多么好的附魔啊  <br>你把图片发了出去，但似乎附魔台上的文字有一些不对劲？  <br>注：请将最终结果按单词以\_分离并包上moectf{}提交，忽略大小写  <br><strong>工具</strong>：Wireshark</p>
 <p>附件是 pcapng文件 用 <strong>Wireshark</strong> 打开  <br>筛选http流量 发现有个传png图片的</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=1m1.png" alt="" referrerpolicy="no-referrer"></p>
@@ -15,7 +15,7 @@ NOW YOU HAVE
 MASTERED
 EOCHANTING</code></pre>
 <p>取得flag flag为  <br><code>moectf{NOW_YOU_HAVE_MASTERED_ENCHANTING}</code></p>
-<h2><strong>Encrypted volume</strong></h2>
+<h2 id="encrypted-volume"><strong>Encrypted volume</strong></h2>
 <p><strong>题目描述</strong>：题目附件：volume.rar  <br>找到钥匙，解开加密卷！  <br><strong>工具</strong>：010Editor VeraCrypt</p>
 <p>题目附件rar 解压得到两个无后缀文件</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=2m1.png" alt="" referrerpolicy="no-referrer"></p>
@@ -28,7 +28,7 @@ EOCHANTING</code></pre>
 <p>brianfuck <a href="https://wnkit.com/tool/brainfuck-ook-encrypt-decrypt">在线网站</a>解一下</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=2m5.png" alt="" referrerpolicy="no-referrer"></p>
 <p>取得flag flag为  <br><code>moectf{nOW_YoU-h4V3_UNlocKED-VOlumE}</code></p>
-<h2><strong>ez_png</strong></h2>
+<h2 id="ez_png"><strong>ez_png</strong></h2>
 <p><strong>题目描述</strong>：题目附件：ez_png.png  <br>这张平平无奇的图片里藏着一个小秘密。  <br>秘密不在颜色中，而在文件的骨骼里。  <br>注意：某些数据段的长短似乎不太协调。  <br><strong>工具</strong>：pngcheck binwalk</p>
 <p>附件是png 根据题目描述 数据段长短不太协调  <br>用 <strong>pngcheck</strong> 查看</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=3m1.png" alt="" referrerpolicy="no-referrer"></p>
@@ -37,7 +37,7 @@ EOCHANTING</code></pre>
 <p>打开分离出来的文件找</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=3m4.png" alt="" referrerpolicy="no-referrer"></p>
 <p>复制 取得flag flag为  <br><code>moectf{h1DdEn_P4YlOaD_IN-Id4T}</code></p>
-<h2><strong>ez_ssl</strong></h2>
+<h2 id="ez_ssl"><strong>ez_ssl</strong></h2>
 <p><strong>题目描述</strong>：题目附件：ez_ssl.pcapng  <br>zero6six 在网页内上传了一份秘密文件。望着浏览器提示的“连接安全，信息不会外泄”，他觉得万无一失。  <br>但与此同时，他的浏览器却悄悄上传了另一份文件。  <br>现在把他电脑的抓包记录给你，你能破解他的秘密吗？  <br><strong>工具</strong>：Wireshark ARCHPR</p>
 <p>附件是pacpng文件 <strong>Wireshark</strong> 打开  <br>根据题目描述 上传文件 要用POST 筛选一下</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=4m1.png" alt="" referrerpolicy="no-referrer"></p>
@@ -61,7 +61,7 @@ CLIENT_RANDOM c8e817f2efcee3be9290aa075919f50f329be997b124487d02a1850e48c4292d 3
 <p>ook加密 <a href="https://wnkit.com/tool/brainfuck-ook-encrypt-decrypt">在线网站</a>解密</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=4m8.png" alt="" referrerpolicy="no-referrer"></p>
 <p>复制 取得flag flag为  <br><code>moectf{upI0@d-l0G_TO-DeCrYPT_uploAD}</code></p>
-<h2><strong>Rush</strong></h2>
+<h2 id="rush"><strong>Rush</strong></h2>
 <p><strong>题目描述</strong>：题目附件：rush.gif  <br>“冲刺，冲刺！”你正走在路上，耳边传来这样的声音，还没反应过来，就被撞倒了。  <br>你费劲地爬起来，好像看到了什么信息，回过神来那人早已扬长而去，那我缺的这个道歉这块？  <br>~~上述文案纯属看图说话，玩个梗，无恶意~~  <br><strong>工具</strong>：Stegsolve QR_Research</p>
 <p>附件gif 打开看看 看见有个二维码  <br><strong>Stegsolve</strong> 逐帧读取gif</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=5m1.png" alt="" referrerpolicy="no-referrer"></p>
@@ -69,12 +69,12 @@ CLIENT_RANDOM c8e817f2efcee3be9290aa075919f50f329be997b124487d02a1850e48c4292d 3
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=5m2.png" alt="" referrerpolicy="no-referrer"></p>
 <p>直接出来了</p>
 <p>复制 取得flag flag为  <br><code>moectf{QR_C0d3s_feATUR3_eRror_c0RRECt10N}</code></p>
-<h2><strong>SSTV</strong></h2>
+<h2 id="sstv"><strong>SSTV</strong></h2>
 <p><strong>题目描述</strong>：题目附件：sstv.wav  <br>识别并解码附件中使用的特殊通信协议，以获取隐藏信息。  <br><strong>工具</strong>：mmsstv</p>
 <p>给的wav音频 听一下 sstv的电波声  <br>直接打开 <strong>mmsstv</strong> 听就行</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=5m3.png" alt="" referrerpolicy="no-referrer"></p>
 <p>取得flag flag为  <br><code>moectf{d3codiNG_SStV_reQu1REs-PATI3nC3}</code></p>
-<h2><strong>WebRepo</strong></h2>
+<h2 id="webrepo"><strong>WebRepo</strong></h2>
 <p><strong>题目描述</strong>：题目附件：WebRepo.webp  <br>这都是什么稀奇古怪的格式！？  <br><strong>工具</strong>：QR_Research binwalk git</p>
 <p>给的一个webp图片 是个二维码 <strong>QR_Research</strong> 扫一下</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=6m1.png" alt="" referrerpolicy="no-referrer"></p>
@@ -88,14 +88,14 @@ CLIENT_RANDOM c8e817f2efcee3be9290aa075919f50f329be997b124487d02a1850e48c4292d 3
 <p>有个flag <code>git show 249ff41401736165cd4514cee7afcd31ecfe7d09</code>  <br>看看它干嘛了</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=6m5.png" alt="" referrerpolicy="no-referrer"></p>
 <p>它放了个 flag.txt 而且git把内容也打印出来了  <br>复制 取得flag flag为  <br><code>moectf{B1NwA1K_ANd_g1t_R3seT-MaG1C}</code></p>
-<h2><strong>weird_photo</strong></h2>
+<h2 id="weird_photo"><strong>weird_photo</strong></h2>
 <p><strong>题目描述</strong>：题目附件: photo.png  <br>FLAG就在图中。  <br>什么，你说你看不见 FLAG？注意 CRC！  <br><strong>工具</strong>：010Editor</p>
 <p>附件是个png图片 根据题目描述“CRC” 猜测宽高被改  <br>用 <strong>010Editor</strong> 打开 把高改大点</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=7m1.png" alt="" referrerpolicy="no-referrer"></p>
 <p>保存 打开图片</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=7m2.png" alt="" referrerpolicy="no-referrer"></p>
 <p>取得flag flag为  <br><code>moectf{Image_Height_Restored}</code></p>
-<h2><strong>哈基米难没露躲</strong></h2>
+<h2 id="哈基米难没露躲"><strong>哈基米难没露躲</strong></h2>
 <p><strong>题目描述</strong>：题目附件：hachimigo.zip  <br>出题人哈基米音乐听多了(bushi  <br><strong>工具</strong>：010Editor</p>
 <p>附件zip 解压一下</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=8m1.png" alt="" referrerpolicy="no-referrer"></p>
@@ -111,13 +111,13 @@ CLIENT_RANDOM c8e817f2efcee3be9290aa075919f50f329be997b124487d02a1850e48c4292d 3
 <p>复制 取得flag flag为  <br><code>moectf{1b8956b9-a423-4101-a1bd-65be33682c82}</code></p>
 <hr>
 <p>做到这网站复活了</p>
-<h2><strong>Misc入门指北</strong></h2>
+<h2 id="misc入门指北"><strong>Misc入门指北</strong></h2>
 <p><strong>题目描述</strong>：题目附件：miscru<em>men_zhi_bei</em>.pdf<br>欢迎来到misc的世界^\_^  <br>想要的flag就藏在入门指北里面，快去找找看吧~  <br><strong>工具</strong>：</p>
 <p>附件pdf 先考虑白色字体隐写  <br>打开 全选 复制到记事本</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=9m1.png" alt="" referrerpolicy="no-referrer"></p>
 <p>发现flag 复制 取得flag flag为  <br><code>moectf{We1c0m3_7o_tH3_w0R1d_0f_m1sc3111aN3ous!!</code></p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=9m2.png" alt="" referrerpolicy="no-referrer"></p>
-<h2><strong>ez_LSB</strong></h2>
+<h2 id="ez_lsb"><strong>ez_LSB</strong></h2>
 <p><strong>题目描述</strong>：题目附件：xidian.png  <br>这是一张普通的图片，但是一个个像素看过去似乎有些蹊跷？  <br><strong>工具</strong>：zsteg Cyberchef</p>
 <p>png图片 根据题目 LSB隐写  <br>用 <strong>zsteg</strong> 查看</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=10m1.png" alt="" referrerpolicy="no-referrer"></p>
@@ -127,7 +127,7 @@ CLIENT_RANDOM c8e817f2efcee3be9290aa075919f50f329be997b124487d02a1850e48c4292d 3
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=10m2.png" alt="" referrerpolicy="no-referrer"></p>
 <p>复制 取得flag flag为<br><code>moectf{LSB_1s_s0_1nt3rest1ng!!sj9wd}</code></p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=10m3.png" alt="" referrerpolicy="no-referrer"></p>
-<h2><strong>捂住一只耳</strong></h2>
+<h2 id="捂住一只耳"><strong>捂住一只耳</strong></h2>
 <p><strong>题目描述</strong>：题目附件：粒子艺术.wav  <br>一只手捂住耳朵 另一只手打开音乐 似乎听到了不一样的声音  <br>flag 形式以moectf{}包裹提交，忽略大小写  <br><strong>工具</strong>：Audacity Cyberchef</p>
 <p>附件wav音频 根据题目描述 猜测声道隐写  <br>用 <strong>Audacity</strong> 打开</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=11m1.png" alt="" referrerpolicy="no-referrer"></p>
@@ -137,7 +137,7 @@ CLIENT_RANDOM c8e817f2efcee3be9290aa075919f50f329be997b124487d02a1850e48c4292d 3
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=11m2.png" alt="" referrerpolicy="no-referrer"></p>
 <p>取得flag flag为  <br><code>moectf{HALF_RADIO_IN_XDU}</code></p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=11m3.png" alt="" referrerpolicy="no-referrer"></p>
-<h2><strong>ez\_锟斤拷????</strong></h2>
+<h2 id="ez-_锟斤拷"><strong>ez\_锟斤拷????</strong></h2>
 <p><strong>题目描述</strong>：题目附件：flag.txt  <br>E=hv在记事本里写下了一些神秘字符，但是经过一通保存另存为的迷之操作之后文本文件里的东西全变成了乱码  <br>现在我把这个文件给你，请你帮助hv找回文件的秘密吧！  <br>请把得到的flag转换成半角字符上交  <br>hint：此题解法与锟斤拷有关  <br><strong>工具</strong>：Python</p>
 <p>附件txt 看看</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=12m1.png" alt="" referrerpolicy="no-referrer"></p>
@@ -220,7 +220,7 @@ if __name__ == &quot;__main__&quot;:
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=12m5.png" alt="" referrerpolicy="no-referrer"></p>
 <p>复制 取得flag flag为  <br><code>moectf{EnC0d1ing_gbK_@nD_Utf_8_1s_4un!!ewwww}</code></p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=12m6.png" alt="" referrerpolicy="no-referrer"></p>
-<h2><strong>encrypted_pdf</strong></h2>
+<h2 id="encrypted_pdf"><strong>encrypted_pdf</strong></h2>
 <p><strong>题目描述</strong>：题目附件：不知道写什么.pdf diary.txt  <br>这年头，啥都能带个密码，pdf也不例外。  <br>难道有密码就能拦住我堂堂misc手吗？？不可能的！  <br><strong>工具</strong>：pdfcrack</p>
 <p>根据题目描述 pdf加密 有个txt文件 先看看</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=13m1.png" alt="" referrerpolicy="no-referrer"></p>
@@ -235,7 +235,7 @@ if __name__ == &quot;__main__&quot;:
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=13m5.png" alt="" referrerpolicy="no-referrer"></p>
 <p>复制 取得flag flag为  <br><code>moectf{Pdf_1s_r3a1ly_c0lor4ul!!ihdw}</code></p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=13m6.png" alt="" referrerpolicy="no-referrer"></p>
-<h2><strong>万里挑一</strong></h2>
+<h2 id="万里挑一"><strong>万里挑一</strong></h2>
 <p><strong>题目描述</strong>：题目附件：hint.txt lock.zip password.zip  <br>要想冲破封锁，寻得真谛，须从万把钥匙中找出唯一的答案  <br><strong>工具</strong>：Python ARCHPR 010Editor bkcrack</p>
 <p>有hint 先看hint</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=14m1.png" alt="" referrerpolicy="no-referrer"></p>
@@ -324,14 +324,14 @@ if __name__ == &quot;__main__&quot;:
 <p>复制 取得flag flag为  <br><code>moectf{Y0u_h4v3_cho5en_7h3_r1ght_z1pf1le!!uysdgfsad}</code></p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=14m12.png" alt="" referrerpolicy="no-referrer"></p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=15m1.png" alt="" referrerpolicy="no-referrer"></p>
-<h2><strong>Pyjail 0</strong></h2>
+<h2 id="pyjail-0"><strong>Pyjail 0</strong></h2>
 <p><strong>题目描述</strong>:A simple reader (所以严格来说这题不算 Pyjail)  <br>你可以使用 netcat 或 pwntools（参考二进制漏洞审计入门指北）连接到本题和后续 Pyjail 题的环境。  <br>关于验证码，示例：Please enter the reverse of 'GZUUAOIS' to continue: SIOAUUZG  <br>至于 flag 的位置？你可以参考 Web 第十二章（  <br><strong>工具</strong>：WebSocket</p>
 <p>就是开环境麻烦点 主机上 <strong>WebSocket</strong> 开完wsl半天连不上  <br>最后用 0.0.0.0 + 主机ip 连上了</p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=15m1.png" alt="" referrerpolicy="no-referrer"></p>
 <p>大致就是让你输随机数的逆序 然后猜flag的位置  <br>根据题目描述 看web十二章的wp 发现是env  <br>也就是 /proc/self/environ</p>
 <p>复制 取得flag flag为  <br><code>moectf{adba1313-7797-c779-5bce-04ad7a7307b9}</code></p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=15m2.png" alt="" referrerpolicy="no-referrer"></p>
-<h2><strong>Pyjail 1</strong></h2>
+<h2 id="pyjail-1"><strong>Pyjail 1</strong></h2>
 <p><strong>题目描述</strong>flag 位置在 /tmp 下  <br>其他信息见 Pyjail 0  <br><strong>工具</strong>：Python WebSocket</p>
 <p>感觉Pyjail就是misc版的SSTI......  <br>等于是给SSTI补课了</p>
 <p>拿附件 源码如下</p>
@@ -352,7 +352,7 @@ if __name__ == &quot;__main__&quot;:
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=16m1.png" alt="" referrerpolicy="no-referrer"></p>
 <p>这里拿到shell看见没反应了 还以为卡了  <br>然后又犯蠢没劲目录就cat 我是人机  <br>不过总归是拿到了 复制 取得flag flag为  <br><code>moectf{0d373ad5-5f18-2c69-6b68-4c913a318ac3}</code></p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=16m2.png" alt="" referrerpolicy="no-referrer"></p>
-<h2><strong>Pyjail 2</strong></h2>
+<h2 id="pyjail-2"><strong>Pyjail 2</strong></h2>
 <p><strong>题目描述</strong>flag 位置在 /tmp 下  <br>其他信息见 Pyjail 0  <br><strong>工具</strong>：Python WebSocket</p>
 <p>拿附件 源码如下</p>
 <pre><code>def chall():
@@ -379,7 +379,7 @@ if __name__ == &quot;__main__&quot;:
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=17m2.png" alt="" referrerpolicy="no-referrer"></p>
 <p>这里又犯蠢了嗯对 第一下忘记加类了 不过还是拿到了  <br>复制 取得flag flag为  <br><code>moectf{0ee52ff3-95f1-9144-7121-5057fd4e025c}</code></p>
 <p><img src="content/所有文章/解题记录/MoeCTF/moectf2025/图片/5m=17m3.png" alt="" referrerpolicy="no-referrer"></p>
-<h2><strong>Pyjail 3</strong></h2>
+<h2 id="pyjail-3"><strong>Pyjail 3</strong></h2>
 <p><strong>题目描述</strong>flag 位置在 /tmp 下  <br>其他信息见 Pyjail 0  <br><strong>工具</strong>：Python WebSocket</p>
 <p>拿附件 看源码</p>
 <pre><code>def chall():

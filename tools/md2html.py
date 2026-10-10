@@ -25,6 +25,24 @@ def _indent_w(ws):
     return sum(4 if c == "\t" else 1 for c in ws)
 
 
+def _slug(text, used):
+    """把标题文本转成一个稳定的锚点 id（中文保留，重名自动加序号）"""
+    s = re.sub(r"`([^`]*)`", r"\1", text)                 # 行内代码
+    s = re.sub(r"\*\*([^*]+)\*\*", r"\1", s)              # 粗体
+    s = re.sub(r"(?<!\*)\*([^*]+)\*(?!\*)", r"\1", s)     # 斜体
+    s = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", s)        # 链接取文字
+    s = re.sub(r"!\[([^\]]*)\]\([^)]*\)", r"\1", s)       # 图片取 alt
+    s = re.sub(r"[^\w\-]+", "-", s).strip("-").lower()
+    if not s:
+        s = "sec"
+    base, n = s, 2
+    while s in used:
+        s = "%s-%d" % (base, n)
+        n += 1
+    used.add(s)
+    return s
+
+
 def _inline(text):
     """行内元素（输入是单段纯文本，输出 HTML）"""
     text = html.escape(text, quote=False)
@@ -159,8 +177,10 @@ def _render_list(entries):
     return "".join(out)
 
 
-def render(md):
-    """Markdown -> HTML"""
+def render(md, _ids=None):
+    """Markdown -> HTML（_ids 在整篇内共享，保证标题锚点不重复）"""
+    if _ids is None:
+        _ids = set()
     lines = md.replace("\r\n", "\n").replace("\r", "\n").split("\n")
     out = []
     i, n = 0, len(lines)
@@ -194,11 +214,12 @@ def render(md):
                 out.append("<pre><code>%s</code></pre>" % code)
             continue
 
-        # 标题
+        # 标题（带锚点 id，供目录跳转）
         m = _HEADING.match(line)
         if m:
             lvl = len(m.group(1))
-            out.append("<h%d>%s</h%d>" % (lvl, _inline(m.group(2).strip()), lvl))
+            raw = m.group(2).strip()
+            out.append('<h%d id="%s">%s</h%d>' % (lvl, _slug(raw, _ids), _inline(raw), lvl))
             i += 1
             continue
 
@@ -214,7 +235,7 @@ def render(md):
             while i < n and _QUOTE.match(lines[i]):
                 buf.append(re.sub(r"^\s*>\s?", "", lines[i]))
                 i += 1
-            out.append("<blockquote>\n%s\n</blockquote>" % render("\n".join(buf)))
+            out.append("<blockquote>\n%s\n</blockquote>" % render("\n".join(buf), _ids))
             continue
 
         # GFM 表格

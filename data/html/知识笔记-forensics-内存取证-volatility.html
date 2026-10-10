@@ -1,16 +1,16 @@
 <h1>Volatility使用指南</h1>
 <div class="post-meta"><span class="chip">知识笔记 · Forensics / 内存取证</span><span>2026-10-09</span></div>
-<h2>PART 1 概述</h2>
+<h2 id="part-1-概述">PART 1 概述</h2>
 <p>Volatility是一款用python编写的开源的内存取证工具</p>
 <p>分为Volatility2与Volatility3 分别使用python2与python3编写</p>
 <blockquote>
 <p>一般都是Volatility3 Windows7与Win7前的旧版考虑Volatility2</p>
 </blockquote>
-<h2>PART 2 使用对象</h2>
+<h2 id="part-2-使用对象">PART 2 使用对象</h2>
 <p>Volatility3作用的文件都是内存镜像文件</p>
 <p>Volatility3 支持的内存镜像格式包括：</p>
 <ul><li>Raw（<code>.raw</code>/<code>.mem</code>/<code>.dmp</code>）</li><li>Windows 崩溃转储（<code>.dmp</code>）</li><li>VMware（<code>.vmem</code>）</li><li>VirtualBox（<code>.sav</code>）</li><li>Hyper-V（<code>.bin</code>）</li><li>EWF</li><li>LiME</li></ul>
-<h2>PART 3 使用方法</h2>
+<h2 id="part-3-使用方法">PART 3 使用方法</h2>
 <p>如果下载的是python源码 就用python加参数运行</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片%201.png" alt="图片.png" referrerpolicy="no-referrer"></p>
 <p>如果下载的是exe 直接加参数运行即可</p>
@@ -22,23 +22,23 @@
 <p>这里的 <code>-f</code> 就是指定分析的文件</p>
 <p><code>[image]</code> 就是内存镜像文件</p>
 <p><code>[plugin]</code> 就是插件</p>
-<h3>PART 3.1 参数</h3>
-<h4>PART 3.1.1 全局参数</h4>
+<h3 id="part-3-1-参数">PART 3.1 参数</h3>
+<h4 id="part-3-1-1-全局参数">PART 3.1.1 全局参数</h4>
 <table><thead><tr><th>参数</th><th>说明</th></tr></thead><tbody><tr><td><code>-f, --file</code></td><td>指定要分析的内存镜像文件</td></tr><tr><td><code>-o, --output-dir</code></td><td>输出目录，用于存放 dump 出的文件</td></tr><tr><td><code>-r, --renderer</code></td><td>输出格式：<code>quick</code>、<code>pretty</code>、<code>json</code>、<code>csv</code> 等</td></tr><tr><td><code>-q, --quiet</code></td><td>抑制进度反馈，适合脚本或管道</td></tr><tr><td><code>--parallelism</code></td><td>并行模式：<code>processes</code>、<code>threads</code>、<code>off</code></td></tr><tr><td><code>-v, --verbose</code></td><td>增加日志详细度，可叠加（如 <code>-vvv</code>）</td></tr><tr><td><code>-l, --log</code></td><td>日志输出到指定文件</td></tr><tr><td><code>-p, --plugin-dirs</code></td><td>额外插件目录（分号分隔）</td></tr><tr><td><code>-s, --symbol-dirs</code></td><td>额外符号表目录（分号分隔）</td></tr><tr><td><code>-c, --config</code></td><td>从 JSON 文件加载配置</td></tr><tr><td><code>-e, --extend</code></td><td>单条配置项覆盖，格式 <code>name=value</code></td></tr><tr><td><code>--save-config</code></td><td>保存当前配置到 JSON 文件</td></tr><tr><td><code>--cache-path</code></td><td>自定义缓存路径</td></tr><tr><td><code>--clear-cache</code></td><td>清除短期缓存</td></tr><tr><td><code>--offline</code></td><td>离线模式，不联网下载符号表</td></tr></tbody></table>
-<h4>PART 3\.1\.2 插件专属参数</h4>
+<h4 id="part-3-1-2-插件专属参数">PART 3\.1\.2 插件专属参数</h4>
 <p>插件参数必须写在插件名之后 且不支持单字母简写</p>
 <table><thead><tr><th>参数</th><th>说明</th><th>适用插件示例</th></tr></thead><tbody><tr><td><code>--pid &lt;PID&gt;</code></td><td>限定分析某个进程</td><td><code>windows.dlllist</code>, <code>windows.handles</code>, <code>windows.vadinfo</code></td></tr><tr><td><code>--dump</code></td><td>将结果转储为文件</td><td><code>windows.memmap</code>, <code>windows.malfind</code></td></tr><tr><td><code>--yara-rules</code></td><td>指定 YARA 规则</td><td><code>yarascan</code></td></tr><tr><td><code>--strings-file</code></td><td>指定字符串文件</td><td><code>windows.strings</code></td></tr></tbody></table>
 <p>查看具体插件的参数可以用</p>
 <p><code>vol &lt;plugin_name&gt; --help</code></p>
 <p>例如 <code>vol windows.pslist --help</code> 会显示该插件支持的所有参数</p>
-<h3>PART 3.2 插件</h3>
-<h4>PART 3.2.1 Windows 插件</h4>
+<h3 id="part-3-2-插件">PART 3.2 插件</h3>
+<h4 id="part-3-2-1-windows-插件">PART 3.2.1 Windows 插件</h4>
 <table><thead><tr><th>插件</th><th>说明</th></tr></thead><tbody><tr><td><code>windows.info</code></td><td>显示正在分析的内存样本的 OS 和内核详细信息</td></tr><tr><td><code>windows.callbacks</code></td><td>列出内核回调和通知例程</td></tr><tr><td><code>windows.cmdline</code></td><td>列出进程命令行参数</td></tr><tr><td><code>windows.dlldump</code></td><td>将进程内存范围 DLL 转储</td></tr><tr><td><code>windows.dlllist</code></td><td>列出 Windows 内存映像中已加载的 dll 模块</td></tr><tr><td><code>windows.driverirp</code></td><td>在 Windows 内存映像中列出驱动程序的 IRP</td></tr><tr><td><code>windows.driverscan</code></td><td>扫描 Windows 内存映像中存在的驱动程序</td></tr><tr><td><code>windows.filescan</code></td><td>扫描 Windows 内存映像中存在的文件对象</td></tr><tr><td><code>windows.handles</code></td><td>列出进程打开的句柄</td></tr><tr><td><code>windows.hashdump</code></td><td>从内存中提取 Windows 本地用户的密码哈希</td></tr><tr><td><code>windows.malfind</code></td><td>列出可能包含注入代码的进程内存范围</td></tr><tr><td><code>windows.mftscan</code></td><td>扫描内存中残留的 NTFS 主文件表记录 并解析出文件元数据</td></tr><tr><td><code>windows.moddump</code></td><td>转储内核模块</td></tr><tr><td><code>windows.modscan</code></td><td>扫描 Windows 内存映像中存在的模块</td></tr><tr><td><code>windows.mutantscan</code></td><td>扫描 Windows 内存映像中存在的互斥锁</td></tr><tr><td><code>windows.pslist</code></td><td>列出 Windows 内存映像中存在的进程</td></tr><tr><td><code>windows.psscan</code></td><td>扫描 Windows 内存映像中存在的进程</td></tr><tr><td><code>windows.pstree</code></td><td>列出进程树</td></tr><tr><td><code>windows.procdump</code></td><td>转储处理可执行映像</td></tr><tr><td><code>windows.registry.certificates</code></td><td>列出注册表中存储的证书</td></tr><tr><td><code>windows.registry.hivelist</code></td><td>列出内存映像中存在的注册表配置单元</td></tr><tr><td><code>windows.registry.hivescan</code></td><td>扫描 Windows 内存映像中存在的注册表配置单元</td></tr><tr><td><code>windows.registry.printkey</code></td><td>在配置单元或特定键值下列出注册表项</td></tr><tr><td><code>windows.registry.userassist</code></td><td>打印用户助手注册表项和信息</td></tr><tr><td><code>windows.ssdt</code></td><td>列出系统调用表</td></tr><tr><td><code>windows.strings</code></td><td>读取字符串命令的输出，并指示每个字符串属于哪个进程</td></tr><tr><td><code>windows.svcscan</code></td><td>扫描 Windows 服务</td></tr><tr><td><code>windows.symlinkscan</code></td><td>扫描 Windows 内存映像中存在的链接</td></tr></tbody></table>
-<h4>PART 3.2.2 通用与 Linux 插件</h4>
+<h4 id="part-3-2-2-通用与-linux-插件">PART 3.2.2 通用与 Linux 插件</h4>
 <table><thead><tr><th>插件</th><th>说明</th></tr></thead><tbody><tr><td><code>layerwriter</code></td><td>运行 automagics 并将堆叠器生成的主层写出到文件</td></tr><tr><td><code>linux.bash</code></td><td>从内存中恢复 bash 命令历史记录</td></tr><tr><td><code>linux.check_afinfo</code></td><td>验证网络协议的操作功能指针</td></tr><tr><td><code>linux.check_syscall</code></td><td>检查系统调用表中的挂钩</td></tr><tr><td><code>linux.elfs</code></td><td>列出所有进程的所有内存映射 ELF 文件</td></tr><tr><td><code>linux.lsmod</code></td><td>列出加载的内核模块</td></tr><tr><td><code>linux.lsof</code></td><td>列出所有进程的所有内存映射</td></tr><tr><td><code>linux.malfind</code></td><td>列出可能包含注入代码的进程内存范围</td></tr><tr><td><code>linux.proc</code></td><td>列出所有进程的所有内存映射</td></tr><tr><td><code>linux.pslist</code></td><td>列出 Linux 内存映像中存在的进程</td></tr><tr><td><code>linux.pstree</code></td><td>列出进程树</td></tr></tbody></table>
-<h4>PART 3.2.3 macOS 插件</h4>
+<h4 id="part-3-2-3-macos-插件">PART 3.2.3 macOS 插件</h4>
 <table><thead><tr><th>插件</th><th>说明</th></tr></thead><tbody><tr><td><code>mac.bash</code></td><td>从内存中恢复 bash 命令历史记录</td></tr><tr><td><code>mac.check_syscall</code></td><td>检查系统调用表中的挂钩</td></tr><tr><td><code>mac.check_sysctl</code></td><td>检查 sysctl 处理程序的挂钩</td></tr><tr><td><code>mac.check_trap_table</code></td><td>检查 trap 表中的挂钩</td></tr><tr><td><code>mac.ifconfig</code></td><td>列出网卡信息</td></tr><tr><td><code>mac.lsmod</code></td><td>列出加载的内核模块</td></tr><tr><td><code>mac.lsof</code></td><td>列出所有进程的所有内存映射</td></tr><tr><td><code>mac.malfind</code></td><td>列出可能包含注入代码的进程内存范围</td></tr><tr><td><code>mac.netstat</code></td><td>列出所有进程的所有网络连接</td></tr><tr><td><code>mac.psaux</code></td><td>恢复程序命令行参数</td></tr><tr><td><code>mac.pslist</code></td><td>列出 Mac 内存映像中存在的进程</td></tr><tr><td><code>mac.pstree</code></td><td>列出进程树</td></tr><tr><td><code>mac.tasks</code></td><td>列出 Mac 内存映像中存在的进程（通过 tasks 队列遍历）</td></tr></tbody></table>
-<h2>PART 4 使用案例</h2>
+<h2 id="part-4-使用案例">PART 4 使用案例</h2>
 <p>检材：[DIDCTF]电子取证初学 内存取证部分</p>
 <blockquote>
 <p>这题的检材基址vol3识别有点问题 用<code>-c</code>手动改一下基址<br>文件路径改成自己电脑的<br>当然直接用vol2可能会好一些 可能是Win7镜像的原因</p>
@@ -62,14 +62,14 @@
   &quot;timeliner&quot;: false
 }
 </code></pre></div>
-<h3>PART 4.1 请给出计算机内存创建北京时间？</h3>
+<h3 id="part-4-1-请给出计算机内存创建北京时间">PART 4.1 请给出计算机内存创建北京时间？</h3>
 <p>[答案格式：2000-01-11 00:00:00]</p>
 <p>内存创建时间 已知镜像文件是windows镜像 所以采用插件 <code>windows.info</code></p>
 <p>得到回显</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片%203.png" alt="图片.png" referrerpolicy="no-referrer"></p>
 <p>SystemTime即为内存创建时间 可以看到是 <code>2023-06-20 17:02:27</code></p>
 <p>修正时区为北京时间需要+8小时 所以答案是 <code>2023-06-21 1:02:27</code></p>
-<h3>PART 4.2 请给出计算机内用户yang88的开机密码？</h3>
+<h3 id="part-4-2-请给出计算机内用户yang88的开机密码">PART 4.2 请给出计算机内用户yang88的开机密码？</h3>
 <p>[答案格式：abc.123]</p>
 <p>需要密码 我们需要NTML密码哈希 利用<code>windows.hashdump</code>插件</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片%204.png" alt="图片.png" referrerpolicy="no-referrer"></p>
@@ -77,18 +77,18 @@
 <p>利用<a href="https://hashes.com/zh/decrypt/hash">在线网站</a>解哈希</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片.png" alt="图片.png" referrerpolicy="no-referrer"></p>
 <p>取得密码为 <code>3w.qax.com</code></p>
-<h3>PART 4.3 提取内存镜像中的USB设备信息，给出该USB设备的最后连接北京时间？</h3>
+<h3 id="part-4-3-提取内存镜像中的usb设备信息-给出该usb设备的最后连接北京时间">PART 4.3 提取内存镜像中的USB设备信息，给出该USB设备的最后连接北京时间？</h3>
 <p>[答案格式：2000-01-11 00:00:00]</p>
 <p>USB设备的连接时间 我们可以去查注册表的USBSTOR</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片%2010.png" alt="图片.png" referrerpolicy="no-referrer"></p>
 <p>看<code>Last Write Time</code> 发现是 <code>2023-06-20 17:01:25</code></p>
 <p>按北京时间修正时区 答案是 <code>2023-06-21 01:01:25</code></p>
-<h3>PART 4.4 请给出用户yang88的LMHASH值？</h3>
+<h3 id="part-4-4-请给出用户yang88的lmhash值">PART 4.4 请给出用户yang88的LMHASH值？</h3>
 <p>[答案格式：字母小写]</p>
 <p>之前找开机密码的时候用 <code>windows.hashdump</code> 已经出来了</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片%206.png" alt="图片.png" referrerpolicy="no-referrer"></p>
 <p>LMHASH为 <code>aad3b435b51404eeaad3b435b51404ee</code></p>
-<h3>PART 4.5 请给出用户yang88访问过文件“提现记录.xlsx”的北京时间？</h3>
+<h3 id="part-4-5-请给出用户yang88访问过文件-提现记录-xlsx-的北京时间">PART 4.5 请给出用户yang88访问过文件“提现记录.xlsx”的北京时间？</h3>
 <p>[答案格式：2000-01-11 00:00:00]</p>
 <p>需要访问文件的时间 可以查询NTFS 主文件表（MFT） 看他的元数据</p>
 <p>用到的插件是 <code>windows.mftsacn</code></p>
@@ -113,7 +113,7 @@
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片%2011.png" alt="图片.png" referrerpolicy="no-referrer"></p>
 <p>得到时间 <code>2023-06-20 16:29:16</code></p>
 <p>修复时区为 <code>2023-06-21 00:29:16</code></p>
-<h3>PART 4.6 请给出“VeraCrypt”最后一次执行的北京时间？</h3>
+<h3 id="part-4-6-请给出-veracrypt-最后一次执行的北京时间">PART 4.6 请给出“VeraCrypt”最后一次执行的北京时间？</h3>
 <p>[答案格式：2000-01-11 00:00:00]</p>
 <p>需要取得最后的执行时间 我们需要查看进程</p>
 <p>利用插件 <code>windows.psscan</code></p>
@@ -122,13 +122,13 @@
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片%2013.png" alt="图片.png" referrerpolicy="no-referrer"></p>
 <p>取得时间为 <code>2023-06-20 16:47:41</code></p>
 <p>修正时区为 <code>2023-06-21 00:47:41</code></p>
-<h3>PART 4.7 用户在“2023-06-20 16:56:57 UTC+0”访问过“维斯塔斯”后台多少 次？</h3>
+<h3 id="part-4-7-用户在-2023-06-20-16-56-57-utc-0-访问过-维斯塔斯-后台多少-次">PART 4.7 用户在“2023-06-20 16:56:57 UTC+0”访问过“维斯塔斯”后台多少 次？</h3>
 <p>[答案格式:10]</p>
 <p>通过查询 得知“维斯塔斯”后台是web网页形式存在的</p>
 <p>所以需要查浏览器历史记录 vol没法直接查 可以选择vol2导出数据库文件 然后数据库文件分析</p>
 <p>但是太麻烦 我说用MemProcFS直接mount再查数据库 这里就不写了</p>
 <p>得到count是 <code>2</code></p>
-<h3>PART 4.8 请给出用户最后一次访问chrome浏览器的进程PID？</h3>
+<h3 id="part-4-8-请给出用户最后一次访问chrome浏览器的进程pid">PART 4.8 请给出用户最后一次访问chrome浏览器的进程PID？</h3>
 <p>[答案格式：1234]</p>
 <p>查进程PID 刚刚用插件<code>windows.psscan</code>已经可以查了</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片%202.png" alt="图片.png" referrerpolicy="no-referrer"></p>

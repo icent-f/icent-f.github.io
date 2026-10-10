@@ -683,6 +683,104 @@
 
   /* ---------- 打开文章窗口 ----------
      pos 可选：{ x, y } —— 传了就在该位置打开（卡片拖到桌面松手时用） */
+  /* ---------- 文章目录：点主标题展开，点条目跳转 ---------- */
+  let tocGlobalBound = false;
+  function bindTocGlobal() {
+    if (tocGlobalBound) return;
+    tocGlobalBound = true;
+    // 点空白处收起（只注册一次，避免每个窗口都挂一个监听）
+    document.addEventListener("click", () => {
+      document.querySelectorAll(".toc-panel.open").forEach((p) => p.classList.remove("open"));
+      document.querySelectorAll(".toc-trigger.open").forEach((h) => {
+        h.classList.remove("open");
+        h.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+
+  function setupToc(bodyEl) {
+    const art = bodyEl.querySelector(".post-article");
+    if (!art) return;
+    const h1 = art.querySelector("h1");
+    if (!h1) return;
+
+    const heads = Array.prototype.slice.call(art.querySelectorAll("h1, h2, h3, h4, h5, h6"));
+    // 补 id / 去重（同一篇内 id 必须唯一，否则跳转会指错）
+    const used = Object.create(null);
+    heads.forEach((h, i) => {
+      let id = h.id;
+      if (!id || used[id]) {
+        const base = id || "sec-" + i;
+        id = base;
+        let n = 2;
+        while (used[id]) { id = base + "-" + n; n += 1; }
+        h.id = id;
+      }
+      used[id] = true;
+    });
+
+    const items = heads.filter((h) => h !== h1);
+    if (!items.length) return;
+
+    // 主标题外面套一层，用来给下拉框定位
+    let wrap = h1.parentNode;
+    if (!wrap.classList || !wrap.classList.contains("toc-wrap")) {
+      wrap = document.createElement("div");
+      wrap.className = "toc-wrap";
+      h1.parentNode.insertBefore(wrap, h1);
+      wrap.appendChild(h1);
+    }
+    h1.classList.add("toc-trigger");
+    h1.setAttribute("role", "button");
+    h1.setAttribute("tabindex", "0");
+    h1.setAttribute("aria-expanded", "false");
+    h1.title = "点击展开目录";
+
+    const baseLvl = Math.min.apply(null, items.map((h) => parseInt(h.tagName.charAt(1), 10)));
+    const panel = document.createElement("div");
+    panel.className = "toc-panel";
+    panel.innerHTML = items.map((h) => {
+      const lvl = parseInt(h.tagName.charAt(1), 10) - baseLvl;
+      return '<a class="toc-item toc-lv' + Math.min(lvl, 3) + '" data-toc="' + esc(h.id) +
+        '" style="--lvl:' + lvl + '">' + esc((h.textContent || "").trim()) + "</a>";
+    }).join("");
+    wrap.appendChild(panel);
+
+    function setOpen(v) {
+      panel.classList.toggle("open", v);
+      h1.classList.toggle("open", v);
+      h1.setAttribute("aria-expanded", v ? "true" : "false");
+    }
+    function toggle(e) {
+      if (e) e.stopPropagation();
+      setOpen(!panel.classList.contains("open"));
+    }
+
+    h1.addEventListener("click", toggle);
+    h1.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+    });
+
+    panel.addEventListener("click", (e) => {
+      const a = e.target.closest ? e.target.closest("[data-toc]") : null;
+      if (!a) return;
+      e.stopPropagation();
+      setOpen(false);
+      const target = art.querySelector('[id="' + a.dataset.toc.replace(/"/g, '\\"') + '"]');
+      if (!target) return;
+      const top = target.getBoundingClientRect().top - bodyEl.getBoundingClientRect().top + bodyEl.scrollTop;
+      bodyEl.scrollTo({ top: Math.max(0, top - 14), behavior: "smooth" });
+      target.classList.remove("toc-flash");
+      void target.offsetWidth;                 // 强制重排，让动画能重新播放
+      target.classList.add("toc-flash");
+      setTimeout(() => target.classList.remove("toc-flash"), 1400);
+    });
+
+    // 滚动时收起（面板是相对标题定位的，滚走了就别留在半空）
+    bodyEl.addEventListener("scroll", () => setOpen(false), { passive: true });
+    bindTocGlobal();
+  }
+
   function openPost(file, title, pos) {
     const meta = POSTS.find((p) => p.file === file) || {};
     const isMd = /\.md$/i.test(file);
@@ -703,6 +801,7 @@
       onRender(bodyEl) {
         const show = (inner) => {
           bodyEl.innerHTML = '<div class="post-article">' + inner + "</div>";
+          setupToc(bodyEl);
         };
         const fail = () => {
           show('<h1>加载失败</h1><p>无法读取文章文件：<code>' + esc(file) + "</code></p>");

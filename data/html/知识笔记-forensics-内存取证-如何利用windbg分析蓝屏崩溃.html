@@ -1,11 +1,11 @@
 <h1>如何利用WinDbg分析蓝屏崩溃</h1>
 <div class="post-meta"><span class="chip">知识笔记 · Forensics / 内存取证</span><span>2026-10-09</span></div>
-<h2>PART 1 概述</h2>
+<h2 id="part-1-概述">PART 1 概述</h2>
 <p>WinDbg 是微软官方推出的一款<strong>Windows 调试工具</strong></p>
 <p>主要用于调试内核模式和用户模式的代码 也常用于分析系统或应用程序崩溃时生成的转储文件</p>
 <p>这篇文章讲的就是用它分析电脑蓝屏产生的转储文件</p>
-<h2>PART 2 使用对象</h2>
-<h3>PART 2.1 蓝屏转储文件的由来</h3>
+<h2 id="part-2-使用对象">PART 2 使用对象</h2>
+<h3 id="part-2-1-蓝屏转储文件的由来">PART 2.1 蓝屏转储文件的由来</h3>
 <p>先讲讲为什么会蓝屏</p>
 <p>蓝屏本质上是Windows的一种自我保护机制</p>
 <p>系统遇到无法安全恢复的严重错误时 系统选择主动停机 而不是带着未知错误继续运行</p>
@@ -20,33 +20,33 @@
 <p>常见的蓝屏转储文件格式为<code>.dmp</code> 即DUMP文件 也就是我们要分析的对象</p>
 <p>“启动和恢复”设置里 可以选择不同的转储级别 这决定了 DUMP文件的大小和内容</p>
 <p>分为 小内存转储、核心内存转储、完整内存转储、自动内存转储</p>
-<h3>PART 2.2 小内存转储</h3>
+<h3 id="part-2-2-小内存转储">PART 2.2 小内存转储</h3>
 <p>顾名思义就是很小的内存转储文件 只有256KB左右 只保存最核心的线索</p>
 <p>默认存放在 <code>C:\Windows\Minidump</code>文件夹下</p>
 <p>包含：</p>
 <ul><li>蓝屏代码（Bug Check Code）</li><li>四个参数（没有全局统一的固定含义 具体含义由当前的蓝屏代码界定）</li><li>崩溃那一刻的调用栈</li><li>已加载的驱动程序列表</li></ul>
-<h3>PART 2.3 核心内存转储</h3>
+<h3 id="part-2-3-核心内存转储">PART 2.3 核心内存转储</h3>
 <p>保存内核模式使用的所有内存 大小中等且不固定 通常约为物理内存的1/3</p>
 <p>默认保存至<code>C:\Windows\MEMORY.DMP</code></p>
 <p>除了小内存转储的内容 它还包含：</p>
 <ul><li>操作系统内核</li><li>硬件抽象层</li><li>所有加载的内核驱动</li><li>崩溃时所有内核线程的调用栈</li></ul>
 <p>不包含用户模式程序的数据</p>
-<h3>PART 2.4 完整内存转储</h3>
+<h3 id="part-2-4-完整内存转储">PART 2.4 完整内存转储</h3>
 <p>顾名思义就是把完整的物理内存全刻进硬盘 32G就刻32G 64G就刻64G</p>
 <p>默认保存位置也在<code>C:\Windows\MEMORY.DMP</code></p>
 <p>包含了所有通过内存可以查到的内容 不过因为文件太大 开这个模式的比较少</p>
-<h3>PART 2.5 自动内存转储</h3>
+<h3 id="part-2-5-自动内存转储">PART 2.5 自动内存转储</h3>
 <p>Win7 之后引入的“智能”选项 系统会自动判断选用哪种转储方式 通常生成的是核心内存转储</p>
 <p>也就是说 自动内存转储并不是一个单独的转储方式 只是一个决策工具</p>
 <p>大部分用户开的都是这个</p>
-<h2>PART 3 使用方法&amp;例题</h2>
+<h2 id="part-3-使用方法-例题">PART 3 使用方法&amp;例题</h2>
 <p>安装完WinDbg后 双击dmp文件即可自动进入WinDbg界面</p>
 <p>初次打开会安装很多内容 主要是符号文件</p>
 <p>可以理解成蓝屏转储文件的说明书 等它装完才能正常使用</p>
 <p>光看说明书是很难搞的 直接上手一下</p>
 <p>这里以 [SUSCTF2026]Silent Crash 的dmp文件为例 共8道题</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片17.png" alt="图片.png" referrerpolicy="no-referrer"></p>
-<h3>PART 3.1 请提交本次崩溃的 BugCheck Code</h3>
+<h3 id="part-3-1-请提交本次崩溃的-bugcheck-code">PART 3.1 请提交本次崩溃的 BugCheck Code</h3>
 <p>双击打开</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片18.png" alt="图片.png" referrerpolicy="no-referrer"></p>
 <p>我们发现它输出了一堆英文和一个高亮的<code>!analyze -v</code><br>这些英文是WinDbg的初始化和加载日志 和文件本体没多大关系 忽略即可</p>
@@ -61,7 +61,7 @@
 <p><code>PAGE_FAULT_IN_NONPAGED_AREA</code>是<code>50</code>的释义名字</p>
 <p>而BugCheck Code是要数值 也就是<code>50</code></p>
 <p>所以这道题的答案是<code>50</code></p>
-<h3>PART 3.2 被异常访问的内存地址以及访问类型是什么？</h3>
+<h3 id="part-3-2-被异常访问的内存地址以及访问类型是什么">PART 3.2 被异常访问的内存地址以及访问类型是什么？</h3>
 <p>我们接着细看提供的四个参数的含义</p>
 <blockquote>
 <p>注意这里的参数含义只适用于当前的BugCheck Code</p>
@@ -81,7 +81,7 @@ Arg4: 0000000000000002, (reserved)</code></pre>
 <p>题目问的是被异常访问的内存地址 也就是Arg1的<code>ffffee899137f78c</code></p>
 <p>而访问类型就是Arg2对应的 写操作 即<code>write</code></p>
 <p>所以答案为<code>ffffee899137f78c_write</code></p>
-<h3>PART 3.3 追踪实际发生 Page Fault 的指令。执行这条异常内存访问指令的驱动映像文件是什么？</h3>
+<h3 id="part-3-3-追踪实际发生-page-fault-的指令-执行这条异常内存访问指令的驱动映像文件是什么">PART 3.3 追踪实际发生 Page Fault 的指令。执行这条异常内存访问指令的驱动映像文件是什么？</h3>
 <p>题目要我们追踪实际发生的Page Fault 的指令</p>
 <p>也就是触发这次非法内存访问的那条CPU指令 也就是刚刚的Arg3</p>
 <p>通过Arg3的值 我们知道这条指令的地址<code>fffff804814dda6f</code></p>
@@ -95,7 +95,7 @@ Arg4: 0000000000000002, (reserved)</code></pre>
 <p>题目要的是执行这条异常内存访问指令的驱动映像文件</p>
 <p>那就是 IMAGE_NAME 对应的内容 <code>nvlddmkm.sys</code></p>
 <p>所以答案为 <code>nvlddmkm.sys</code></p>
-<h3>PART 3.4 为了使故障位置不依赖本次加载时的绝对地址，请给出 faulting instruction 相对于该驱动加载基址的偏移</h3>
+<h3 id="part-3-4-为了使故障位置不依赖本次加载时的绝对地址-请给出-faulting-instruction-相对于该驱动加载基址的偏移">PART 3.4 为了使故障位置不依赖本次加载时的绝对地址，请给出 faulting instruction 相对于该驱动加载基址的偏移</h3>
 <p>faulting instruction 也就是出错指令</p>
 <p>题目要的是出错指令相对于驱动加载基址的偏移</p>
 <p>刚刚分析过的的 IP_IN_PAGED_CODE 与 BUCKET_ID_FUNC_OFFSET 其实都给出了</p>
@@ -105,7 +105,7 @@ Arg4: 0000000000000002, (reserved)</code></pre>
 <p>而偏移是固定的 只要有偏移的数据</p>
 <p>重新开机后定位驱动加载的新地址就可以精准地定位到错误指令的位置</p>
 <p>这道题答案为 <code>16ada6f</code></p>
-<h3>PART 3.5 定位 faulting component 后，还需要确认它发生在哪个进程上下文中。请提交该进程名称</h3>
+<h3 id="part-3-5-定位-faulting-component-后-还需要确认它发生在哪个进程上下文中-请提交该进程名称">PART 3.5 定位 faulting component 后，还需要确认它发生在哪个进程上下文中。请提交该进程名称</h3>
 <p>faulting component 也就是故障组件</p>
 <p>题目要求我们定位故障组件 找到它所在的进程</p>
 <p>其实刚刚也分析到了 PROCESS_NAME 的值为<code>System</code></p>
@@ -120,7 +120,7 @@ Arg4: 0000000000000002, (reserved)</code></pre>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片23.png" alt="图片.png" referrerpolicy="no-referrer"></p>
 <ul><li>PROCESS ffffaa09ab6d8040<ul><li>进程对象地址：<code>ffffaa09ab6d8040</code></li></ul></li><li>SessionId: <code>none</code> Cid: <code>0004</code> Peb: <code>00000000</code> ParentCid: <code>0000</code><ul><li>SessionId: <code>none</code><ul><li>会话 ID 为 none 说明它不属于任何用户登录会话（不是交互式用户进程）</li></ul></li><li>Cid: <code>0004</code><ul><li>Client ID 即进程ID（PID）= 4</li></ul></li><li>Peb: <code>00000000</code><ul><li>进程环境块（PEB）地址为 0<ul><li>System 进程没有用户态 PEB</li></ul></li></ul></li><li>ParentCid: <code>0000</code><ul><li>父进程 ID = 0 说明它没有父进程</li></ul></li></ul></li><li>DirBase: <code>00a42000</code> ObjectTable: <code>ffff82874e2bf040</code> HandleCount: <code>&lt;Data Not Accessible&gt;</code><ul><li>DirBase: <code>00a42000</code><ul><li>页目录基址（CR3 的值）为<code>00a42000</code> 用于地址翻译</li></ul></li><li>ObjectTable: <code>ffff82874e2bf040</code><ul><li>该进程的对象句柄表地址为 <code>ffff82874e2bf040</code></li></ul></li><li>HandleCount: <code>&lt;Data Not Accessible&gt;</code><ul><li>句柄计数无法访问 显示这个是因为相关内存页可能已经不可读或已损坏</li></ul></li></ul></li><li>Image: <code>System</code><ul><li>映像名称：<code>System</code> 即：这是System进程</li></ul></li></ul>
 <p>总而言之 这道题答案为<code>System</code></p>
-<h3>PART 3.6 崩溃发生时，系统正处于什么待机状态？</h3>
+<h3 id="part-3-6-崩溃发生时-系统正处于什么待机状态">PART 3.6 崩溃发生时，系统正处于什么待机状态？</h3>
 <p>题目我们需要查询崩溃发生时的系统待机状态</p>
 <p>由于系统状态不在崩溃栈里 所以我们需要去查黑盒的内存</p>
 <p>我们先找到<code>!analyze -v</code>给出的这块内容</p>
@@ -133,7 +133,7 @@ Arg4: 0000000000000002, (reserved)</code></pre>
 <p>看待机状态 我们只要抓住相关的内容即可</p>
 <ul><li>Sleep in progress: <code>FALSE</code><ul><li>也就是不属于传统睡眠进程（S3） 那就接着看</li></ul></li><li>Connected standby in progress: <code>TRUE</code><ul><li>也就是连接待机正在进行 那么这个就是崩溃时的待机状态</li></ul></li></ul>
 <p>所以这道题的答案为<code>connectedstandby</code></p>
-<h3>PART 3.7 最后一次电源状态参考记录距离系统崩溃相差多少毫秒？</h3>
+<h3 id="part-3-7-最后一次电源状态参考记录距离系统崩溃相差多少毫秒">PART 3.7 最后一次电源状态参考记录距离系统崩溃相差多少毫秒？</h3>
 <p>电源状态也是状态 还是看刚刚<code>!blackboxbsd</code>的内容</p>
 <p>看<code>Last reference time</code> 即崩溃前最后一次记录的时间参考点</p>
 <p><img src="content/所有文章/知识笔记/Forensics/内存取证/图片/图片26.png" alt="图片.png" referrerpolicy="no-referrer"></p>
@@ -147,7 +147,7 @@ Arg4: 0000000000000002, (reserved)</code></pre>
 <p>总之获得崩溃时间为 <code>2026-9-11T09:54:03.168Z</code></p>
 <p>崩溃时间 - 最后一次电源状态参考记录时间 = 747毫秒</p>
 <p>所以这道题的答案为747</p>
-<h3>PART 3.8 综合内存转储文件中的各条线索，下列哪一个结论是目前能够作出的最严谨判断？</h3>
+<h3 id="part-3-8-综合内存转储文件中的各条线索-下列哪一个结论是目前能够作出的最严谨判断">PART 3.8 综合内存转储文件中的各条线索，下列哪一个结论是目前能够作出的最严谨判断？</h3>
 <ul><li>A. Windows 内核自身缺陷，与第三方驱动无关。</li><li>B. Hyper-V 是此次蓝屏的根本原因。</li><li>C. 现有证据可以定位直接故障点并还原部分崩溃现场，但不足以唯一确定更深层的根本原因。</li><li>D. 可以确定用户进行了拔电操作，该操作直接导致 NVIDIA 驱动崩溃。</li></ul>
 <p>选择题 我们一个一个看</p>
 <ul><li>A选项<ul><li>faulting instruction 的归属模块是 <code>nvlddmkm.sys</code></li><li>这是第三方驱动（NVIDIA显卡驱动）不是 Windows 内核组件</li><li>所以A选项错误</li></ul></li><li>B选项<ul><li>虽然可以查询到Hyper-V的信息 但不代表是它的问题</li><li>崩溃发生在NVIDIA显卡驱动 所以根因定位到Hyper-V并不合适</li><li>所以B选项错误</li></ul></li><li>C选项<ul><li>根据刚刚的分析 我们确实定位到了故障地址 并且还原了部分崩溃现场</li><li>我们也只能简单的确定蓝屏位置是NVIDIA显卡驱动 没有定位到根因</li><li>所以C选项正确</li></ul></li><li>D选项<ul><li>直接看刚刚<code>!blackboxbsd</code>的分析结果</li></ul></li></ul>

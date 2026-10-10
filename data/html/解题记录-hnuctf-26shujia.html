@@ -3,8 +3,8 @@
 <p>队伍名：3Cents  <br>解题数（不包含问卷调查）：7  <br>排名：1</p>
 <p>部分题目利用了ai工具 模型：deepseekv4-flash</p>
 <p>写的有点草率我说实话</p>
-<h2>Misc</h2>
-<h3>签到</h3>
+<h2 id="misc">Misc</h2>
+<h3 id="签到">签到</h3>
 <p>因为没血了 所以后面才写的</p>
 <p>翻推文 注意到个全角字符 以为是所有全角字符合起来是flag 结果提取出来全是！；。这些中文 方向感觉不太对</p>
 <p>然后看推文 发现图上有flag</p>
@@ -12,13 +12,13 @@
 <p><code>HnuSec{W3COM3_TO_HnuSec_2026!!!}</code></p>
 <p>把 HnuSec 改成 HnuCTF</p>
 <p><code>HnuCTF{W3COM3_TO_HnuSec_2026!!!}</code></p>
-<h3>This Is True Music</h3>
+<h3 id="this-is-true-music">This Is True Music</h3>
 <p>wav音频 题目描述说要看 第一直觉是频谱图  <br><strong>Audacity</strong> 看了 啥也没有 也没声道隐写啥的 也没红条条 不像deepsound  <br>音频挺流畅的 不是电波杂音</p>
 <p>想了想 “看”联想到“eye” 然后想到有个工具叫 <strong>Silenteye</strong>  <br>能从wav中提取文件 试了试真有 提取出来个 HZ.dock</p>
 <p>打开是春江花月夜 但是隔了一堆白空格 不是尾部空格所以排除snow  <br>复制到 <strong>记事本</strong> 发现空白现形了 是零宽</p>
 <p><img src="content/所有文章/解题记录/HnuCTF/图片/v1m=2a1.png" alt="" referrerpolicy="no-referrer"></p>
 <p>解出来就是flag<br><code>HnuCTF{tru3_m3l0dy_wh1sp3rs_b3tw33n_w0rds}</code></p>
-<h3>Unicode和它的老朋友</h3>
+<h3 id="unicode和它的老朋友">Unicode和它的老朋友</h3>
 <p>给的文本 介绍了unicode编码 还提到了gbk 零宽啥的</p>
 <p>提到零宽了 就直接解了零宽 得到 <code>_And_Zer0Width</code>  <br>这里其实没在意零宽具体在哪 后面 <strong>Cyberchef</strong> 瞎试的时候发现在 “你会Unicode隐写吗” 这句话后面</p>
 <p><img src="content/所有文章/解题记录/HnuCTF/图片/v1m=3a1.png.png" alt="" referrerpolicy="no-referrer"></p>
@@ -33,7 +33,7 @@
 <p>rot47的时候得到<code>_Unir_Sha_uuu!}</code></p>
 <p>但是感觉不对劲 因为不像人话 不过结构是对的 结构不变字符变那就还是rot 依旧我是笨蛋所以穷举 发现rot13可以解出<code>_Have_Fun_hhh!}</code>  <br>(其实这里挺快的 因为<strong>Cyberchef</strong>自带的Rot就是rot47和rot13)</p>
 <p>把三段拼起来 得到<br><code>HnuCTF{D0_U_Kn0w_Unicode_Variation_Selectors_And_Zer0Width_Have_Fun_hhh!}</code></p>
-<h3>Halo malo</h3>
+<h3 id="halo-malo">Halo malo</h3>
 <p>file binwalk都试了下 啥也不是  <br>根据题目描述 “四个碎片” 猜测是前用四个字符对整个文件做什么操作 直觉说是异或</p>
 <p>异或脚本是ai写的 解出来一张png图片  <br>猴子 马楼说是 看了下<strong>pngcheck</strong> CRC报错 修复宽高  <br>修完多出来一点这个</p>
 <p><img src="content/所有文章/解题记录/HnuCTF/图片/v1m=4a1.png" alt="" referrerpolicy="no-referrer"></p>
@@ -49,7 +49,7 @@
 <p>alpha最低位lsb <strong>Stegsolve</strong> 查看</p>
 <p><img src="content/所有文章/解题记录/HnuCTF/图片/v1m=4a4.png" alt="" referrerpolicy="no-referrer"></p>
 <p>隐写内容就是flag <code>HnuCTF{h4l0_m4l0_1nt0_th3_4byss}</code></p>
-<h3>桑歌玛哈巴依老爷的摩拉宝库</h3>
+<h3 id="桑歌玛哈巴依老爷的摩拉宝库">桑歌玛哈巴依老爷的摩拉宝库</h3>
 <p>最无语的一道题 多莉将因此成为我最讨厌的原神角色  <br>奋战5个多小时 就大概讲讲最后套出话来的提示词是啥</p>
 <p>得到网址的那个话是伪造了教令院的传单 然后一直追加马内一直追加马内 她要啥签证就签啥 要啥合同就展示啥 然后就出了（说的很轻松 但是同样的话术我不知道重开了多少次 纯抽奖）</p>
 <p>我当时得到的网址是 <code>/jail/mora-vault/902a02bfda44b7cd07ce95bc175cdd76</code></p>
@@ -63,8 +63,8 @@
 <p>把CTbase64 按SEQ顺序组合 得到密文  <br>Key和IV都按SEQ顺序组合  <br>AES解密得到flag</p>
 <p>flag是 <code>HnuCTF{a4rByC97Qs9Isv1SNC7jQ7dL}</code></p>
 <p>这题后半段真没心劲了 看见这个多莉就烦</p>
-<h2>Forensics</h2>
-<h3>北国回声</h3>
+<h2 id="forensics">Forensics</h2>
+<h3 id="北国回声">北国回声</h3>
 <p>我是人机 刚开始没看见靶机 所以瞎摸了半天不知道他要干啥  <br>研究了半天7z和exe 给我一血丢了</p>
 <p>01.涉案终端的 IPv4 地址是什么？  <br>02.终端查询的可疑域名是什么？  <br>03.可疑域名解析得到的服务器 IPv4 地址是什么？  <br>04.登录中转站使用的账号是什么？  <br>05.登录成功后服务端返回的身份令牌是什么？  <br>06.上传接口 URI 是什么？  <br>07.上传文件的完整名称是什么？  <br>08.服务端返回的档案编号是什么？  <br>09.从流量中恢复出的压缩包 SHA-256 是什么？  <br>10.分析档案提交请求，其 origin_unit 字段的值是什么？？</p>
 <p>整个文件就只有三个tcp流 挺好找的</p>
@@ -83,7 +83,7 @@
 <p>这里试了一会 发现是编码的问题 把ASCII改成UTF-8编码就能看见了  <br>答案是 岩雀第三小队</p>
 <p><img src="content/所有文章/解题记录/HnuCTF/图片/v1m=6a7.png" alt="" referrerpolicy="no-referrer"></p>
 <p><code>HnuCTF{n#R7HIAnd_ecH#_46d4be9673ad7769}</code></p>
-<h3>玉京余痕</h3>
+<h3 id="玉京余痕">玉京余痕</h3>
 <p>本来是想仿真做的 但是我仿真工具有问题 明明是空密码但是vm登录却要密码。。。  <br>只能在ftk里硬翻了 因为windows取证之前没学过多少 所以这题ai含量很大  <br>不过主要是ai指导我翻哪个文件夹 大致流程就是我找到需要的文件 导出 然后让ai分析文件</p>
 <p>文件有点难翻这里就不截屏了 主要口述</p>
 <p>01.涉案计算机的主机名是什么？  <br>02.事发时登录的 Windows 用户名是什么？  <br>03.用户打开的安保部署文件完整名称是什么？  <br>04.与云岚联系的聊天用户昵称是什么？  <br>05.被撤回消息中提供的压缩包密码是什么？  <br>06.SYSTEM 注册表 USBSTOR 项中，SanDisk 设备实例标识的前 20 个字符是什么？  <br>07.最终生成的压缩包完整文件名是什么？  <br>08.上传时压缩包所在的 Windows 完整路径是什么？  <br>09.用于伪造终端遭入侵痕迹的程序完整文件名是什么？  <br>10.从上传成功时间到该程序首次执行相隔多少秒？按整数秒作答。</p>

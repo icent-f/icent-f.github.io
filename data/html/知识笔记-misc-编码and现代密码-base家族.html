@@ -6,7 +6,7 @@
 <blockquote>
 <p>后半段的编码要不位数不固定 要不量太大 所以不放映射表了</p>
 </blockquote>
-<h3>Base 16</h3>
+<h3 id="base-16">Base 16</h3>
 <p>base16编码也称为十六进制编码或Hex编码  <br>按4为分组 字符集为 0-9 A-F</p>
 <p>由于4bit就可以表示 $2^4 = 16$ 个字符  <br>所以用4bit可以表示所有的十六进制数 (base16编码用小端模式存储)  <br>编码后长度是明文的恰好两倍</p>
 <p>编码过程为 按4个一组切分二进制数据 再按下表映射  <br>(若二进制数据不是4的倍数 则在后方补0)</p>
@@ -26,7 +26,7 @@
 1101 -&gt; D
 1110 -&gt; E
 1111 -&gt; F</code></pre>
-<h3>Base32</h3>
+<h3 id="base32">Base32</h3>
 <p>按5位分组 字符集为 2-7 A-Z</p>
 <p>编码原理和 bases16 基本相同 只不过变成了5个二进制数一组  <br>Base32编码通常用于需要在文本环境中表示二进制数据的场景  <br>例如电子邮件中的附件编码、URL中的参数传递等  <br>$2^5 = 32$ 表如下</p>
 <p>(若二进制数据不是5的倍数 则在后方补0 并用=填充)</p>
@@ -62,28 +62,28 @@
 11101 -&gt; 5
 11110 -&gt; 6
 11111 -&gt; 7</code></pre>
-<h3>Base36</h3>
+<h3 id="base36">Base36</h3>
 <p>分组位数不固定 字符集为 0-9 A-z</p>
-<h3>Base58</h3>
+<h3 id="base58">Base58</h3>
 <p>分组位数不固定</p>
 <p>Base58字符集通常包括58个字符 通常是由除去Base62中易混淆的字符  <br>如 <code>0</code> <code>O</code> <code>I</code> 和 <code>l</code> 以及可能引起歧义的字符 如 <code>+</code> 和 <code>/</code></p>
 <p>通常用于表示加密货币地址和其他数据</p>
-<h3>Base62</h3>
+<h3 id="base62">Base62</h3>
 <p>分组位数不固定 字符集为 0-9 A-Z a-z</p>
-<h3>Base64</h3>
+<h3 id="base64">Base64</h3>
 <p>按6位分组 字符集为 0-9 A-Z a-z + /</p>
-<h3>Base85</h3>
+<h3 id="base85">Base85</h3>
 <p>按32位分组 字符集</p>
 <pre><code>0-9 a-z A-Z
 !&quot;#$%&amp;&#x27;()*+,-.:;&lt;=&gt;?@[\]^_`</code></pre>
-<h3>Base91</h3>
+<h3 id="base91">Base91</h3>
 <p>按 13/14 位分组</p>
 <p>字符集</p>
 <pre><code>0-9 a-z A-Z
 !&quot;#$%&amp;()*+,./:;&lt;=&gt;?@[]^_`{|}~</code></pre>
-<h3>Base92</h3>
+<h3 id="base92">Base92</h3>
 <p>字符集不确定 Base92 没有统一标准  <br>常见的一种是比 Base91 增加一个 ~ 符号 也就是</p>
 <pre><code>0-9 a-z A-Z
 !#$%&amp; ()*+,./:;&lt;=&gt;?@ []^_` {|}”~</code></pre>
-<h3>Base100</h3>
+<h3 id="base100">Base100</h3>
 <p>Base100 使用 256 个Emoji 作为字母表</p>

@@ -3,8 +3,8 @@
 <p>USB流量可以用来传输多种交互式设备的操作 比如鼠标、键盘、手柄</p>
 <p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片15.png" alt="\图片.png" referrerpolicy="no-referrer"></p>
 <p>这个文章只简单介绍鼠标以及键盘的USB流量 并且附加两个工具的简单使用</p>
-<h2>鼠标协议</h2>
-<h3>简述</h3>
+<h2 id="鼠标协议">鼠标协议</h2>
+<h3 id="简述">简述</h3>
 <p>虽然鼠标移动表现为连续性 但是实际上计算机的一切连续性内容是用离散数据模拟的</p>
 <p>所以鼠标移动的数据也会被打包成一个个离散的USB流量包传输</p>
 <p>我们简单看一个鼠标流量</p>
@@ -15,10 +15,10 @@
 <p>这里直接用现成的工具就好</p>
 <p>事实上 也有8字节数据长度的鼠标流量</p>
 <ul><li>第1个字节代表按键 即左键右键中健(部分鼠标还有侧键)<ul><li>取 <code>00</code> 时 代表没按键</li><li>取 <code>01</code> 时 代表按左键</li><li>取 <code>02</code> 时 代表按右键</li></ul></li><li>第2个字节是保留位 通常是 <code>00</code> 解析时忽略即可</li><li>第3个字节是 X（左右方向）的低位字节</li><li>第4个字节是 X 的高位字节（16 位小端，符号扩展）<ul><li>高位为 <code>00</code>（即 X 为正）时 代表向右移动像素</li><li>高位为 <code>ff</code>（即 X 为负）时 代表向左移动像素</li></ul></li><li>第5个字节是 Y（上下方向）的低位字节</li><li>第6个字节是 Y 的高位字节（16 位小端，符号扩展）<ul><li>高位为 <code>00</code>（即 Y 为正）时 代表向上移动像素</li><li>高位为 <code>ff</code>（即 Y 为负）时 代表向下移动像素</li></ul></li><li>第7、第8字节是保留位 通常为 <code>00</code></li></ul>
-<h3>工具：<a href="https://github.com/WangYihang/USB-Mouse-Pcap-Visualizer">USB-Mouse-Pcap-Visualizer</a></h3>
+<h3 id="工具-usb-mouse-pcap-visualizer">工具：<a href="https://github.com/WangYihang/USB-Mouse-Pcap-Visualizer">USB-Mouse-Pcap-Visualizer</a></h3>
 <p>这个工具可以从 pcap 里提取鼠标包 按上面4字节还原按键状态与相对位移 再累加成可视的轨迹 产出csv文件</p>
 <pre><code>python usb-mouse-pcap-visualizer.py -i &lt;输入.pcap&gt; -o &lt;输出.csv&gt;</code></pre>
-<h3>例题：[NUAACTF-2017]<strong>traffic</strong></h3>
+<h3 id="例题-nuaactf-2017-traffic">例题：[NUAACTF-2017]<strong>traffic</strong></h3>
 <p><a href="https://ctf.bugku.com/challenges/detail/id/241.html"><strong>题目地址</strong></a></p>
 <p><strong>题目描述：</strong>Emmm，这是什么流量...</p>
 <p><strong>工具：</strong>Wireshark USB-Mouse-Pcap-Visualizer</p>
@@ -41,17 +41,17 @@
 <p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片6.png" alt="图片.png" referrerpolicy="no-referrer"></p>
 <p>取得flag flag为</p>
 <p><code>nuaactf{usb_mouse}</code></p>
-<h2>键盘协议</h2>
-<h3>简述</h3>
+<h2 id="键盘协议">键盘协议</h2>
+<h3 id="简述-2">简述</h3>
 <p>依旧简单的看一个键盘流量</p>
 <p><img src="content/所有文章/知识笔记/Misc/USB流量（简）/图片/图片11.png" alt="图片.png" referrerpolicy="no-referrer"></p>
 <p>选择的区域就是键盘流量的数据区 可以看到长度为8字节 击键信息集中在第3个字节</p>
 <ul><li>第1个字节是修饰键<ul><li><code>01</code> 左 Ctrl <code>02</code> 左 Shift <code>04</code> 左 Alt <code>08</code> 左 Win(GUI)</li><li><code>10</code> 右 Ctrl <code>20</code> 右 Shift <code>40</code> 右 Alt <code>80</code> 右 Win</li><li>例：<code>0x02</code> = 按左 Shift → 配合键码决定是<strong>大写/上档字符</strong>（如 <code>a</code> → <code>A</code>，<code>1</code> → <code>!</code>）</li></ul></li><li>第2个字节是保留位 通常是 <code>00</code> 解析时忽略即可</li><li>第3个字节本身是 HID Usage ID 可以查 HID Usage Table 映射表还原成字符<ul><li>松开一个键时 该字节回 <code>0x00</code></li></ul></li><li>第4-8字节 多键位 忽略即可</li></ul>
 <p>完整映射表放在最后</p>
-<h3>工具：<a href="https://github.com/WangYihang/UsbKeyboardDataHacker">UsbKeyboardDataHacker</a></h3>
+<h3 id="工具-usbkeyboarddatahacker">工具：<a href="https://github.com/WangYihang/UsbKeyboardDataHacker">UsbKeyboardDataHacker</a></h3>
 <p>可以把pcap中的usb键盘流量映射为可读的键盘字符</p>
 <pre><code>python UsbKeyboardDataHacker.py --input &lt;输入.pcap&gt;</code></pre>
-<h3>例题：[NISACTF 2022]破损的flag</h3>
+<h3 id="例题-nisactf-2022-破损的flag">例题：[NISACTF 2022]破损的flag</h3>
 <p><a href="https://www.nssctf.cn/problem/2048"><strong>题目链接</strong></a></p>
 <p><strong>题目描述：</strong>flag真的是flag吗？</p>
 <p>Tips：flag格式为NSSCTF{}</p>
@@ -78,7 +78,7 @@
 <p>将flag部分拿出来 加上<code>_</code></p>
 <p>取得flag flag为</p>
 <p>NSSCTF{welcome_to_fjnu}</p>
-<h2>其他</h2>
+<h2 id="其他">其他</h2>
 <p>写一点小tip</p>
 <p>有些小阴间会把4字节的鼠标流量填充成8字节(并非正常的8字节鼠标流量)</p>
 <p>伪装成键盘流量 导致键盘流量工具空输出</p>
