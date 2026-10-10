@@ -1,5 +1,16 @@
 [
   {
+    "id": "知识笔记-forensics-内存取证-如何利用windbg分析蓝屏崩溃",
+    "title": "如何利用WinDbg分析蓝屏崩溃",
+    "date": "2026-10-10",
+    "category": "知识笔记",
+    "group": "Forensics / 内存取证",
+    "folder": "知识笔记/Forensics/内存取证",
+    "file": "content/所有文章/知识笔记/Forensics/内存取证/如何利用WinDbg分析蓝屏崩溃.md",
+    "html": "data/html/知识笔记-forensics-内存取证-如何利用windbg分析蓝屏崩溃.html",
+    "excerpt": "WinDbg 是微软官方推出的一款Windows 调试工具"
+  },
+  {
     "id": "知识笔记-forensics-内存取证-volatility",
     "title": "Volatility",
     "date": "2026-10-09",
